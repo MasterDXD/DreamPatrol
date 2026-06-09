@@ -3,6 +3,9 @@
 *.key
 ECS/
 
+# 本地文件
+Files/
+
 # 依赖
 node_modules/
 .pnp
