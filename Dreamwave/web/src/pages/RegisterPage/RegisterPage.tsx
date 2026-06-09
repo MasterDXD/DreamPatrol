@@ -65,7 +65,7 @@ export default function RegisterPage({ onRegister }: RegisterPageProps) {
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.header}>
           <span className={styles.logo}>🌙</span>
-          <h1 className={styles.appTitle}>巡梦</h1>
+          <h1 className={styles.appTitle}><img src="/assets/logo.jpg" alt="巡梦" className={styles.logoImage} /></h1>
           <p className={styles.subtitle}>创建你的梦境空间</p>
         </div>
 

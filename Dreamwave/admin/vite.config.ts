@@ -69,10 +69,11 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    hmr: {
+      overlay: false,
+    },
   },
   optimizeDeps: {
-    // 关键修复：@ant-design/charts 及其 @antv 依赖链包含 esbuild 无法解析的语法
-    // 全部排除走原始 ESM 加载，浏览器端天然支持 CJS default export
     exclude: [
       '@ant-design/charts',
       '@ant-design/graphs',
@@ -88,7 +89,6 @@ export default defineConfig({
       '@antv/expr',
       '@antv/event-emitter',
     ],
-    // 强制让 esbuild 把这些 CJS 包预构建成正确 ESM
     include: [
       'lodash',
       'eventemitter3',
@@ -101,10 +101,30 @@ export default defineConfig({
     esbuildOptions: {
       target: 'es2020',
     },
+    force: true,
   },
   resolve: {
     alias: {
       eventemitter3: _require.resolve('eventemitter3'),
     },
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'antd': ['antd'],
+          'charts': ['@ant-design/charts', '@antv/g2'],
+          'icons': ['@ant-design/icons'],
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
   },
 });

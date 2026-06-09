@@ -136,7 +136,27 @@ export default function DreamDetailPage() {
     }
   };
 
-  if (loading) return <div className={styles.loading}>加载中...</div>;
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.inner}>
+          <div className={styles.skeletonCard}>
+            <div className={styles.skeletonHeader}>
+              <div className={styles.skeletonBackBtn}></div>
+              <div className={styles.skeletonEmotion}></div>
+            </div>
+            <div className={styles.skeletonTitle}></div>
+            <div className={styles.skeletonDate}></div>
+            <div className={styles.skeletonContent}>
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className={styles.skeletonLine}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!dream) return <EmptyState message="找不到这个梦" actionLabel="返回首页" onAction={() => navigate('/')} />;
 
   const meta = EMOTION_META[dream.emotion];

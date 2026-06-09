@@ -668,6 +668,142 @@
 }
 
 /* ===== Loading & Empty ===== */
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.skeletonCard {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.skeletonSubtitle {
+  width: 240px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.skeletonBadge {
+  width: 80px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.skeletonLabel {
+  width: 80px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.skeletonIcon {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.skeletonValue {
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.skeletonTrend {
+  width: 100px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.skeletonSectionTitle {
+  width: 120px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.skeletonSectionSubtitle {
+  width: 160px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.skeletonCircle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.skeletonRing {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 12px solid rgba(255, 255, 255, 0.04);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.skeletonBar {
+  width: 100%;
+  max-width: 28px;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+.skeletonTag {
+  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.skeletonAiIcon {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.skeletonAiTitle {
+  width: 120px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeletonAiText {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.skeletonAiText:first-of-type {
+  width: 100%;
+}
+
+.skeletonAiText:nth-of-type(2) {
+  width: 90%;
+}
+
+.skeletonAiText:last-of-type {
+  width: 70%;
+}
+
 .loading {
   text-align: center;
   padding: 24px;

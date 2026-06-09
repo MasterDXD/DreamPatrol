@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![巡梦 Logo](Dreamwave/参考页面/logo_light.png)
+![巡梦 Logo](Dreamwave/admin/public/assets/logo.jpg)
 
 **🌙 记录梦境 · 洞察情绪**
 
@@ -14,9 +14,15 @@
 
 ## 品牌标识
 
-| 浅色版 Logo | 深色版 Logo | 品牌主视觉 |
-|:---:|:---:|:---:|
-| ![Logo Light](Dreamwave/参考页面/logo_light.png) | ![Logo Black](Dreamwave/参考页面/logo_black.png) | ![品牌设计](Dreamwave/参考页面/品牌设计.png) |
+### 品牌主视觉
+
+![官网背景](Dreamwave/admin/public/assets/官网背景图.png)
+
+### Logo 版本
+
+| 浅色背景版（深色文字） | 深色背景版（浅色文字） |
+|:---:|:---:|
+| ![Logo Light](Dreamwave/admin/public/assets/logo_light.png) | ![Logo Black](Dreamwave/admin/public/assets/logo_black.png) |
 
 > **品牌主题**：梦境 · 情绪 · 星空。Logo 以"月相 + 梦境波纹"为视觉主体，呼应 Dreamwave（梦境之波）的产品名。
 

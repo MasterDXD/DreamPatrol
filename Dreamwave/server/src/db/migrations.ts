@@ -1,5 +1,6 @@
 import { Database as SqlJsDatabase } from 'sql.js';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 // 迁移定义：每个迁移有唯一版本号和执行函数
 interface Migration {

@@ -39,42 +39,11 @@ export default function Login({ onLogin }: LoginProps) {
       justifyContent: 'center',
       position: 'relative',
       overflow: 'hidden',
-      background: '#0d1126',
+      backgroundImage: 'url(/assets/官网背景图.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
     }}>
-      {/* Nebula effects */}
-      <div style={{
-        position: 'absolute',
-        top: '15%',
-        left: '15%',
-        width: 400,
-        height: 400,
-        background: 'rgba(167, 139, 250, 0.15)',
-        borderRadius: 9999,
-        filter: 'blur(100px)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '15%',
-        right: '10%',
-        width: 500,
-        height: 500,
-        background: 'rgba(139, 92, 246, 0.1)',
-        borderRadius: 9999,
-        filter: 'blur(120px)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '60%',
-        width: 300,
-        height: 300,
-        background: 'rgba(217, 70, 239, 0.08)',
-        borderRadius: 9999,
-        filter: 'blur(80px)',
-        pointerEvents: 'none',
-      }} />
 
       {/* Form Card */}
       <div style={{
@@ -95,10 +64,10 @@ export default function Login({ onLogin }: LoginProps) {
             src="/assets/logo.jpg"
             alt="巡梦"
             style={{
-              height: 24,
+              height: 144,
               width: 'auto',
               objectFit: 'contain',
-              marginBottom: 6,
+              marginBottom: 12,
               filter: 'drop-shadow(0 0 12px rgba(167, 139, 250, 0.4))',
             }}
           />

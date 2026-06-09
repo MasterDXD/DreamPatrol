@@ -11,5 +11,24 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    hmr: {
+      overlay: false,
+    },
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
   },
 });

@@ -38,7 +38,7 @@
 }
 
 .sidebarCollapsed .logoImg {
-  width: 36px;
+  width: 48px;
 }
 
 .sidebarCollapsed .logoText {
@@ -98,7 +98,7 @@
 }
 
 .logoImg {
-  width: 40px;
+  width: 56px;
   display: block;
   transition: width 300ms ease;
 }

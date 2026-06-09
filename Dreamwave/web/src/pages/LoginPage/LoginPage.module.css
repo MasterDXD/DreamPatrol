@@ -133,15 +133,13 @@
 }
 
 .appTitle {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: 6px;
-  color: transparent;
-  background: linear-gradient(135deg, #7eb8da 0%, #a78bfa 40%, #c4b5fd 70%, #f0abfc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.4));
   margin-bottom: 8px;
+}
+
+.logoImage {
+  height: 50px;
+  width: auto;
+  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.4));
 }
 
 .appTitle::after {

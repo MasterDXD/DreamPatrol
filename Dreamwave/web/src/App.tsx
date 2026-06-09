@@ -78,7 +78,14 @@ export default function App() {
 
   return (
     <AuthErrorBoundary onAuthExpired={handleAuthExpired}>
-      <Suspense fallback={<div className="page-loading">加载中...</div>}>
+      <Suspense fallback={
+        <div className="page-loading">
+          <div className="page-loading-content">
+            <div className="page-loading-spinner"></div>
+            <span className="page-loading-text">进入梦境中...</span>
+          </div>
+        </div>
+      }>
         <Routes>
           <Route path="/welcome" element={<GuestGuard authed={authed}><div className="page-enter"><WelcomePage /></div></GuestGuard>} />
           <Route path="/login" element={<GuestGuard authed={authed}><div className="page-enter"><LoginPage onLogin={() => setAuthed(true)} /></div></GuestGuard>} />

@@ -154,23 +154,27 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .weekDay {
   text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: #94a3b8;
-  letter-spacing: 0.05em;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.7);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 4px 0;
+  padding: 6px 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  border-radius: 8px;
 }
 
 .daysGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 6px;
   transition: opacity 250ms ease;
 }
 
@@ -180,25 +184,30 @@
 
 /* ---- Day cell ---- */
 .dayCell {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-radius: 14px;
+  padding: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  min-height: 48px;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 56px;
   position: relative;
-  transition: background 150ms ease;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
 }
 
 .dayCell:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .dayCellOtherMonth {
-  color: rgba(148, 163, 184, 0.35);
+  color: rgba(148, 163, 184, 0.25);
   background: transparent;
   border-color: transparent;
   cursor: default;
@@ -206,57 +215,85 @@
 
 .dayCellOtherMonth:hover {
   background: transparent;
+  border-color: transparent;
+  transform: none;
+  box-shadow: none;
 }
 
 .dayCellSelected {
-  border-color: var(--color-primary, #a78bfa);
-  background: rgba(167, 139, 250, 0.1);
-  box-shadow: inset 0 0 20px rgba(167, 139, 250, 0.2), 0 0 15px rgba(167, 139, 250, 0.3);
+  border-color: rgba(167, 139, 250, 0.5);
+  background: linear-gradient(145deg, rgba(167, 139, 250, 0.18) 0%, rgba(139, 92, 246, 0.08) 100%);
+  box-shadow: 
+    inset 0 0 24px rgba(167, 139, 250, 0.25),
+    0 0 20px rgba(167, 139, 250, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .dayCellSelected:hover {
-  background: rgba(167, 139, 250, 0.15);
+  background: linear-gradient(145deg, rgba(167, 139, 250, 0.25) 0%, rgba(139, 92, 246, 0.12) 100%);
+  transform: translateY(-2px);
 }
 
 .dayNumber {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .dayCellSelected .dayNumber {
   color: var(--color-primary, #a78bfa);
   font-weight: 700;
+  text-shadow: 0 0 12px rgba(167, 139, 250, 0.6);
+}
+
+.dayCellOtherMonth .dayNumber {
+  color: rgba(148, 163, 184, 0.25);
 }
 
 .dayCellToday .dayNumber {
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.4);
+  background: linear-gradient(135deg, var(--color-primary, #a78bfa) 0%, #8b5cf6 100%);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 
+    0 0 0 3px rgba(167, 139, 250, 0.2),
+    0 0 12px rgba(167, 139, 250, 0.4);
+}
+
+.dayCellToday.dayCellSelected .dayNumber {
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.95) 100%);
+  color: var(--color-primary, #a78bfa);
 }
 
 /* ---- Emotion dots ---- */
 .recordIndicator {
   display: flex;
-  gap: 3px;
+  gap: 4px;
   position: absolute;
-  bottom: 6px;
-  left: 6px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .emotionDot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 200ms ease;
 }
 
-/* glow is applied via inline style boxShadow */
+.dayCell:hover .emotionDot {
+  transform: scale(1.2);
+}
 
 /* ---- Side panel ---- */
 .sidePanelHeader {
@@ -362,6 +399,153 @@
 .mobileDreamItemMeta {
   font-size: 12px;
   color: #94a3b8;
+}
+
+/* ---- Loading & Skeleton ---- */
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.skeleton {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.skeletonSubtitle {
+  width: 180px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.skeletonBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.skeletonCell {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skeletonDayNumber {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.skeletonDate {
+  width: 120px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.skeletonDreamCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.skeletonDreamCardHeader {
+  width: 60%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.skeletonDreamCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonDreamCardLine {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+}
+
+.skeletonDreamCardLine:first-child {
+  width: 100%;
+}
+
+.skeletonDreamCardLine:last-child {
+  width: 70%;
+}
+
+.skeletonMobileItem {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skeletonMobileBar {
+  width: 4px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.skeletonMobileTitle {
+  width: 120px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.skeletonMobileMeta {
+  width: 80px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.contentLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.loadingSpinnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes spinnerRotate {
+  to { transform: rotate(360deg); }
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(167, 139, 250, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spinnerRotate 1s linear infinite;
+}
+
+.loadingText {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.mobileLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
 /* ---- Animations ---- */

@@ -66,7 +66,10 @@ export default function CalendarPage() {
     } catch {}
   }, []);
 
-  useEffect(() => { loadCalendarData(); loadEmotionData(); }, [loadCalendarData, loadEmotionData]);
+  useEffect(() => {
+    loadCalendarData();
+    loadEmotionData();
+  }, [loadCalendarData, loadEmotionData]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -80,18 +83,18 @@ export default function CalendarPage() {
   }, [selectedDate]);
 
   const changeMonth = (delta: number) => {
+    let m = currentMonth + delta;
+    let y = currentYear;
+    if (m < 1) { m = 12; y--; }
+    else if (m > 12) { m = 1; y++; }
     setFading(true);
     setTimeout(() => {
-      let m = currentMonth + delta;
-      let y = currentYear;
-      if (m < 1) { m = 12; y--; }
-      else if (m > 12) { m = 1; y++; }
       setCurrentMonth(m);
       setCurrentYear(y);
       const newDate = formatDate(y, m, 1);
       setSelectedDate(newDate);
-      setFading(false);
-    }, 250);
+      setTimeout(() => setFading(false), 50);
+    }, 200);
   };
 
   const goToday = () => {
@@ -101,8 +104,8 @@ export default function CalendarPage() {
       setCurrentYear(d.getFullYear());
       setCurrentMonth(d.getMonth() + 1);
       setSelectedDate(formatDate(d.getFullYear(), d.getMonth() + 1, d.getDate()));
-      setFading(false);
-    }, 250);
+      setTimeout(() => setFading(false), 50);
+    }, 200);
   };
 
   const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
@@ -145,6 +148,71 @@ export default function CalendarPage() {
     const [, m, d] = selectedDate.split('-');
     return `${parseInt(m)}月${parseInt(d)}日`;
   }, [selectedDate]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.mainLayout}>
+          <section className={`${styles.calendarSection} ${styles.glassPanel} ${styles.skeleton}`}>
+            <div className={styles.calendarHeader}>
+              <div className={styles.headerLeft}>
+                <div className={`${styles.monthTitle} ${styles.skeletonTitle}`}></div>
+                <div className={`${styles.monthSubtitle} ${styles.skeletonSubtitle}`}></div>
+              </div>
+              <div className={styles.headerNav}>
+                <div className={`${styles.navBtn} ${styles.skeletonBtn}`}></div>
+                <div className={`${styles.todayBtn} ${styles.skeletonBtn}`}></div>
+                <div className={`${styles.navBtn} ${styles.skeletonBtn}`}></div>
+              </div>
+            </div>
+            <div className={styles.calendarBody}>
+              <div className={styles.weekHeader}>
+                {WEEK_DAYS.map(d => (
+                  <div key={d} className={styles.weekDay}>{d}</div>
+                ))}
+              </div>
+              <div className={styles.daysGrid}>
+                {Array.from({ length: 42 }).map((_, i) => (
+                  <div key={i} className={`${styles.dayCell} ${styles.skeletonCell}`}>
+                    <div className={styles.skeletonDayNumber}></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <aside className={styles.sidePanel}>
+            <div className={`${styles.glassPanel} ${styles.sidePanelHeader} ${styles.skeleton}`}>
+              <div className={`${styles.sidePanelDate} ${styles.skeletonDate}`}></div>
+              <div className={`${styles.sidePanelSubtitle} ${styles.skeletonSubtitle}`}></div>
+            </div>
+            <div className={styles.sidePanelList}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className={`${styles.skeletonDreamCard}`}>
+                  <div className={styles.skeletonDreamCardHeader}></div>
+                  <div className={styles.skeletonDreamCardBody}>
+                    <div className={styles.skeletonDreamCardLine}></div>
+                    <div className={styles.skeletonDreamCardLine}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
+        <div className={`${styles.glassPanelLight} ${styles.mobileDreamSection} ${styles.skeleton}`}>
+          <div className={`${styles.mobileDreamTitle} ${styles.skeletonTitle}`}></div>
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className={`${styles.mobileDreamItem} ${styles.skeletonMobileItem}`}>
+              <div className={styles.skeletonMobileBar}></div>
+              <div className={styles.mobileDreamInfo}>
+                <div className={styles.skeletonMobileTitle}></div>
+                <div className={styles.skeletonMobileMeta}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -244,11 +312,16 @@ export default function CalendarPage() {
           <div className={`${styles.glassPanel} ${styles.sidePanelHeader}`}>
             <h2 className={styles.sidePanelDate}>{selectedDateDisplay}</h2>
             <p className={styles.sidePanelSubtitle}>
-              ✦ {dreamsByDate.length} 个梦境碎片
+              ✦ {isDateLoading ? '加载中...' : dreamsByDate.length} 个梦境碎片
             </p>
           </div>
-          <div className={styles.sidePanelList}>
-            {dreamsByDate.length === 0 ? (
+          <div className={`${styles.sidePanelList} ${isDateLoading ? styles.contentLoading : ''}`}>
+            {isDateLoading ? (
+              <div className={styles.loadingSpinnerContainer}>
+                <div className={styles.loadingSpinner}></div>
+                <span className={styles.loadingText}>正在读取梦境...</span>
+              </div>
+            ) : dreamsByDate.length === 0 ? (
               <p className={styles.noDreamsText}>这一天没有梦</p>
             ) : (
               dreamsByDate.map(dream => (
@@ -262,7 +335,11 @@ export default function CalendarPage() {
       {/* Mobile dream section */}
       <div className={`${styles.glassPanelLight} ${styles.mobileDreamSection}`}>
         <h3 className={styles.mobileDreamTitle}>{selectedDateDisplay} 的梦境</h3>
-        {dreamsByDate.length === 0 ? (
+        {isDateLoading ? (
+          <div className={styles.mobileLoading}>
+            <div className={styles.loadingSpinner}></div>
+          </div>
+        ) : dreamsByDate.length === 0 ? (
           <p className={styles.noDreamsText}>这一天没有梦</p>
         ) : (
           dreamsByDate.map(dream => (

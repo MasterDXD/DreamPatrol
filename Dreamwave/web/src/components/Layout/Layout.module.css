@@ -48,6 +48,62 @@
   z-index: 1;
 }
 
+/* ===== Meteor Shower ===== */
+@keyframes meteorFall {
+  0% {
+    transform: translateX(0) translateY(-100vh) rotate(var(--meteor-rot));
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw) translateY(100vh) rotate(var(--meteor-rot));
+    opacity: 0;
+  }
+}
+
+.meteorLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.meteor {
+  position: absolute;
+  top: -100px;
+  left: var(--meteor-left);
+  width: var(--meteor-size);
+  height: var(--meteor-size);
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(167, 139, 250, 0.4),
+    0 0 30px rgba(126, 184, 218, 0.3);
+  animation: meteorFall var(--meteor-duration, 1.5s) linear var(--meteor-delay, 0s) infinite;
+}
+
+.meteor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateY(-50%) rotate(45deg);
+  opacity: 0.6;
+}
+
 /* ===== Sidebar ===== */
 .sidebar {
   width: 256px;
@@ -444,6 +500,18 @@
 .main {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.contentContainer {
+  min-height: 100%;
+  transition: opacity 200ms ease, transform 200ms ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contentTransitioning {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 /* ===== Mobile Bottom Nav ===== */

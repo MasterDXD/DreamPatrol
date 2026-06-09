@@ -22,7 +22,77 @@ export default function StatsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className={styles.loading}>加载中...</div>;
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.pageHeader}>
+          <div>
+            <div className={`${styles.pageTitle} ${styles.skeletonTitle}`}></div>
+            <div className={`${styles.pageSubtitle} ${styles.skeletonSubtitle}`}></div>
+          </div>
+          <div className={`${styles.pageBadge} ${styles.skeletonBadge}`}></div>
+        </div>
+        <div className={styles.bentoGrid}>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className={`${styles.kpiCard} ${styles.skeletonCard}`}>
+              <div className={styles.kpiTop}>
+                <div className={`${styles.kpiLabel} ${styles.skeletonLabel}`}></div>
+                <div className={`${styles.kpiIcon} ${styles.skeletonIcon}`}></div>
+              </div>
+              <div className={`${styles.kpiValue} ${styles.skeletonValue}`}></div>
+              <div className={`${styles.kpiTrend} ${styles.skeletonTrend}`}></div>
+            </div>
+          ))}
+          <div className={`${styles.nebulaCard} ${styles.skeletonCard}`}>
+            <div className={`${styles.sectionTitle} ${styles.skeletonSectionTitle}`}></div>
+            <div className={styles.nebulaVis}>
+              <div className={styles.skeletonCircle}></div>
+            </div>
+          </div>
+          <div className={`${styles.ringCard} ${styles.skeletonCard}`}>
+            <div className={`${styles.sectionTitle} ${styles.skeletonSectionTitle}`}></div>
+            <div className={`${styles.sectionSubtitle} ${styles.skeletonSectionSubtitle}`}></div>
+            <div className={styles.ringChartWrapper}>
+              <div className={styles.skeletonRing}></div>
+            </div>
+          </div>
+          <div className={`${styles.trendCard} ${styles.skeletonCard}`}>
+            <div className={styles.trendHeader}>
+              <div className={`${styles.sectionTitle} ${styles.skeletonSectionTitle}`}></div>
+              <div className={`${styles.trendPeriod} ${styles.skeletonPeriod}`}></div>
+            </div>
+            <div className={styles.barChart}>
+              {Array.from({ length: 7 }).map((_, i) => (
+                <div key={i} className={styles.barItem}>
+                  <div className={styles.skeletonBar}></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={`${styles.tagCard} ${styles.skeletonCard}`}>
+            <div className={`${styles.sectionTitle} ${styles.skeletonSectionTitle}`}></div>
+            <div className={`${styles.sectionSubtitle} ${styles.skeletonSectionSubtitle}`}></div>
+            <div className={styles.tagCloud}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className={styles.skeletonTag}></div>
+              ))}
+            </div>
+          </div>
+          <div className={`${styles.aiCard} ${styles.skeletonCard}`}>
+            <div className={styles.aiContent}>
+              <div className={styles.skeletonAiIcon}></div>
+              <div className={styles.aiTextWrap}>
+                <div className={`${styles.aiTitle} ${styles.skeletonAiTitle}`}></div>
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className={styles.skeletonAiText}></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!stats) return <div className={styles.empty}>暂无统计数据</div>;
 
   const maxCount = Math.max(...stats.recentDailyCounts.map(d => d.count), 1);

@@ -26,6 +26,10 @@ export default function AmbientMusic() {
     audio.volume = 0.3;
     audioRef.current = audio;
 
+    if (playing) {
+      audio.play().catch(() => {});
+    }
+
     return () => {
       audio.pause();
       audio.src = '';
@@ -72,7 +76,6 @@ export default function AmbientMusic() {
       audioRef.current.pause();
     }
     setMusicIndex(prev => (prev + 1) % DREAM_MUSIC.length);
-    setPlaying(false);
   }, []);
 
   return (

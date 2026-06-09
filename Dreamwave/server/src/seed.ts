@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { getDatabase, run, queryOne } from './db/database';
 
 // 种子数据：6条示例梦境，覆盖所有6种情绪

@@ -64,21 +64,19 @@
 }
 
 .dreamCard.compact {
-  flex-direction: row;
-  padding: 10px 12px;
-  gap: 8px;
-  min-height: 48px;
-  justify-content: center;
+  flex-direction: column;
+  padding: 16px 14px;
+  gap: 12px;
+  min-height: auto;
+  justify-content: flex-start;
 }
 
-.dreamCard.compact .dreamCardImageContainer {
-  display: none;
-}
+
 
 .dreamCard.compact .dreamCardContent {
   padding: 0;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -145,7 +143,13 @@
 }
 
 .dreamCard.compact .dreamCardPreview {
-  display: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+  line-height: 1.5;
 }
 
 .dreamCardTags {
@@ -173,4 +177,79 @@
 .dreamCard.compact .emotionTag {
   font-size: 10px;
   padding: 1px 8px;
+}
+
+.dreamCardMedia {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.dreamCardMediaImage {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.dreamCardMediaPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  gap: 8px;
+  color: rgba(148, 163, 184, 0.5);
+  font-size: 12px;
+}
+
+.dreamCardAnalysis {
+  background: rgba(167, 139, 250, 0.06);
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+.dreamCardAnalysisHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a78bfa;
+  margin-bottom: 8px;
+}
+
+.dreamCardAnalysisHeader i {
+  font-size: 11px;
+}
+
+.dreamCardAnalysisContent {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dreamCardAnalysisPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 0;
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 12px;
+}
+
+.dreamCardAnalysisHint {
+  font-size: 10px;
+  margin: 0;
+  opacity: 0.6;
 }

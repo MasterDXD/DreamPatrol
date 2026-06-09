@@ -30,6 +30,8 @@ export default function Layout({ onLogout }: LayoutProps) {
     return localStorage.getItem(COLLAPSE_KEY) === 'true';
   });
   const [showMusic, setShowMusic] = useState(isAmbientMusicVisible);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [previousPath, setPreviousPath] = useState(location.pathname);
 
   // 监听设置变更事件
   useEffect(() => {
@@ -41,6 +43,17 @@ export default function Layout({ onLogout }: LayoutProps) {
   useEffect(() => {
     localStorage.setItem(COLLAPSE_KEY, String(collapsed));
   }, [collapsed]);
+
+  useEffect(() => {
+    if (location.pathname !== previousPath) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setPreviousPath(location.pathname);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, previousPath]);
 
   const handleLogout = () => {
     localStorage.removeItem('dreamwave_token');
@@ -56,6 +69,23 @@ export default function Layout({ onLogout }: LayoutProps) {
 
   return (
     <div className={styles.layout}>
+      {/* Meteor Shower Background */}
+      <div className={styles.meteorLayer}>
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className={styles.meteor}
+            style={{
+              '--meteor-delay': `${Math.random() * 8}s`,
+              '--meteor-duration': `${1 + Math.random() * 1}s`,
+              '--meteor-left': `${Math.random() * 100}%`,
+              '--meteor-size': `${1 + Math.random() * 2}px`,
+              '--meteor-rot': '-45deg',
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
+
       {/* Sidebar */}
       <aside className={`${styles.sidebar} ${collapsed ? styles.sidebarCollapsed : ''}`}>
         <div className={styles.sidebarTop}>
@@ -122,7 +152,9 @@ export default function Layout({ onLogout }: LayoutProps) {
 
       {/* Main Content */}
       <main className={styles.main}>
-        <Outlet />
+        <div className={`${styles.contentContainer} ${isTransitioning ? styles.contentTransitioning : ''}`}>
+          <Outlet />
+        </div>
       </main>
 
       {/* Mobile Bottom Nav */}

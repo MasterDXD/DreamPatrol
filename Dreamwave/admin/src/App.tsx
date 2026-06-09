@@ -1,21 +1,35 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { ConfigProvider, theme, App as AntApp } from 'antd';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { ConfigProvider, theme, App as AntApp, Spin } from 'antd';
 import Layout from './components/Layout';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import DreamManage from './pages/DreamManage';
-import UserManage from './pages/UserManage';
-import AIConfig from './pages/AIConfig';
-import AICallLogs from './pages/AICallLogs';
-import SystemSettings from './pages/SystemSettings';
-import OperationLogs from './pages/OperationLogs';
-import NotFound from './pages/NotFound';
 import './admin-theme.css';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const DreamManage = lazy(() => import('./pages/DreamManage'));
+const UserManage = lazy(() => import('./pages/UserManage'));
+const AIConfig = lazy(() => import('./pages/AIConfig'));
+const AICallLogs = lazy(() => import('./pages/AICallLogs'));
+const SystemSettings = lazy(() => import('./pages/SystemSettings'));
+const OperationLogs = lazy(() => import('./pages/OperationLogs'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function AdminGuard({ children, authed }: { children: React.ReactNode; authed: boolean }) {
   if (!authed) return <Navigate to="/login" replace />;
   return <>{children}</>;
+}
+
+function PageLoading() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '200px',
+    }}>
+      <Spin size="large" tip="加载中..." style={{ color: '#a78bfa' }} />
+    </div>
+  );
 }
 
 export default function App() {
@@ -54,16 +68,16 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login onLogin={() => setAuthed(true)} />} />
         <Route path="/" element={<AdminGuard authed={authed}><Layout onLogout={() => setAuthed(false)} /></AdminGuard>}>
-          <Route index element={<Dashboard />} />
-          <Route path="dreams" element={<DreamManage />} />
-          <Route path="users" element={<UserManage />} />
-          <Route path="ai-config" element={<AIConfig />} />
-          <Route path="ai-logs" element={<AICallLogs />} />
-          <Route path="settings" element={<SystemSettings />} />
-          <Route path="logs" element={<OperationLogs />} />
-          <Route path="*" element={<NotFound />} />
+          <Route index element={<Suspense fallback={<PageLoading />}><Dashboard /></Suspense>} />
+          <Route path="dreams" element={<Suspense fallback={<PageLoading />}><DreamManage /></Suspense>} />
+          <Route path="users" element={<Suspense fallback={<PageLoading />}><UserManage /></Suspense>} />
+          <Route path="ai-config" element={<Suspense fallback={<PageLoading />}><AIConfig /></Suspense>} />
+          <Route path="ai-logs" element={<Suspense fallback={<PageLoading />}><AICallLogs /></Suspense>} />
+          <Route path="settings" element={<Suspense fallback={<PageLoading />}><SystemSettings /></Suspense>} />
+          <Route path="logs" element={<Suspense fallback={<PageLoading />}><OperationLogs /></Suspense>} />
+          <Route path="*" element={<Suspense fallback={<PageLoading />}><NotFound /></Suspense>} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Suspense fallback={<PageLoading />}><NotFound /></Suspense>} />
       </Routes>
       </AntApp>
     </ConfigProvider>
