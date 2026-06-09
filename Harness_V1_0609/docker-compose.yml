@@ -1,0 +1,18 @@
+services:
+  harness:
+    build: .
+    ports:
+      - "3210:3210"
+    volumes:
+      - ./.harness:/app/.harness
+      - ./docs:/app/docs
+    environment:
+      - NODE_ENV=production
+      - HARNESS_API_TOKEN=${HARNESS_API_TOKEN:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "const http = require('http'); const req = http.get('http://localhost:3210/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }); req.on('error', () => process.exit(1)); req.setTimeout(3000, () => { req.destroy(); process.exit(1); });"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

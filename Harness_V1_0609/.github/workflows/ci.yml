@@ -1,0 +1,193 @@
+name: Harness Engineering CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: 代码风格检查
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run lint
+
+  test-linux:
+    runs-on: ubuntu-latest
+    name: 测试 (Ubuntu)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test
+
+  test-windows:
+    runs-on: windows-latest
+    name: 测试 (Windows)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test
+
+  coverage:
+    runs-on: ubuntu-latest
+    name: 覆盖率门禁
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - name: 运行覆盖率测试
+        run: npm run test:coverage
+      - name: 检查分支覆盖率 >= 55%
+        run: |
+          node -e "
+            const lcov = require('fs').readFileSync('coverage/lcov.info','utf-8');
+            const lines = lcov.split('\n');
+            let found=0, hit=0;
+            for (const l of lines) {
+              if (l.startsWith('BRDA:')) {
+                found++;
+                const parts = l.split(':');
+                const val = parts[parts.length-1].trim();
+                if (val !== '0' && val !== '-') hit++;
+              }
+            }
+            const pct = found > 0 ? (hit/found*100).toFixed(1) : 0;
+            console.log('分支覆盖率:', pct + '%');
+            if (pct < 55) { console.error('分支覆盖率低于55%门禁'); process.exit(1); }
+          "
+
+  security:
+    runs-on: ubuntu-latest
+    name: 安全审计
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - name: npm audit
+        run: npm audit --omit=dev || true
+        continue-on-error: true
+
+  validate:
+    runs-on: ubuntu-latest
+    name: 框架一致性验证
+    needs: [lint, test-linux]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+
+      - name: 入口文件+RBAC+依赖图一致性检查
+        run: node scripts/sync-check.js
+
+      - name: 文档链接检查
+        run: node scripts/link-check.js
+
+      - name: YAML Frontmatter验证
+        run: |
+          echo "检查所有Skill文件的YAML Frontmatter..."
+          for file in .harness/skills/*.md; do
+            if ! head -1 "$file" | grep -q "^---"; then
+              echo "ERROR: $file 缺少YAML Frontmatter"
+              exit 1
+            fi
+          done
+          echo "所有Skill文件YAML Frontmatter检查通过"
+
+      - name: JSON配置验证
+        run: |
+          echo "验证config.json格式..."
+          node -e "JSON.parse(require('fs').readFileSync('.harness/config.json','utf-8')); console.log('config.json 格式正确')"
+
+      - name: 文件完整性检查
+        run: |
+          echo "检查核心文件是否存在..."
+          required_files=(
+            "CLAUDE.md"
+            ".trae/rules/project_rules.md"
+            ".cursor/rules/harness-engineering.mdc"
+            ".github/copilot-instructions.md"
+            ".windsurfrules"
+            ".harness/config.json"
+            "requirements.md"
+            "SETUP.md"
+            "package.json"
+            "CHANGELOG.md"
+            "LICENSE"
+          )
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: 缺少核心文件 $file"
+              exit 1
+            fi
+          done
+          echo "所有核心文件检查通过"
+
+      - name: Agent定义验证
+        run: |
+          echo "检查Agent定义文件完整性..."
+          required_agents=(
+            "team-lead.md"
+            "domain-analyst.md"
+            "task-worker.md"
+            "quality-assurance.md"
+            "devops-engineer.md"
+            "technical-writer.md"
+          )
+          for agent in "${required_agents[@]}"; do
+            if [ ! -f ".harness/agents/$agent" ]; then
+              echo "ERROR: 缺少Agent定义 .harness/agents/$agent"
+              exit 1
+            fi
+            if ! grep -q "available_skills:" ".harness/agents/$agent"; then
+              echo "ERROR: $agent 缺少available_skills字段"
+              exit 1
+            fi
+            if ! grep -q "auto_route:" ".harness/agents/$agent"; then
+              echo "ERROR: $agent 缺少auto_route字段"
+              exit 1
+            fi
+            if ! grep -q "tdd_enforced:" ".harness/agents/$agent"; then
+              echo "ERROR: $agent 缺少tdd_enforced字段"
+              exit 1
+            fi
+          done
+          echo "所有Agent定义文件检查通过"
+
+      - name: Skill文件验证
+        run: |
+          echo "检查Skill文件..."
+          skill_count=$(ls .harness/skills/*.md 2>/dev/null | wc -l)
+          if [ "$skill_count" -lt 17 ]; then
+            echo "ERROR: Skill文件数量不足: $skill_count (期望>=17)"
+            exit 1
+          fi
+          echo "Skill文件数量: $skill_count (通过)"
+
+      - name: 工作区目录验证
+        run: |
+          echo "检查工作区目录..."
+          for dir in staging shared locks; do
+            if [ ! -d ".harness/workspace/$dir" ]; then
+              echo "ERROR: 缺少工作区目录 .harness/workspace/$dir"
+              exit 1
+            fi
+          done
+          echo "工作区目录检查通过"

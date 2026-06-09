@@ -1,0 +1,95 @@
+{
+  "name": "harness-engineering",
+  "version": "2.73.6",
+  "description": "Harness Engineering 多Agent框架 — 分层分责+文档驱动+流程管控+容错自愈",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "type": "commonjs",
+  "sideEffects": ["src/index.js", "src/utils/i18n.js", "src/utils/debug-logger.js", "src/runtime/infrastructure/event-registrar.js"],
+  "exports": {
+    ".": "./src/index.js",
+    "./runtime": "./src/runtime/skill/skill-router.js",
+    "./permission": "./src/permission/rbac-enforcer.js",
+    "./gate": "./src/gate/tdd-gate.js",
+    "./design": "./src/gate/design-skill-engine.js",
+    "./web": "./src/web/server.js",
+    "./utils": "./src/utils/index.js",
+    "./deepening": "./src/runtime/deepening/deepening-pipeline.js"
+  },
+  "bin": {
+    "harness": "./harness-cli.js"
+  },
+  "scripts": {
+    "start": "node harness-cli.js dashboard",
+    "dev": "node --watch harness-cli.js dashboard",
+    "check": "node scripts/sync-check.js",
+    "check:links": "node scripts/link-check.js",
+    "check:all": "node scripts/sync-check.js && node scripts/link-check.js",
+    "test": "node --test test/**/*.test.js",
+    "test:watch": "node --test --watch test/**/*.test.js",
+    "test:runtime": "node --test test/runtime/**/*.test.js",
+    "test:permission": "node --test test/permission/**/*.test.js",
+    "test:gate": "node --test test/gate/**/*.test.js",
+    "test:deepening": "node --test test/deepening/**/*.test.js",
+    "test:hook": "node --test test/hook/**/*.test.js",
+    "test:design": "node --test test/design/**/*.test.js",
+    "test:integration": "node --test test/integration/**/*.test.js test/web/**/*.test.js",
+    "test:web": "node --test test/web/**/*.test.js",
+    "test:utils": "node --test test/utils/**/*.test.js",
+    "test:new": "node --test test/runtime/workflow/command-router.test.js test/hook/**/*.test.js test/runtime/context/context-compression.test.js test/integration/integration-pipeline.test.js",
+    "test:coverage": "c8 --check-coverage --lines 75 --functions 70 --branches 70 --reporter=text --reporter=lcov npm test",
+    "lint": "eslint src/ test/ scripts/",
+    "lint:fix": "eslint --fix src/ test/ scripts/",
+    "validate": "npm run lint && npm run check:all && npm test",
+    "cli": "node harness-cli.js",
+    "version:check": "node scripts/version.js check",
+    "version:bump": "node scripts/version.js bump",
+    "version:record": "node scripts/version.js record",
+    "version:list": "node scripts/version.js list",
+    "dashboard": "node harness-cli.js dashboard",
+    "status": "node harness-cli.js status",
+    "validate:cli": "node harness-cli.js validate",
+    "skills": "node harness-cli.js skills",
+    "agents": "node harness-cli.js agents",
+    "commands": "node harness-cli.js commands"
+  },
+  "keywords": [
+    "multi-agent",
+    "ai-coding",
+    "tdd",
+    "harness-engineering",
+    "workflow-automation",
+    "rbac",
+    "skill-router"
+  ],
+  "author": "Harness Engineering Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harness-engineering/framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harness-engineering/framework/issues"
+  },
+  "homepage": "https://github.com/harness-engineering/framework#readme",
+  "files": [
+    "src/",
+    ".harness/skills/",
+    ".harness/agents/",
+    ".harness/rules/",
+    ".harness/config.json",
+    "scripts/",
+    "docs/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "c8": "^11.0.0",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.9.0"
+  }
+}

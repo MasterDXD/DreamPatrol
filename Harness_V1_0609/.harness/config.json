@@ -1,0 +1,2615 @@
+{
+  "project_name": "AIProject",
+  "version": "2.73.6",
+  "max_concurrent_agents": 6,
+  "task_timeout_minutes": 20,
+  "max_retry_times": 3,
+  "retry_backoff_strategy": "exponential",
+  "token_budget": 1000000000,
+  "default_model": "gpt-4o",
+  "fallback_models": [
+    "claude-3-opus",
+    "deepseek-v3"
+  ],
+  "agents": [
+    {
+      "id": "team-lead",
+      "name": "Team Lead",
+      "name_zh": "团队负责人",
+      "type": "functional",
+      "role": "team_lead",
+      "enforcement": "strict",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "requirement-analysis",
+        "dispatching-parallel",
+        "writing-skills",
+        "necessity-review",
+        "architecture-design",
+        "verification-before-completion",
+        "web-interaction",
+        "cli-anything",
+        "ai-native-scaling",
+        "ai-research",
+        "source-driven-development"
+      ]
+    },
+    {
+      "id": "domain-analyst",
+      "name": "Domain Analyst",
+      "name_zh": "领域分析师",
+      "type": "functional",
+      "role": "domain_analyst",
+      "enforcement": "recommended",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "requirement-analysis",
+        "architecture-design",
+        "code-review",
+        "security-audit",
+        "performance-optimization",
+        "systematic-debugging",
+        "refactor-code",
+        "writing-skills",
+        "iterative-deepening",
+        "multi-agent-fusion",
+        "ai-prompting",
+        "necessity-review",
+        "design-md",
+        "taste-skill",
+        "impeccable",
+        "web-interaction",
+        "cli-anything",
+        "mvp-builder",
+        "ai-research",
+        "source-driven-development",
+        "deprecation-and-migration",
+        "code-locator"
+      ]
+    },
+    {
+      "id": "task-worker",
+      "name": "Task Worker",
+      "name_zh": "任务执行者",
+      "type": "functional",
+      "role": "task_worker",
+      "enforcement": "strict",
+      "skills": [
+        "tdd-implement",
+        "module-development",
+        "bug-fix",
+        "performance-optimization",
+        "systematic-debugging",
+        "refactor-code",
+        "verification-before-completion",
+        "writing-skills",
+        "iterative-deepening",
+        "multi-agent-fusion",
+        "ai-prompting",
+        "design-md",
+        "taste-skill",
+        "impeccable",
+        "ui-skills",
+        "motion-ai-kit",
+        "better-icons",
+        "web-interaction",
+        "cli-anything",
+        "mvp-builder",
+        "source-driven-development",
+        "deprecation-and-migration",
+        "code-locator"
+      ]
+    },
+    {
+      "id": "quality-assurance",
+      "name": "Quality Assurance",
+      "name_zh": "质量保证",
+      "type": "functional",
+      "role": "quality_assurance",
+      "enforcement": "strict",
+      "skills": [
+        "code-review",
+        "integration-testing",
+        "security-audit",
+        "verification-before-completion",
+        "iterative-deepening",
+        "multi-agent-fusion"
+      ]
+    },
+    {
+      "id": "devops-engineer",
+      "name": "DevOps Engineer",
+      "name_zh": "运维工程师",
+      "type": "functional",
+      "role": "devops_engineer",
+      "enforcement": "strict",
+      "skills": [
+        "deployment",
+        "verification-before-completion",
+        "web-interaction",
+        "cli-anything"
+      ]
+    },
+    {
+      "id": "technical-writer",
+      "name": "Technical Writer",
+      "name_zh": "技术文档工程师",
+      "type": "functional",
+      "role": "technical_writer",
+      "enforcement": "optional",
+      "skills": [
+        "documentation",
+        "auto-doc-generation"
+      ]
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "name_zh": "代码审查员",
+      "type": "task",
+      "role": "code_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening"
+      ]
+    },
+    {
+      "id": "security-reviewer",
+      "name": "Security Reviewer",
+      "name_zh": "安全审查员",
+      "type": "task",
+      "role": "security_reviewer",
+      "enforcement": "strict",
+      "skills": [
+        "security-audit",
+        "verification-before-completion"
+      ]
+    },
+    {
+      "id": "build-error-solver",
+      "name": "Build Error Solver",
+      "name_zh": "构建错误解决者",
+      "type": "task",
+      "role": "build_error_solver",
+      "enforcement": "recommended",
+      "skills": [
+        "systematic-debugging",
+        "bug-fix",
+        "verification-before-completion"
+      ]
+    },
+    {
+      "id": "planner",
+      "name": "Planner",
+      "name_zh": "实现规划师",
+      "type": "task",
+      "role": "planner",
+      "enforcement": "recommended",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "requirement-analysis",
+        "architecture-design",
+        "writing-skills",
+        "ai-research"
+      ]
+    },
+    {
+      "id": "test-writer",
+      "name": "Test Writer",
+      "name_zh": "测试编写者",
+      "type": "task",
+      "role": "test_writer",
+      "enforcement": "strict",
+      "skills": [
+        "tdd-implement",
+        "module-development",
+        "verification-before-completion"
+      ]
+    },
+    {
+      "id": "typescript-reviewer",
+      "name": "TypeScript Code Reviewer",
+      "name_zh": "TypeScript代码审查专家",
+      "type": "language-reviewer",
+      "role": "typescript_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening"
+      ]
+    },
+    {
+      "id": "python-reviewer",
+      "name": "Python Code Reviewer",
+      "name_zh": "Python代码审查专家",
+      "type": "language-reviewer",
+      "role": "python_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening"
+      ]
+    },
+    {
+      "id": "go-reviewer",
+      "name": "Go Code Reviewer",
+      "name_zh": "Go代码审查专家",
+      "type": "language-reviewer",
+      "role": "go_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening"
+      ]
+    },
+    {
+      "id": "rust-reviewer",
+      "name": "Rust Code Reviewer",
+      "name_zh": "Rust代码审查专家",
+      "type": "language-reviewer",
+      "role": "rust_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening",
+        "security-audit"
+      ]
+    },
+    {
+      "id": "java-reviewer",
+      "name": "Java Code Reviewer",
+      "name_zh": "Java代码审查专家",
+      "type": "language-reviewer",
+      "role": "java_reviewer",
+      "enforcement": "recommended",
+      "skills": [
+        "code-review",
+        "verification-before-completion",
+        "iterative-deepening"
+      ]
+    },
+    {
+      "id": "backend-engineer",
+      "name": "Backend Engineer",
+      "name_zh": "后端工程师",
+      "type": "specialist",
+      "role": "backend_engineer",
+      "enforcement": "strict",
+      "skills": [
+        "writing-skills",
+        "verification-before-completion",
+        "architecture-design",
+        "cli-anything"
+      ]
+    },
+    {
+      "id": "data-analyst",
+      "name": "Data Analyst",
+      "name_zh": "数据分析师",
+      "type": "specialist",
+      "role": "data_analyst",
+      "enforcement": "recommended",
+      "skills": [
+        "data-analysis",
+        "visualization",
+        "statistical-modeling",
+        "report-generation",
+        "deep-research"
+      ]
+    },
+    {
+      "id": "frontend-engineer",
+      "name": "Frontend Engineer",
+      "name_zh": "前端工程师",
+      "type": "specialist",
+      "role": "frontend_engineer",
+      "enforcement": "strict",
+      "skills": [
+        "writing-skills",
+        "verification-before-completion",
+        "web-interaction"
+      ]
+    },
+    {
+      "id": "marketing-strategist",
+      "name": "Marketing Strategist",
+      "name_zh": "营销策略师",
+      "type": "specialist",
+      "role": "marketing_strategist",
+      "enforcement": "recommended",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "deep-research",
+        "writing-skills",
+        "data-analysis"
+      ]
+    },
+    {
+      "id": "product-manager",
+      "name": "Product Manager",
+      "name_zh": "产品经理",
+      "type": "specialist",
+      "role": "product_manager",
+      "enforcement": "recommended",
+      "skills": [
+        "brainstorming",
+        "requirement-analysis",
+        "idea-validation",
+        "deep-research",
+        "writing-skills"
+      ]
+    },
+    {
+      "id": "research-specialist",
+      "name": "Research Specialist",
+      "name_zh": "研究专家",
+      "type": "specialist",
+      "role": "research_specialist",
+      "enforcement": "recommended",
+      "skills": [
+        "deep-research",
+        "data-analysis",
+        "writing-skills",
+        "idea-validation"
+      ]
+    },
+    {
+      "id": "seo-specialist",
+      "name": "SEO Specialist",
+      "name_zh": "SEO专家",
+      "type": "specialist",
+      "role": "seo_specialist",
+      "enforcement": "recommended",
+      "skills": [
+        "deep-research",
+        "writing-skills",
+        "data-analysis"
+      ]
+    },
+    {
+      "id": "ux-designer",
+      "name": "UX Designer",
+      "name_zh": "UX设计师",
+      "type": "specialist",
+      "role": "ux_designer",
+      "enforcement": "recommended",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "requirement-analysis",
+        "writing-skills"
+      ]
+    },
+    {
+      "id": "system-designer",
+      "name": "System Designer",
+      "name_zh": "系统设计者",
+      "type": "human",
+      "role": "system_designer",
+      "enforcement": "recommended",
+      "skills": [
+        "architecture-design",
+        "necessity-review",
+        "code-review",
+        "security-audit",
+        "verification-before-completion"
+      ]
+    },
+    {
+      "id": "customer-service",
+      "name": "Customer Service Agent",
+      "name_zh": "客服Agent",
+      "type": "business",
+      "role": "customer_service",
+      "enforcement": "recommended",
+      "skills": [
+        "requirement-analysis",
+        "writing-skills",
+        "verification-before-completion",
+        "web-interaction",
+        "cli-anything"
+      ]
+    },
+    {
+      "id": "order-processing",
+      "name": "Order Processing Agent",
+      "name_zh": "订单处理Agent",
+      "type": "business",
+      "role": "order_processing",
+      "enforcement": "recommended",
+      "skills": [
+        "requirement-analysis",
+        "writing-skills",
+        "verification-before-completion",
+        "web-interaction",
+        "cli-anything"
+      ]
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics Agent",
+      "name_zh": "物流Agent",
+      "type": "business",
+      "role": "logistics",
+      "enforcement": "optional",
+      "skills": [
+        "requirement-analysis",
+        "writing-skills",
+        "verification-before-completion",
+        "web-interaction",
+        "cli-anything"
+      ]
+    }
+  ],
+  "auto_compact_threshold": 0.8,
+  "checkpoint_interval": "30m",
+  "phase_budget_allocation": {
+    "brainstorming": 0.05,
+    "requirement-analysis": 0.1,
+    "architecture-design": 0.2,
+    "module-development": 0.35,
+    "integration-testing": 0.2,
+    "deployment": 0.1
+  },
+  "skill_registry": {
+    "auto_trigger_enabled": true,
+    "skills": [
+      {
+        "skill_id": "brainstorming",
+        "name": "头脑风暴",
+        "phase": "brainstorming",
+        "priority": 0,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "ai-research",
+        "name": "AI自主调研",
+        "phase": "brainstorming",
+        "priority": 0,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "decision-loop",
+        "name": "七层闭环决策",
+        "phase": "brainstorming",
+        "priority": 0,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "idea-validation",
+        "name": "想法验证",
+        "phase": "brainstorming",
+        "priority": 1,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "requirement-analysis",
+        "name": "需求分析",
+        "phase": "requirement-analysis",
+        "priority": 1,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "architecture-design",
+        "name": "架构设计",
+        "phase": "architecture-design",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "cloud-ai-blueprint",
+        "name": "AI系统蓝图规划",
+        "phase": "architecture-design",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "tdd-implement",
+        "name": "TDD驱动开发",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "module-development",
+        "name": "模块开发",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "dispatching-parallel",
+        "name": "并行子代理调度",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "mvp-builder",
+        "name": "MVP构建",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "code-review",
+        "name": "代码审查",
+        "phase": "module-development",
+        "priority": 4,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "verification-before-completion",
+        "name": "完成前验证",
+        "phase": "module-development",
+        "priority": 4,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "systematic-debugging",
+        "name": "系统化调试",
+        "phase": "module-development",
+        "priority": 4,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "bug-fix",
+        "name": "缺陷修复",
+        "phase": "module-development",
+        "priority": 4,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "security-audit",
+        "name": "安全审计",
+        "phase": "module-development",
+        "priority": 5,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "performance-optimization",
+        "name": "性能优化",
+        "phase": "module-development",
+        "priority": 5,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "refactor-code",
+        "name": "系统化重构",
+        "phase": "module-development",
+        "priority": 5,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "integration-testing",
+        "name": "集成测试",
+        "phase": "integration-testing",
+        "priority": 6,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "deployment",
+        "name": "部署上线",
+        "phase": "deployment",
+        "priority": 7,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "documentation",
+        "name": "文档编写",
+        "phase": "deployment",
+        "priority": 7,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "ai-native-scaling",
+        "name": "AI原生规模化",
+        "phase": "deployment",
+        "priority": 2,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "writing-skills",
+        "name": "技能编写",
+        "phase": "module-development",
+        "priority": 8,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "taste-skill",
+        "name": "审美判断",
+        "phase": "architecture-design",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "design-md",
+        "name": "DESIGN.md 设计语言文档",
+        "phase": "architecture-design",
+        "priority": 1,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "impeccable",
+        "name": "设计规范落地",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "ui-skills",
+        "name": "模块化UI工程",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "motion-ai-kit",
+        "name": "动效技能",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "better-icons",
+        "name": "图标技能",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "iterative-deepening",
+        "name": "迭代深化推理",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "multi-agent-fusion",
+        "name": "多Agent协同融合",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "auto-doc-generation",
+        "name": "自动文档生成",
+        "phase": "deployment",
+        "priority": 3,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "necessity-review",
+        "name": "必要性审查",
+        "phase": "module-development",
+        "priority": 0,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "ai-prompting",
+        "name": "AI编程提示词工程",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "web-interaction",
+        "name": "网页交互",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "cli-anything",
+        "name": "软件操控",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "source-driven-development",
+        "name": "源码驱动开发",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "deprecation-and-migration",
+        "name": "废弃与迁移管理",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "code-locator",
+        "name": "精准代码定位",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "doc-completeness-rules",
+        "name": "文档完整性规则",
+        "phase": "module-development",
+        "priority": 0,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "optimization-loop",
+        "name": "优化循环求解器",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "ooda-loop",
+        "name": "OODA决策闭环",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "skill-router",
+        "name": "Skill路由引擎",
+        "type": "infrastructure",
+        "phase": "infrastructure",
+        "priority": 0,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "session-start-hook",
+        "name": "会话启动Hook",
+        "type": "infrastructure",
+        "phase": "infrastructure",
+        "priority": 0,
+        "enforcement": "strict"
+      },
+      {
+        "skill_id": "multi-agent-decision-guide",
+        "name": "Multi-Agent决策指南",
+        "phase": "requirement-analysis",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "hermes-rl",
+        "name": "Hermes RL训练管线",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "browser-use",
+        "name": "BrowserUse浏览器自动化",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "claude-mem",
+        "name": "对话记忆持久化与会话恢复",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "ai-delivery-optimization",
+        "name": "AI交付优化",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "data-collect",
+        "name": "多平台数据采集",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "skill-distillation",
+        "name": "技能蒸馏",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "knowledge-base",
+        "name": "知识库管理",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "direction-discovery",
+        "name": "方向发现",
+        "phase": "requirement-exploration",
+        "priority": 1,
+        "enforcement": "recommended"
+      },
+      {
+        "skill_id": "clone-website",
+        "name": "网站克隆",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "skill-effectiveness",
+        "name": "技能效能评估",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "optional"
+      },
+      {
+        "skill_id": "ai-developer-analytics",
+        "name": "AI开发者分析管线",
+        "phase": "module-development",
+        "priority": 2,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "domain-analyst",
+          "task-worker"
+        ],
+        "trigger_conditions": [
+          "用户需要分析AI开发者效率指标",
+          "用户需要对比实验数据",
+          "用户需要定位性能瓶颈或反模式",
+          "用户需要检测指标异常或趋势偏移",
+          "用户提到分析管线/实验对比/瓶颈定位/异常检测/AI开发者分析",
+          "module-development阶段需要数据驱动的质量洞察"
+        ]
+      },
+      {
+        "skill_id": "app-connect",
+        "name": "应用连接器",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "需要连接外部应用",
+          "用户请求连接应用或一键连接",
+          "需要集成第三方服务"
+        ]
+      },
+      {
+        "skill_id": "auto-research",
+        "name": "自主研究闭环",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "domain-analyst",
+          "task-worker"
+        ],
+        "trigger_conditions": [
+          "用户提及auto-research/自主研究闭环/autoresearch",
+          "用户需要自动化迭代研究/实验优化",
+          "用户需要A/B测试/内容优化/运营优化/ML研究/工作流优化",
+          "用户请求假设验证/实验设计/优化策略生成"
+        ]
+      },
+      {
+        "skill_id": "chain-of-thought",
+        "name": "思维链推理",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "复杂问题需要逐步推理",
+          "用户请求逐步分析或分步推理",
+          "算法开发、调试复杂代码",
+          "需要可见推理过程的任务"
+        ]
+      },
+      {
+        "skill_id": "digital-twin",
+        "name": "数字孪生",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "需要了解用户工作习惯",
+          "用户请求我的偏好或数字孪生",
+          "需要个性化推荐"
+        ]
+      },
+      {
+        "skill_id": "document-parsing",
+        "name": "智能文档解析",
+        "phase": "module-development",
+        "priority": 5,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "解析文档",
+          "解析PDF",
+          "提取表格",
+          "文档入库",
+          "OCR识别",
+          "文档解析",
+          "数据提取",
+          "document parsing",
+          "PDF extraction",
+          "table extraction"
+        ]
+      },
+      {
+        "skill_id": "knowledge-graph",
+        "name": "知识图谱",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "需要构建结构化知识库",
+          "实体关系建模与查询",
+          "多跳推理需求",
+          "知识图谱可视化"
+        ]
+      },
+      {
+        "skill_id": "memory-archive",
+        "name": "三层记忆归档",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "需要管理记忆生命周期",
+          "长期项目需要记忆自动归档",
+          "用户请求归档记忆或整理记忆"
+        ]
+      },
+      {
+        "skill_id": "opportunity-discovery",
+        "name": "机会发现管线",
+        "phase": "brainstorming",
+        "priority": 0,
+        "enforcement": "strict",
+        "applicable_agents": [
+          "domain-analyst",
+          "task-worker"
+        ],
+        "trigger_conditions": [
+          "用户需要发现市场机会或产品方向",
+          "用户需要从用户抱怨中提取需求",
+          "用户需要竞品差评分析或空隙识别",
+          "用户需要评估技术红利窗口",
+          "用户提到机会/痛点扫描/竞品空隙/技术红利/Product Lens",
+          "brainstorming阶段需要数据驱动的方向发现"
+        ]
+      },
+      {
+        "skill_id": "plan-project",
+        "name": "项目规划脚手架",
+        "phase": "architecture-design",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "新项目初始化",
+          "用户请求规划项目结构或创建项目脚手架",
+          "架构设计阶段需要文件结构规划",
+          "需要快速搭建项目骨架"
+        ]
+      },
+      {
+        "skill_id": "dynamic-workflow",
+        "name": "动态工作流引擎",
+        "phase": "module-development",
+        "priority": 3,
+        "enforcement": "recommended",
+        "applicable_agents": [
+          "team-lead",
+          "task-worker",
+          "domain-analyst"
+        ],
+        "trigger_conditions": [
+          "用户提到 workflow / harness / dynamic workflow / 动态工作流",
+          "用户提到 ultracode / 调度脚本 / 并行执行 / 对抗验证",
+          "需要多Agent并行协作和对抗式验证",
+          "需要检查点容灾和预算约束"
+        ]
+      },
+      {
+        "skill_id": "agent-architecture",
+        "name": "Agent工程化架构",
+        "description": "AI Agent工程化架构 — Prompt驱动+强约束，渐进式披露、架构约束、自验证循环、上下文隔离、熵治理、可拆卸六大原则统一协调",
+        "category": "architecture",
+        "required": false
+      },
+      {
+        "skill_id": "agentic-patterns",
+        "name": "Agentic设计模式引擎",
+        "description": "实现Google《Agentic Design Patterns》8大核心模式的增强引擎，提供中间验证门控、回退路由、并发控制和反思循环",
+        "category": "architecture",
+        "required": false
+      },
+      {
+        "skill_id": "browse-qa",
+        "name": "浏览器QA测试",
+        "description": "真实浏览器中验证UI状态和功能，捕获控制台错误，生成QA截图证据和测试报告",
+        "category": "validation",
+        "required": false
+      },
+      {
+        "skill_id": "cso-security",
+        "name": "安全官审计",
+        "description": "系统化安全审计 — STRIDE威胁建模、OWASP漏洞扫描、安全审计报告生成",
+        "category": "validation",
+        "required": false
+      },
+      {
+        "skill_id": "deerflow",
+        "name": "DeerFlow超级智能体框架",
+        "description": "DeerFlow 2.0超级智能体框架融合 — 任务调度拆解、安全隔离审计、跨会话记忆、模型兼容",
+        "category": "infrastructure",
+        "required": false
+      },
+      {
+        "skill_id": "dynamic-harness",
+        "name": "动态工作流Harness",
+        "description": "AI自动生成调度脚本，实现从概率黑盒到工业级确定性工程的跨越，支持并行Agent和对抗验证",
+        "category": "infrastructure",
+        "required": false
+      },
+      {
+        "skill_id": "harness-engineering",
+        "name": "驾驭工程约束引擎",
+        "description": "实现Harness Engineering六大架构约束的增强引擎，提供渐进式披露编排、三重防线协调和自验证循环",
+        "category": "architecture",
+        "required": false
+      },
+      {
+        "skill_id": "mnemosyne-enhanced",
+        "name": "Mnemosyne增强记忆",
+        "description": "将4个神经科学启发记忆算法融入MemoryPipeline：SurprisalGate预测编码过滤、MutableRAG记忆重整合、AffectiveRouter情感路由、SpreadingActivation扩散激活",
+        "category": "infrastructure",
+        "required": false
+      },
+      {
+        "skill_id": "multi-agent-orchestrator",
+        "name": "多智能体协调控制器",
+        "description": "流程控制、Token控制、完成标准(DoD)三大机制统一协调多智能体系统，解决无限循环和通信冗余",
+        "category": "infrastructure",
+        "required": false
+      },
+      {
+        "skill_id": "multi-agent-control",
+        "name": "多智能体系统工程控制",
+        "description": "实现多Agent系统工程控制机制：流程控制（迭代/熔断/回滚）、Token控制（分层上下文/压缩管线）、完成标准（DoD洋葱模型）",
+        "category": "infrastructure",
+        "required": false
+      },
+      {
+        "skill_id": "office-hours",
+        "name": "YC创业顾问",
+        "description": "从创始人视角对产品方向进行质疑和追问，验证市场假设，避免盲目开发",
+        "category": "business",
+        "required": false
+      },
+      {
+        "skill_id": "plan-ceo-review",
+        "name": "CEO产品审查",
+        "description": "从创始人视角重新思考产品范围和方向，输出4种范围决策模式，避免过度工程化",
+        "category": "business",
+        "required": false
+      },
+      {
+        "skill_id": "plan-eng-review",
+        "name": "工程架构审查",
+        "description": "锁定架构、数据流、状态转换和失败模式，输出风险登记表和审查通过的架构文档",
+        "category": "architecture",
+        "required": false
+      },
+      {
+        "skill_id": "plan-execute-enhancer",
+        "name": "先规划后执行增强引擎",
+        "description": "实现滚动规划、需求边界锁定、规划模板固化和执行反馈学习，确保规划和执行一致性",
+        "category": "meta",
+        "required": false
+      },
+      {
+        "skill_id": "qa-find-fix",
+        "name": "QA修复循环",
+        "description": "系统化的发现-修复-验证循环，输出0-100健康评分和修复验证报告",
+        "category": "validation",
+        "required": false
+      },
+      {
+        "skill_id": "retro-sprint",
+        "name": "Sprint回顾",
+        "description": "Sprint周期结束后的回顾总结，生成改进建议清单，推动持续流程优化",
+        "category": "meta",
+        "required": false
+      },
+      {
+        "skill_id": "review-paranoid",
+        "name": "偏执代码审查",
+        "description": "在代码合并前发现CI无法捕获的生产级Bug，提供深度审查和潜在Bug清单",
+        "category": "validation",
+        "required": false
+      },
+      {
+        "skill_id": "ship-release",
+        "name": "发布工程师",
+        "description": "自动化发布流程 — 创建PR、推送分支、生成发布记录，确保代码审查和测试通过后才发布",
+        "category": "extension",
+        "required": false
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command_id": "plan",
+      "name": "实现规划",
+      "skills": [
+        "brainstorming",
+        "requirement-analysis",
+        "architecture-design"
+      ],
+      "agent": "team-lead",
+      "phase": "brainstorming"
+    },
+    {
+      "command_id": "code-review",
+      "name": "代码审查",
+      "skills": [
+        "code-review"
+      ],
+      "agent": "code-reviewer",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "security-review",
+      "name": "安全审查",
+      "skills": [
+        "security-audit"
+      ],
+      "agent": "security-reviewer",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "debug",
+      "name": "系统化调试",
+      "skills": [
+        "systematic-debugging",
+        "bug-fix"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "fix",
+      "name": "缺陷修复",
+      "skills": [
+        "bug-fix",
+        "verification-before-completion"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "deploy",
+      "name": "部署上线",
+      "skills": [
+        "verification-before-completion",
+        "deployment"
+      ],
+      "agent": "devops-engineer",
+      "phase": "deployment"
+    },
+    {
+      "command_id": "test",
+      "name": "集成测试",
+      "skills": [
+        "integration-testing"
+      ],
+      "agent": "quality-assurance",
+      "phase": "integration-testing"
+    },
+    {
+      "command_id": "refactor",
+      "name": "系统化重构",
+      "skills": [
+        "refactor-code"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "prompt",
+      "name": "AI编程提示词工程",
+      "skills": [
+        "ai-prompting"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "audit",
+      "name": "审计查询",
+      "skills": [
+        "security-audit"
+      ],
+      "agent": "quality-assurance",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "build",
+      "name": "构建实现",
+      "skills": [
+        "tdd-implement",
+        "module-development"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "code-simplify",
+      "name": "代码简化",
+      "skills": [
+        "refactor-code"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "goal",
+      "name": "目标执行",
+      "skills": [
+        "iterative-deepening",
+        "brainstorming",
+        "requirement-analysis"
+      ],
+      "agent": "team-lead",
+      "phase": "brainstorming"
+    },
+    {
+      "command_id": "learn",
+      "name": "触发学习",
+      "skills": [
+        "iterative-deepening"
+      ],
+      "agent": "domain-analyst",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "optimize",
+      "name": "性能优化",
+      "skills": [
+        "performance-optimization"
+      ],
+      "agent": "domain-analyst",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "review",
+      "name": "代码审查",
+      "skills": [
+        "code-review",
+        "security-audit"
+      ],
+      "agent": "code-reviewer",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "section",
+      "name": "Section生成",
+      "skills": [
+        "ui-skills",
+        "design-md"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "ship",
+      "name": "发布上线",
+      "skills": [
+        "verification-before-completion",
+        "deployment"
+      ],
+      "agent": "devops-engineer",
+      "phase": "deployment"
+    },
+    {
+      "command_id": "spec",
+      "name": "规格定义",
+      "skills": [
+        "requirement-analysis",
+        "architecture-design"
+      ],
+      "agent": "domain-analyst",
+      "phase": "requirement-analysis"
+    },
+    {
+      "command_id": "web",
+      "name": "网页交互",
+      "skills": [
+        "web-interaction"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "cli",
+      "name": "软件操控",
+      "skills": [
+        "cli-anything"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    },
+    {
+      "command_id": "startup",
+      "name": "AI创业流程",
+      "skills": [
+        "brainstorming",
+        "idea-validation",
+        "requirement-analysis",
+        "architecture-design",
+        "mvp-builder",
+        "deployment",
+        "ai-native-scaling"
+      ],
+      "agent": "team-lead",
+      "phase": "brainstorming"
+    },
+    {
+      "command_id": "decide",
+      "name": "七层闭环决策",
+      "skills": [
+        "decision-loop"
+      ],
+      "agent": "domain-analyst",
+      "phase": "brainstorming"
+    },
+    {
+      "command_id": "research",
+      "name": "AI自主调研",
+      "skills": [
+        "ai-research",
+        "source-driven-development"
+      ],
+      "agent": "domain-analyst",
+      "phase": "brainstorming"
+    },
+    {
+      "command_id": "cleanup",
+      "name": "Dead Code清理",
+      "skills": [
+        "refactor-code",
+        "deprecation-and-migration"
+      ],
+      "agent": "task-worker",
+      "phase": "module-development"
+    }
+  ],
+  "tdd_config": {
+    "_migrated_note": "test_coverage_threshold 和 delete_prewritten_implementation 已迁移到 gate_config.tdd_gate",
+    "enabled": true,
+    "red_green_refactor_enforced": true,
+    "no_code_without_test": true
+  },
+  "verification_config": {
+    "enabled": true,
+    "lint_zero_errors_required": true,
+    "test_pass_rate_required": 1,
+    "evidence_mandatory": true,
+    "skip_requires_lead_approval": false
+  },
+  "agent_permissions": {
+    "team-lead": {
+      "allowed_tools": [
+        "all"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "system_command"
+      ],
+      "requires_confirmation": [
+        "budget_override",
+        "model_change"
+      ]
+    },
+    "domain-analyst": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "web_search",
+        "web_interact",
+        "cli_anything"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "system_command"
+      ],
+      "requires_confirmation": []
+    },
+    "task-worker": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "run_command",
+        "web_interact",
+        "cli_anything"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": [
+        "system_command",
+        "network_request"
+      ]
+    },
+    "quality-assurance": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command"
+      ],
+      "requires_confirmation": []
+    },
+    "devops-engineer": {
+      "allowed_tools": [
+        "all"
+      ],
+      "restricted_operations": [
+        "modify_harness_config"
+      ],
+      "requires_confirmation": [
+        "production_deploy",
+        "database_migration"
+      ]
+    },
+    "technical-writer": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "code-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "security-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "build-error-solver": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "run_command"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": [
+        "system_command"
+      ]
+    },
+    "planner": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "test-writer": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "run_command"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": [
+        "system_command"
+      ]
+    },
+    "typescript-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "python-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "go-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "rust-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "java-reviewer": {
+      "allowed_tools": [
+        "read_file",
+        "search_files",
+        "run_command",
+        "web_search"
+      ],
+      "restricted_operations": [
+        "write_file",
+        "file_delete",
+        "system_command",
+        "modify_harness_config"
+      ],
+      "requires_confirmation": []
+    },
+    "system-designer": {
+      "allowed_tools": [
+        "read_file",
+        "write_file",
+        "search_files",
+        "web_search",
+        "web_interact",
+        "cli_anything"
+      ],
+      "restricted_operations": [
+        "file_delete",
+        "system_command"
+      ],
+      "requires_confirmation": [
+        "budget_override",
+        "model_change"
+      ]
+    }
+  },
+  "hooks": {
+    "session_start": {
+      "enabled": true,
+      "actions": [
+        "inject_core_identity",
+        "inject_skill_router",
+        "load_current_phase_context"
+      ]
+    },
+    "pre_tool_call": {
+      "enabled": true,
+      "checks": [
+        "permission_check",
+        "parameter_validation",
+        "rate_limit_check"
+      ]
+    },
+    "pre_file_write": {
+      "enabled": true,
+      "checks": [
+        "path_validation",
+        "content_safety",
+        "backup_original"
+      ]
+    },
+    "pre_task_submit": {
+      "enabled": true,
+      "checks": [
+        "deliverable_completeness",
+        "quality_standards",
+        "yagni_pre_check"
+      ]
+    },
+    "pre_model_call": {
+      "enabled": true,
+      "checks": [
+        "token_budget_check",
+        "content_safety",
+        "output_format_check"
+      ]
+    },
+    "post_task_complete": {
+      "enabled": true,
+      "checks": [
+        "verification_before_completion",
+        "token_auto_record"
+      ]
+    },
+    "post_tool_use": {
+      "enabled": true,
+      "checks": [
+        "audit_log_record",
+        "content_safety"
+      ]
+    },
+    "post_file_write": {
+      "enabled": true,
+      "checks": [
+        "quality_standards",
+        "simplicity_check",
+        "surgical_change_check",
+        "audit_log_record",
+        "design_anti_pattern_check",
+        "accessibility_compliance"
+      ]
+    }
+  },
+  "logging": {
+    "level": "info",
+    "audit_all_tool_calls": true,
+    "audit_all_file_operations": true,
+    "retention_days": 30
+  },
+  "runtime_config": {
+    "capacity_config": {
+      "causal_memory_max": 500,
+      "causal_memory_ttl_days": 30,
+      "causal_chain_max": 200,
+      "pending_outputs_max": 50,
+      "skill_interfaces_max": 100,
+      "conflict_resolvers_max": 20,
+      "execution_history_max": 100,
+      "deduplication_index_max": 200,
+      "module_instances_max": 200,
+      "goals_max": 100,
+      "sandboxes_max": 50,
+      "custom_policies_max": 100,
+      "handlers_max": 50,
+      "similarity_threshold": 0.3,
+      "conflict_similarity_threshold": 0.7,
+      "decay_factor_per_day": 0.98
+    },
+    "skill_router": {
+      "discovery_path": ".harness/skills/",
+      "auto_discover": true,
+      "conflict_resolution": "phase_priority"
+    },
+    "session_manager": {
+      "persistence_path": ".harness/sessions/",
+      "auto_persist": true,
+      "session_ttl_hours": 24,
+      "max_sessions": 100
+    },
+    "phase_orchestrator": {
+      "strict_phase_transition": true,
+      "allow_backward_transition": false
+    },
+    "rules_registry": {
+      "discovery_path": ".harness/rules/",
+      "auto_discover": true,
+      "rules": [
+        "task-execution",
+        "context-management",
+        "document-standards",
+        "monitoring-fault-tolerance",
+        "cost-control",
+        "security-permissions",
+        "best-practices",
+        "coding-standards",
+        "ai-prompting-standards",
+        "karpathy-principles",
+        "memory-persistence",
+        "anti-sycophancy",
+        "token-efficiency",
+        "anti-bad-code",
+        "commit-discipline",
+        "vibecoding-principles"
+      ]
+    },
+    "agent_diversity": {
+      "diversity_threshold": 0.3,
+      "max_history": 50,
+      "ensemble_modes": [
+        "bagging",
+        "boosting",
+        "stacking"
+      ],
+      "default_mode": "boosting",
+      "bagging_max_agents": 5,
+      "boosting_max_iterations": 3,
+      "stacking_meta_learner": true
+    },
+    "dream_scheduler": {
+      "enabled": true,
+      "review_interval_ms": 1800000,
+      "batch_size": 10,
+      "max_experiences": 500
+    },
+    "error_prevention_guard": {
+      "enabled": true,
+      "max_patterns": 500,
+      "max_warnings_per_check": 10,
+      "auto_sync_from_dream": true
+    },
+    "playbook_generator": {
+      "enabled": true,
+      "max_playbooks": 200,
+      "max_steps_per_playbook": 20,
+      "auto_generate_from_dream": true
+    },
+    "skill_tree_dag": {
+      "enabled": true,
+      "max_depth": 10,
+      "max_children": 20
+    },
+    "inference_cache": {
+      "enabled": true,
+      "max_size": 100,
+      "ttl_ms": 1800000
+    }
+  },
+  "collaboration_config": {
+    "ensemble": {
+      "enabled": true,
+      "default_mode": "boosting",
+      "modes": {
+        "bagging": {
+          "description": "并行求稳——多Agent独立执行同一任务，投票/平均融合结果",
+          "parallel": true,
+          "max_agents": 5,
+          "fusion_strategy": "vote",
+          "min_diversity_score": 0.4
+        },
+        "boosting": {
+          "description": "串行纠错——前一Agent错误由后一Agent重点修正，迭代提升质量",
+          "parallel": false,
+          "max_iterations": 3,
+          "error_focus_weight": 0.7,
+          "min_improvement": 0.05
+        },
+        "stacking": {
+          "description": "元学习——多Agent结果由元学习器组合，自动发现最优融合策略",
+          "parallel": true,
+          "base_agents": 3,
+          "meta_learner_enabled": true,
+          "training_window": 10
+        }
+      },
+      "contribution_tracker": {
+        "enabled": true,
+        "max_records": 1000
+      },
+      "diversity_check": true,
+      "auto_mode_selection": true
+    }
+  },
+  "platform_config": {
+    "platform_gateway": {
+      "enabled": true,
+      "supported_platforms": [
+        "webchat",
+        "app",
+        "miniprogram",
+        "feishu",
+        "dingtalk",
+        "wechat",
+        "email",
+        "api"
+      ],
+      "max_history_per_user": 50,
+      "max_user_bindings": 1000,
+      "auto_context_injection": true
+    },
+    "business_agent_registry": {
+      "enabled": true,
+      "auto_register_templates": true,
+      "business_agents": [
+        "customer-service",
+        "order-processing",
+        "logistics",
+        "data-analyst",
+        "marketing",
+        "payment",
+        "account",
+        "general"
+      ],
+      "default_priority": 5
+    },
+    "priority_scheduler": {
+      "enabled": true,
+      "max_concurrent_per_agent": 5,
+      "default_timeout_ms": 300000,
+      "urgent_timeout_ms": 120000,
+      "overload_threshold": 0.8,
+      "max_queue_size": 1000,
+      "health_check_interval_ms": 30000,
+      "agent_unresponsive_ms": 60000
+    }
+  },
+  "permission_config": {
+    "rbac_enforcer": {
+      "agents_path": ".harness/agents/",
+      "strict_enforcement_blocking": true,
+      "validation_map": {
+        "customer-service": {
+          "allowed_skills": [
+            "requirement-analysis",
+            "writing-skills",
+            "verification-before-completion",
+            "web-interaction",
+            "cli-anything"
+          ],
+          "role": "customer_service",
+          "description": "客服Agent — 负责客户需求分析、文案撰写和网页交互"
+        },
+        "order-processing": {
+          "allowed_skills": [
+            "requirement-analysis",
+            "writing-skills",
+            "verification-before-completion",
+            "web-interaction",
+            "cli-anything"
+          ],
+          "role": "order_processing",
+          "description": "订单处理Agent — 负责订单流程分析、文档撰写和系统交互"
+        },
+        "logistics": {
+          "allowed_skills": [
+            "requirement-analysis",
+            "writing-skills",
+            "verification-before-completion",
+            "web-interaction",
+            "cli-anything"
+          ],
+          "role": "logistics",
+          "description": "物流Agent — 负责物流需求分析、流程文档撰写和物流系统交互"
+        }
+      }
+    },
+    "permission_guard": {
+      "system_files": [
+        "config.json",
+        "agents",
+        "skills",
+        "rules",
+        "workspace"
+      ],
+      "allowed_mutable_dirs": [
+        "sessions",
+        "checkpoints"
+      ],
+      "lock_timeout_minutes": 20,
+      "confirmation_expiry_minutes": 5
+    },
+    "audit_logger": {
+      "enabled": true,
+      "retention_days": 30,
+      "max_entries": 10000
+    }
+  },
+  "gate_config": {
+    "tdd_gate": {
+      "enabled": true,
+      "coverage_threshold": 0.8,
+      "test_coverage_threshold": 0.8,
+      "delete_prewritten_implementation": true,
+      "block_implementation_without_test": true,
+      "max_cycles_per_task": 100
+    },
+    "evidence_verifier": {
+      "enabled": true
+    },
+    "output_conciseness_guard": {
+      "enabled": true,
+      "max_tokens": 2000,
+      "max_lines": 100,
+      "max_repetition_ratio": 0.3,
+      "penalty_threshold": 0.7
+    }
+  },
+  "deepening_config": {
+    "recurrent_deepening": {
+      "max_iterations": 4,
+      "convergence_threshold": 0.85,
+      "min_improvement": 0.02
+    },
+    "adaptive_depth": {
+      "quick_threshold": 0.25,
+      "standard_threshold": 0.5,
+      "deep_threshold": 0.75,
+      "max_depth": 5
+    },
+    "lti_context_injector": {
+      "mode": "lti",
+      "max_history": 10
+    },
+    "multi_agent_router": {
+      "top_k": 2,
+      "min_affinity": 0.3
+    },
+    "output_fusion": {
+      "default_strategy": "cascade"
+    },
+    "iterative_refinement": {
+      "max_refinements": 3,
+      "quality_threshold": 0.8
+    },
+    "progressive_deepening": {
+      "default_level": "standard"
+    },
+    "deepening_orchestrator": {
+      "default_depth_level": "standard",
+      "max_iterations": 4,
+      "convergence_threshold": 0.85,
+      "top_k": 2,
+      "fusion_strategy": "cascade",
+      "token_budget_ratio": 0.3,
+      "enable_lti": true,
+      "enable_adaptive_depth": true,
+      "enable_multi_agent": true
+    },
+    "quality_scorer": {
+      "weights": {
+        "completeness": 0.25,
+        "correctness": 0.3,
+        "consistency": 0.15,
+        "coverage": 0.15,
+        "clarity": 0.15
+      },
+      "thresholds": {
+        "excellent": 0.9,
+        "good": 0.75,
+        "acceptable": 0.6,
+        "poor": 0.4
+      }
+    },
+    "token_aware_deepening": {
+      "budget_ratio": 0.3,
+      "min_budget_remaining": 0.1,
+      "iteration_token_cost": 1000
+    },
+    "affinity_learner": {
+      "learning_rate": 0.1,
+      "decay_factor": 0.995,
+      "min_samples": 3
+    },
+    "convergence_detector": {
+      "quality_threshold": 0.85,
+      "min_improvement_rate": 0.02,
+      "stability_window": 3,
+      "stability_variance": 0.01,
+      "coverage_threshold": 0.8,
+      "dimension_balance_threshold": 0.15,
+      "max_iterations": 10
+    }
+  },
+  "model_selector_config": {
+    "default_model": "gpt-4o",
+    "fallback_chain": [
+      "gpt-4o-mini",
+      "gpt-3.5-turbo"
+    ],
+    "enable_auto_downgrade": true,
+    "complexity_threshold": {
+      "premium": 0.7,
+      "standard": 0.3
+    }
+  },
+  "context_compression": {
+    "threshold": 0.8,
+    "retainCurrentPhase": true,
+    "retainKeyDecisions": true,
+    "retainSessionState": true,
+    "maxSummaryLength": 200
+  },
+  "mcp_servers": {
+    "filesystem": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ],
+      "tools": {
+        "include": [
+          "read_file",
+          "write_file",
+          "list_directory"
+        ]
+      },
+      "recommended": true,
+      "description": "文件系统访问 — 推荐：提供安全的文件读写能力"
+    },
+    "github": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "tools": {
+        "include": [
+          "create_issue",
+          "search_repositories"
+        ]
+      },
+      "recommended": false,
+      "description": "GitHub集成 — 按需启用：需要GITHUB_TOKEN环境变量"
+    },
+    "postgres": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres"
+      ],
+      "tools": {
+        "include": [
+          "query"
+        ]
+      },
+      "recommended": false,
+      "description": "PostgreSQL数据库 — 按需启用：需要DATABASE_URL环境变量"
+    },
+    "memory": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "tools": {
+        "include": [
+          "create_entities",
+          "create_relations",
+          "search_nodes",
+          "open_nodes"
+        ]
+      },
+      "recommended": true,
+      "description": "知识图谱内存 — 推荐：提供持久化知识存储和实体关系管理"
+    },
+    "brave-search": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "tools": {
+        "include": [
+          "brave_web_search",
+          "brave_local_search"
+        ]
+      },
+      "recommended": false,
+      "description": "Brave搜索 — 按需启用：需要BRAVE_API_KEY环境变量"
+    },
+    "sequential-thinking": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "tools": {
+        "include": [
+          "sequentialthinking"
+        ]
+      },
+      "recommended": true,
+      "description": "顺序思维 — 推荐：提供结构化思维链推理能力"
+    },
+    "fetch": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "tools": {
+        "include": [
+          "fetch"
+        ]
+      },
+      "recommended": true,
+      "description": "HTTP请求 — 推荐：提供网页内容获取和API调用能力"
+    },
+    "sqlite": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite"
+      ],
+      "tools": {
+        "include": [
+          "read_query",
+          "write_query",
+          "create_table"
+        ]
+      },
+      "recommended": false,
+      "description": "SQLite数据库 — 按需启用：轻量级本地数据库访问"
+    },
+    "puppeteer": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "tools": {
+        "include": [
+          "puppeteer_navigate",
+          "puppeteer_screenshot",
+          "puppeteer_click"
+        ]
+      },
+      "recommended": true,
+      "description": "浏览器自动化 — 推荐：网页截图和UI测试，用于前端改动真实测试"
+    },
+    "docker": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-docker"
+      ],
+      "tools": {
+        "include": [
+          "list_containers",
+          "list_images",
+          "run_container"
+        ]
+      },
+      "recommended": false,
+      "description": "Docker管理 — 按需启用：容器和镜像管理"
+    },
+    "opencli": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@jackwener/opencli"
+      ],
+      "tools": {
+        "include": [
+          "*"
+        ]
+      },
+      "recommended": true,
+      "description": "OpenCLI网页交互 — 推荐：将80+网站和Electron应用转化为CLI命令，AI Agent可通过已登录Chrome浏览器实现网页导航、点击、输入、提取等操作，零Token成本获取结构化数据",
+      "requires": [
+        "chrome-browser-bridge"
+      ],
+      "setup_hint": "需安装Chrome Bridge扩展：1) 从GitHub Releases下载opencli-extension.zip 2) 在chrome://extensions加载解压目录 3) 运行opencli doctor验证连接"
+    },
+    "cli-anything": {
+      "enabled": false,
+      "command": "python",
+      "args": [
+        "-m",
+        "cli_anything_hub"
+      ],
+      "tools": {
+        "include": [
+          "*"
+        ]
+      },
+      "recommended": true,
+      "description": "CLI-Anything软件操控 — 推荐：港大HKUDS开源，将任意软件（GIMP/Blender/LibreOffice/OBS等）转化为AI可直接调用的CLI工具，通过7阶段自动化流水线生成Agent-Native命令行接口，支持40+预生成CLI和自定义软件CLI生成",
+      "requires": [
+        "python3.10+",
+        "target-software"
+      ],
+      "setup_hint": "安装CLI-Hub：pip install cli-anything-hub，然后cli-hub install <name>安装所需软件CLI（如cli-hub install gimp）。生成新CLI需AI编码Agent环境支持"
+    },
+    "browser-use": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/browser-use-mcp"
+      ],
+      "tools": {
+        "include": [
+          "*"
+        ]
+      },
+      "recommended": true,
+      "requires": [
+        "chrome-remote-debugging"
+      ],
+      "setup_hint": "需启用Chrome远程调试(--remote-debugging-port=9222)并安装browser-use MCP服务器"
+    },
+    "hermes-rl": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/hermes-rl-mcp"
+      ],
+      "tools": {
+        "include": [
+          "*"
+        ]
+      },
+      "recommended": false,
+      "requires": [
+        "python-3.11",
+        "gpu-optional"
+      ],
+      "setup_hint": "需安装Atropos轨迹服务器和Tinker训练服务，或使用hermes-rl MCP服务器。GPU可选(CPU训练较慢)。"
+    },
+    "claude-mem": {
+      "enabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "claude-mem"
+      ],
+      "tools": {
+        "include": [
+          "*"
+        ]
+      },
+      "recommended": false,
+      "requires": [
+        "bun-runtime"
+      ],
+      "setup_hint": "需安装Bun运行时。Harness已内置ConversationContextStore提供原生对话持久化，此MCP服务器为可选增强。"
+    }
+  },
+  "knowledge-base": {
+    "enabled": true,
+    "rootPath": ".harness/knowledge-base",
+    "supportedFileTypes": [
+      ".md",
+      ".txt",
+      ".json",
+      ".js",
+      ".ts",
+      ".py"
+    ],
+    "autoCompile": false,
+    "maxRawFiles": 1000,
+    "maxWikiEntries": 500,
+    "maxOutputFiles": 200
+  },
+  "skill-distillation": {
+    "enabled": true,
+    "distilledDir": ".harness/skills-distilled",
+    "maxTraces": 500,
+    "maxDistillations": 100,
+    "minTracesForDistillation": 5,
+    "convergenceThreshold": 0.1,
+    "canaryTrafficPercent": 20,
+    "canaryEvalRounds": 10,
+    "canarySuccessThreshold": 0.8
+  },
+  "skill-effectiveness": {
+    "enabled": true,
+    "maxActiveSkills": 12,
+    "adaptiveTopK": true,
+    "minTopK": 3,
+    "maxTopK": 8,
+    "relevanceDecayFactor": 0.9,
+    "placementStrategy": "attention-weighted",
+    "contextTokenBudget": 8000
+  },
+  "opportunity-discovery": {
+    "enabled": true,
+    "minSourcesPerPainPoint": 5,
+    "painIntensityThreshold": 7,
+    "solutionSatisfactionThreshold": 4,
+    "competitorReviewMinCount": 20,
+    "techTrendRecencyDays": 90,
+    "exaApiKey": null
+  },
+  "ai-developer-analytics": {
+    "enabled": true,
+    "maxMetricsPerSource": 1000,
+    "maxMetricKeys": 500,
+    "anomalyThreshold": 2,
+    "trendWindowSize": 20
+  },
+  "moe_config": {
+    "enabled": true,
+    "topK": 2,
+    "minGateScore": 0.1,
+    "auxiliaryLossWeight": 0.01,
+    "gateDecayFactor": 0.95,
+    "enableSharedExperts": true,
+    "enableLoadBalancing": true
+  },
+  "autoresearch_loop_config": {
+    "enabled": true,
+    "max_concurrent_loops": 3,
+    "max_iterations_per_loop": 10,
+    "min_observations_before_hypothesis": 3,
+    "auto_refine_threshold": 0.7,
+    "experiment_timeout_ms": 60000,
+    "enable_code_generation": true,
+    "enable_auto_refine": true,
+    "domains": [
+      "content",
+      "operations",
+      "ml_research",
+      "workflow"
+    ],
+    "sandbox": {
+      "max_concurrent_experiments": 5,
+      "default_timeout_ms": 60000,
+      "max_timeout_ms": 300000,
+      "max_history_size": 200,
+      "enable_file_system": false,
+      "enable_network": false
+    },
+    "domain_adapter": {
+      "enabled": true,
+      "max_hypotheses_history": 500,
+      "custom_domains": []
+    }
+  },
+  "bounded_contexts": {
+    "platform-integration": {
+      "description": "多平台接入与业务Agent调度：网关、注册中心、优先级调度",
+      "modules": [
+        "platform/platform-gateway",
+        "platform/business-agent-registry",
+        "platform/priority-scheduler"
+      ],
+      "core_concepts": [
+        "PlatformGateway",
+        "BusinessAgentRegistry",
+        "PriorityScheduler",
+        "UnifiedMessage"
+      ]
+    },
+    "skill-management": {
+      "description": "技能生命周期管理：路由、演化、蒸馏、图谱",
+      "modules": [
+        "skill/skill-router",
+        "skill/skill-evolver",
+        "skill/skill-distiller",
+        "skill/skill-graph",
+        "skill/meta-skill-orchestrator"
+      ],
+      "core_concepts": [
+        "Skill",
+        "SkillRoute",
+        "SkillEvolution",
+        "SkillDistillation"
+      ]
+    },
+    "quality-assurance": {
+      "description": "质量保障：评分、门禁、校准、验证",
+      "modules": [
+        "quality/quality-scorer",
+        "gate/tdd-gate",
+        "gate/evidence-verifier",
+        "quality/evaluation-calibrator"
+      ],
+      "core_concepts": [
+        "QualityScore",
+        "TDDGate",
+        "EvidenceVerification",
+        "Calibration"
+      ]
+    },
+    "workflow-orchestration": {
+      "description": "工作流编排：阶段、管道、状态图、目标",
+      "modules": [
+        "workflow/phase-orchestrator",
+        "workflow/pipeline-executor",
+        "workflow/state-graph",
+        "workflow/goal-executor"
+      ],
+      "core_concepts": [
+        "Phase",
+        "Pipeline",
+        "StateGraph",
+        "Goal"
+      ]
+    },
+    "thought-reasoning": {
+      "description": "思维推理：记忆、梦境、知识图谱、深化",
+      "modules": [
+        "thought/brain-memory",
+        "thought/dream-engine",
+        "thought/knowledge-graph-store",
+        "deepening/deepening-orchestrator"
+      ],
+      "core_concepts": [
+        "Memory",
+        "Dream",
+        "KnowledgeGraph",
+        "Deepening"
+      ]
+    },
+    "collaboration": {
+      "description": "协作：Agent编排、会话、因果数据",
+      "modules": [
+        "collaboration/ensemble-orchestrator",
+        "session/session-manager",
+        "causal/causal-data-bus"
+      ],
+      "core_concepts": [
+        "Agent",
+        "Session",
+        "CausalData"
+      ]
+    },
+    "specification": {
+      "description": "规范驱动：合约、验证、同步、铁律、阶段桥接",
+      "modules": [
+        "sdd/sdd-contract-manager",
+        "sdd/sdd-document-validator",
+        "sdd/sdd-sync-verifier",
+        "sdd/iron-rule-engine",
+        "sdd/sdd-phase-bridge"
+      ],
+      "core_concepts": [
+        "Contract",
+        "Specification",
+        "TraceMatrix",
+        "IronRule",
+        "PhaseBridge"
+      ]
+    },
+    "domain-driven-design": {
+      "description": "领域驱动设计：实体、值对象、聚合根、领域事件、仓储、规约、上下文映射",
+      "modules": [
+        "domain/entity",
+        "domain/value-object",
+        "domain/aggregate-root",
+        "domain/domain-event",
+        "domain/repository",
+        "domain/domain-service",
+        "domain/specification",
+        "domain/context-mapper"
+      ],
+      "core_concepts": [
+        "Entity",
+        "ValueObject",
+        "AggregateRoot",
+        "DomainEvent",
+        "DomainEventBus",
+        "Repository",
+        "DomainService",
+        "Specification",
+        "ContextMapper",
+        "BoundedContext"
+      ]
+    },
+    "optimization-autoresearch": {
+      "description": "自主研究闭环：七阶段循环、实验沙箱、领域适配、假设生成",
+      "modules": [
+        "optimization/autonomous-research-loop",
+        "optimization/experiment-sandbox",
+        "optimization/research-domain-adapter",
+        "optimization/autonomous-optimization-orchestrator"
+      ],
+      "core_concepts": [
+        "AutonomousResearchLoop",
+        "ExperimentSandbox",
+        "ResearchDomainAdapter",
+        "Autoresearch",
+        "ClosedLoop"
+      ]
+    }
+  }
+}
