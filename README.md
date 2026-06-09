@@ -28,6 +28,26 @@
 
 ---
 
+## 页面预览
+
+### 用户端
+
+| 欢迎页 | 登录页 |
+|:---:|:---:|
+| ![欢迎页](screenshots/welcome.png) | ![登录页](screenshots/login.png) |
+
+| 首页 | 日历页 | 统计页 |
+|:---:|:---:|:---:|
+| ![首页](screenshots/home.png) | ![日历页](screenshots/calendar.png) | ![统计页](screenshots/stats.png) |
+
+### 管理后台
+
+| 管理后台登录 | 管理后台仪表盘 |
+|:---:|:---:|
+| ![管理后台登录](screenshots/admin-login.png) | ![管理后台仪表盘](screenshots/admin-dashboard.png) |
+
+---
+
 ## 项目简介
 
 **巡梦（Dreamwave）** 是一款轻量级梦境记录 Web 应用，帮助用户：
