@@ -103,6 +103,14 @@ docker compose up -d
 | web (用户前端) | dreamwave-web | 8080 | running |
 | admin (管理后台) | dreamwave-admin | 5174 | running |
 
+### 远程测试地址
+
+| 服务 | 地址 |
+|------|------|
+| 用户前端 | `http://114.55.129.88:8080` |
+| 管理后台 | `http://114.55.129.88:5174` |
+| API 健康检查 | `http://114.55.129.88:3100/api/health` |
+
 ### 测试账号密码
 
 | 类型 | 用户名 | 密码 |
