@@ -112,8 +112,9 @@ export default function NewDreamPage() {
   }, [content, emotion, selectedTagIds, saveDraft]);
 
   const startImageGeneration = async (dreamId: string, prompt: string) => {
-    if (!hasApiKey()) {
-      setImgError('请先在设置中配置 API Key');
+    const hasKey = await hasApiKey();
+    if (!hasKey) {
+      setImgError('请先在后台管理配置 AI API Key');
       setImgStatus('error');
       return;
     }
@@ -150,8 +151,9 @@ export default function NewDreamPage() {
   };
 
   const startInterpretation = async (dreamId: string, text: string) => {
-    if (!hasApiKey()) {
-      setInterpError('请先在设置中配置 API Key');
+    const hasKey = await hasApiKey();
+    if (!hasKey) {
+      setInterpError('请先在后台管理配置 AI API Key');
       setInterpStatus('error');
       return;
     }

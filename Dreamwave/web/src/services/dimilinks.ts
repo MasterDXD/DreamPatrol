@@ -89,7 +89,12 @@ export async function submitImageGeneration(prompt: string, dreamId?: string): P
     body: JSON.stringify({ prompt, dream_id: dreamId }),
   });
 
-  const data = await res.json();
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(`生图请求失败：服务器返回了非预期格式 (${res.status})`);
+  }
   if (!res.ok) throw new Error(data.error || `请求失败 (${res.status})`);
 
   return { taskId: data.task_id, logId: data.log_id };
@@ -103,7 +108,12 @@ export async function pollImageTask(taskId: string, logId?: string): Promise<Ima
     headers: token ? { 'Authorization': `Bearer ${token}` } : {},
   });
 
-  const data = await res.json();
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(`查询任务失败：服务器返回了非预期格式 (${res.status})`);
+  }
   if (!res.ok) throw new Error(data.error || `查询失败 (${res.status})`);
 
   const status = data.status as string;
@@ -152,7 +162,12 @@ export async function interpretDream(content: string, dreamId?: string): Promise
     body: JSON.stringify({ content, dream_id: dreamId }),
   });
 
-  const data = await res.json();
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(`解读请求失败：服务器返回了非预期格式 (${res.status})`);
+  }
   if (!res.ok) throw new Error(data.error || `请求失败 (${res.status})`);
 
   const text = data.choices?.[0]?.message?.content

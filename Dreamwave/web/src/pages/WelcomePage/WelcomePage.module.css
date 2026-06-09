@@ -254,12 +254,15 @@
 }
 .subtitle {
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: clamp(14px, 4vw, 18px);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.5;
   color: var(--welcome-secondary);
-  max-width: 28rem;
+  max-width: 100%;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ----------- 行动按钮 ----------- */
@@ -459,27 +462,83 @@
   100% { transform: translateY(0px); }
 }
 
-/* ----------- 响应式微调 ----------- */
+/* ----------- 响应式：平板端 ----------- */
+@media (max-width: 768px) {
+  .main {
+    padding: clamp(80px, 10vh, 120px) 20px 28px;
+    max-width: 600px;
+  }
+  .title {
+    font-size: clamp(70px, 12vw, 100px);
+  }
+  .primaryBtn {
+    padding: 14px 28px;
+    font-size: 22px;
+    gap: 10px;
+  }
+  .nebula1 {
+    width: 20rem;
+    height: 20rem;
+  }
+  .nebula2 {
+    width: 26rem;
+    height: 26rem;
+  }
+}
+
+/* ----------- 响应式：手机端 ----------- */
 @media (max-width: 480px) {
   .main {
-    padding-top: 88px;
+    padding: clamp(72px, 8vh, 100px) 16px 24px;
+    max-width: 400px;
   }
   .brand {
-    /* 极窄屏让品牌更紧贴顶部，避免与 hero 撞行 */
-    top: 20px;
+    top: 16px;
+    gap: 6px;
+  }
+  .brandIcon {
+    font-size: 20px;
+  }
+  .brandText {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+  }
+  .hero {
+    gap: clamp(16px, 2.5vh, 24px);
+    margin-bottom: clamp(28px, 5vh, 48px);
+  }
+  .title {
+    font-size: clamp(56px, 14vw, 80px);
+    letter-spacing: 0.08em;
+  }
+  .subtitle {
+    font-size: clamp(12px, 3.5vw, 16px);
+    padding: 0 8px;
+  }
+  .primaryBtn {
+    padding: 12px 24px;
+    font-size: 20px;
+    gap: 8px;
+  }
+  .primaryBtnIcon {
+    font-size: 24px;
+  }
+  .secondaryLink {
+    font-size: 13px;
   }
   .footer {
     font-size: 11px;
     letter-spacing: 0.04em;
+    bottom: 24px;
   }
   .bgLabel {
-    bottom: 72px;
+    bottom: 64px;
   }
   .bgLabelText {
-    font-size: 16px;
+    font-size: 14px;
   }
   .bgIndicators {
-    bottom: 44px;
+    bottom: 36px;
     gap: 6px;
   }
   .bgIndicator {
@@ -488,6 +547,42 @@
   }
   .bgIndicatorActive {
     width: 18px;
+  }
+  .nebula1 {
+    width: 16rem;
+    height: 16rem;
+    top: 20%;
+    left: 10%;
+  }
+  .nebula2 {
+    width: 20rem;
+    height: 20rem;
+    bottom: 20%;
+    right: 10%;
+  }
+}
+
+/* ----------- 响应式：极小屏 ----------- */
+@media (max-width: 360px) {
+  .main {
+    padding: clamp(64px, 7vh, 80px) 12px 20px;
+  }
+  .title {
+    font-size: clamp(48px, 15vw, 64px);
+  }
+  .subtitle {
+    font-size: clamp(11px, 3vw, 14px);
+  }
+  .primaryBtn {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+  .footer {
+    font-size: 10px;
+    bottom: 20px;
+  }
+  .bgLabelText {
+    font-size: 12px;
   }
 }
 

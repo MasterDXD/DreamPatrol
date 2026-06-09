@@ -42,8 +42,7 @@
 }
 
 .sidebarCollapsed .logoTitle {
-  font-size: 20px;
-  letter-spacing: 2px;
+  height: 84px;
 }
 
 .sidebarCollapsed .logoSub {
@@ -106,14 +105,14 @@
 }
 
 .logoTitle {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 8px;
-  color: white;
-  text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+  height: 120px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.6));
   position: relative;
   margin-bottom: 2px;
-  transition: font-size 300ms ease, letter-spacing 300ms ease;
+  transition: height 300ms ease;
 }
 
 .logoSub {
@@ -128,7 +127,7 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .navItem {
@@ -141,23 +140,62 @@
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: all 200ms ease, gap 300ms ease, padding 300ms ease;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease, box-shadow 220ms ease, gap 300ms ease, padding 300ms ease;
   position: relative;
+  overflow: hidden;
+}
+
+.navItem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.12), rgba(139, 92, 246, 0.06));
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+  color: var(--color-text-primary, #e2e8f0);
+  transform: translateX(2px);
+}
+
+.navItem:hover::before {
+  opacity: 1;
+}
+
+.navItem:active {
+  transform: translateX(2px) scale(0.98);
 }
 
 .navItemActive {
-  background: rgba(45, 50, 90, 0.8);
-  color: white;
-  box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.22), rgba(139, 92, 246, 0.12));
+  color: var(--color-text-primary, #ffffff);
+  box-shadow: 0 4px 16px rgba(167, 139, 250, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.navItemActive::before {
+  opacity: 1;
+}
+
+.navItemActive::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-primary, #a78bfa), var(--color-primary-light, #c4b5fd));
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+  pointer-events: none;
 }
 
 .navItemActive .navIcon {
-  color: #a78bfa;
+  color: var(--color-primary, #a78bfa);
+  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.6));
 }
 
 .navIcon {
@@ -166,11 +204,15 @@
   text-align: center;
   color: inherit;
   flex-shrink: 0;
-  transition: margin 300ms ease, color 200ms ease;
+  transition: margin 300ms ease, color 220ms ease, transform 220ms ease, filter 220ms ease;
+  position: relative;
+  z-index: 1;
 }
 
 .navLabel {
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
   transition: opacity 200ms ease, width 0ms;
 }
 
@@ -345,38 +387,57 @@
   left: 0;
   right: 0;
   padding: 8px 24px 12px;
-  background: rgba(20, 25, 55, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-glass-bg, rgba(20, 25, 55, 0.6));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--color-glass-border, rgba(255, 255, 255, 0.08));
   justify-content: space-between;
   align-items: center;
   z-index: 50;
-  border-radius: 16px 16px 0 0;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .mobileNavItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   color: var(--color-text-secondary, #94a3b8);
   font-size: 10px;
+  font-weight: 500;
   text-decoration: none;
-  transition: color 150ms ease;
+  transition: color 200ms ease, transform 200ms ease;
   min-width: 48px;
+  padding: 6px 4px;
+  border-radius: 12px;
+  position: relative;
 }
 
 .mobileNavItem i {
   font-size: 18px;
+  transition: transform 200ms ease;
 }
 
 .mobileNavItem:hover {
-  color: white;
+  color: var(--color-text-primary, #e2e8f0);
+}
+
+.mobileNavItem:hover i {
+  transform: translateY(-2px);
+}
+
+.mobileNavItem:active {
+  transform: scale(0.95);
 }
 
 .mobileNavItemActive {
-  color: #a78bfa;
+  color: var(--color-primary, #a78bfa);
+}
+
+.mobileNavItemActive i {
+  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.6));
+  transform: translateY(-2px);
 }
 
 .mobileFab {
@@ -385,21 +446,25 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(90deg, #8b5cf6, #d946ef);
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa 50%, #d946ef);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 20px;
   text-decoration: none;
-  box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+  box-shadow: 0 6px 20px rgba(167, 139, 250, 0.5), 0 0 0 4px rgba(167, 139, 250, 0.15);
   border: 2px solid var(--color-bg, #0d1126);
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .mobileFab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(167, 139, 250, 0.7);
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 28px rgba(167, 139, 250, 0.7), 0 0 0 4px rgba(167, 139, 250, 0.25);
+}
+
+.mobileFab:active {
+  transform: scale(0.95);
 }
 
 /* ===== Responsive ===== */

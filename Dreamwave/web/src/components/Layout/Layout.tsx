@@ -52,8 +52,8 @@ export default function Layout({ onLogout }: LayoutProps) {
   const toggleCollapse = () => setCollapsed(prev => !prev);
 
   const isActive = (path: string) => {
-    if (path === '/' || path === '/dreams') return location.pathname === '/' || location.pathname === '/dreams';
-    return location.pathname.startsWith(path);
+    if (path === '/') return location.pathname === '/';
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Layout({ onLogout }: LayoutProps) {
         <div className={styles.sidebarTop}>
           {/* Logo */}
           <div className={styles.logoSection}>
-            <h1 className={styles.logoTitle}>巡梦</h1>
+            <img src="/assets/logo.jpg" alt="巡梦" className={styles.logoTitle} />
             {!collapsed && <p className={styles.logoSub}>Dream Rover</p>}
           </div>
 

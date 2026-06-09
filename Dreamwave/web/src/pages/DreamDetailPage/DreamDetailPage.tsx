@@ -6,6 +6,7 @@ import { EMOTION_META } from '../../constants/emotions';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Toast from '../../components/Toast/Toast';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
+import DreamImageModal from '../../components/DreamImageModal/DreamImageModal';
 import { loadImageArchive, loadInterpretArchive, loadDreamAIResults } from '../../services/dimilinks';
 import { renderMarkdown } from '../../utils/renderMarkdown';
 import styles from './DreamDetailPage.module.css';
@@ -22,6 +23,7 @@ export default function DreamDetailPage() {
   const [relatedDreams, setRelatedDreams] = useState<Dream[]>([]);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [interpretHtml, setInterpretHtml] = useState<string | null>(null);
+  const [showImageModal, setShowImageModal] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -143,12 +145,21 @@ export default function DreamDetailPage() {
           <h2 className={styles.dreamTitle}>{dream.title}</h2>
 
           {/* Dream AI image */}
-          {imageUrl && (
+          {imageUrl ? (
             <img
               src={imageUrl}
               alt="梦境生图"
               className={styles.dreamImage}
             />
+          ) : (
+            <div
+              className={styles.dreamImagePlaceholder}
+              onClick={() => setShowImageModal(true)}
+              title="生成梦境图"
+            >
+              <span className={styles.dreamImageIcon}>✨</span>
+              <span className={styles.dreamImageText}>生成梦境图</span>
+            </div>
           )}
 
           <div className={styles.content}>
@@ -211,6 +222,16 @@ export default function DreamDetailPage() {
               </div>
               <div className={styles.actionBtnWithLabel}>
                 <button
+                  onClick={() => setShowImageModal(true)}
+                  className={`${styles.actionBtn} ${styles.imageBtn} ${imageUrl ? styles.imageBtnActive : ''}`}
+                  title={imageUrl ? '重新生成图片' : '生成图片'}
+                >
+                  🖼️
+                </button>
+                <span className={styles.actionBtnLabel}>生图</span>
+              </div>
+              <div className={styles.actionBtnWithLabel}>
+                <button
                   onClick={() => setShowDeleteConfirm(true)}
                   className={`${styles.actionBtn} ${styles.deleteBtn}`}
                   title="删除"
@@ -268,6 +289,21 @@ export default function DreamDetailPage() {
           confirmLabel="确认删除"
           onConfirm={handleDelete}
           onCancel={() => setShowDeleteConfirm(false)}
+        />
+      )}
+
+      {showImageModal && (
+        <DreamImageModal
+          dreamId={dream.id}
+          prompt={dream.content}
+          onClose={() => {
+            setShowImageModal(false);
+            // 关闭后重新加载最新结果
+            const archive = loadImageArchive(dream.id);
+            if (archive && archive.images.length > 0) {
+              setImageUrl(archive.images[0].url);
+            }
+          }}
         />
       )}
 

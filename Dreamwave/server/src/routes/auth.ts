@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+import crypto from 'crypto';
 import { getDatabase, queryOne, run } from '../db/database';
 import { generateToken, authMiddleware, TokenPayload } from '../middleware/auth';
 import { addToBlacklist } from '../middleware/tokenBlacklist';

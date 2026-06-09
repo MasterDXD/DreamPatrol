@@ -41,14 +41,19 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
     const payload = verifyToken(token);
 
     // 检查用户是否在密码修改后使旧 session 失效
-    const user = queryOne('SELECT token_invalidated_before FROM users WHERE id = ?', [payload.userId]) as any;
-    if (user?.token_invalidated_before) {
-      const invalidatedAt = new Date(user.token_invalidated_before).getTime() / 1000;
-      const tokenIssuedAt = (jwt.decode(token) as any)?.iat ?? 0;
-      if (tokenIssuedAt < invalidatedAt) {
-        res.status(401).json({ error: '密码已修改，请重新登录' });
-        return;
+    try {
+      const user = queryOne('SELECT token_invalidated_before FROM users WHERE id = ?', [payload.userId]) as any;
+      if (user?.token_invalidated_before) {
+        const invalidatedAt = new Date(user.token_invalidated_before).getTime() / 1000;
+        const tokenIssuedAt = (jwt.decode(token) as any)?.iat ?? 0;
+        if (tokenIssuedAt < invalidatedAt) {
+          res.status(401).json({ error: '密码已修改，请重新登录' });
+          return;
+        }
       }
+    } catch (dbErr) {
+      // 数据库未初始化或字段不存在时，跳过 session 失效检查，不阻塞请求
+      console.error('[Auth] token_invalidated_before check failed:', dbErr);
     }
 
     (req as any).user = payload;

@@ -15,35 +15,46 @@ const _require = createRequire(import.meta.url);
  *   - 我们用插件把这些模块的代码手动包装 ESM default
  */
 function cjsDefaultExportPlugin(): Plugin {
-  const wrap = (id: string) => {
-    try {
-      const code = readFileSync(id, 'utf8');
-      // 如果是 CJS (有 module.exports / exports.) 重新以 ESM 形式返回
-      if (/module\.exports|exports\./.test(code)) {
-        return {
-          code:
-            code +
-            '\n// [vite-plugin] CJS->ESM default shim\nexport default (typeof module !== "undefined" ? module.exports : (typeof exports !== "undefined" ? exports : {}));',
-          map: null,
-        };
-      }
-    } catch { /* ignore */ }
-    return null;
+  const hasDefaultExport = (code: string) => {
+    return /export\s+(?:default\b|\{[^}]*\bas\s+default\b)/.test(code);
+  };
+  const isCjsModule = (code: string) => {
+    return /(module\.exports|exports\s*=)/.test(code);
+  };
+  const wrap = (code: string, id: string) => {
+    if (hasDefaultExport(code)) {
+      return null;
+    }
+    return {
+      code:
+        code +
+        `\n// [vite-plugin] CJS->ESM default shim for ${id.split('/node_modules/').pop()}\n` +
+        `const __cjsDefault = (typeof module !== "undefined" && module.exports) || ` +
+        `(typeof exports !== "undefined" && exports) || {};\n` +
+        `export default __cjsDefault;`,
+      map: null,
+    };
   };
   return {
     name: 'cjs-default-shim',
     enforce: 'post',
-    transform(_code, id) {
-      if (
-        id.includes('/node_modules/eventemitter3/') ||
-        id.includes('/node_modules/color-string/') ||
-        id.includes('/node_modules/color-name/') ||
-        id.includes('/node_modules/simple-swizzle/') ||
-        id.includes('/node_modules/svg-path-parser/')
-      ) {
-        return wrap(id);
+    transform(code, id) {
+      if (!id.includes('/node_modules/')) {
+        return null;
       }
-      return null;
+      if (code.includes('CJS->ESM default shim')) {
+        return null;
+      }
+      if (hasDefaultExport(code)) {
+        return null;
+      }
+      if (id.includes('.vite/deps/')) {
+        return null;
+      }
+      if (!isCjsModule(code)) {
+        return null;
+      }
+      return wrap(code, id);
     },
   };
 }
@@ -77,10 +88,21 @@ export default defineConfig({
       '@antv/expr',
       '@antv/event-emitter',
     ],
+    // 强制让 esbuild 把这些 CJS 包预构建成正确 ESM
+    include: [
+      'lodash',
+      'eventemitter3',
+      'color-string',
+      'color-name',
+      'simple-swizzle',
+      'svg-path-parser',
+    ],
+    esbuildOptions: {
+      target: 'es2020',
+    },
   },
   resolve: {
     alias: {
-      // 将这些 CJS 包装的"问题包"重定向到我们手动维护的 ESM 兼容版本
       eventemitter3: _require.resolve('eventemitter3'),
     },
   },

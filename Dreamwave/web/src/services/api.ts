@@ -55,6 +55,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   try {
     data = await res.json();
   } catch {
+    // 服务器返回非 JSON 内容（如 HTML 错误页）
+    if (res.status >= 500) {
+      throw new Error(`服务器内部错误 (${res.status})，请稍后重试`);
+    }
     throw new Error(`服务器返回了非预期格式 (${res.status})`);
   }
 
