@@ -50,16 +50,28 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     throw new AuthExpiredError();
   }
 
-  // 安全解析JSON
+  const contentType = res.headers.get('content-type');
+  const isJson = contentType?.includes('application/json') ?? true;
+
   let data: any;
-  try {
-    data = await res.json();
-  } catch {
-    // 服务器返回非 JSON 内容（如 HTML 错误页）
-    if (res.status >= 500) {
-      throw new Error(`服务器内部错误 (${res.status})，请稍后重试`);
+  if (isJson) {
+    try {
+      const text = await res.text();
+      if (!text.trim()) {
+        if (res.status >= 500) {
+          throw new Error(`服务器内部错误 (${res.status})，请稍后重试`);
+        }
+        throw new Error(`服务器返回了空响应 (${res.status})`);
+      }
+      data = JSON.parse(text);
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        throw new Error(`服务器返回了无效的JSON格式 (${res.status})`);
+      }
+      throw err;
     }
-    throw new Error(`服务器返回了非预期格式 (${res.status})`);
+  } else {
+    throw new Error(`服务器返回了非JSON格式 (${res.status})`);
   }
 
   if (!res.ok) {

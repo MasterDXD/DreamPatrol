@@ -10,8 +10,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import Toast from '../../components/Toast/Toast';
 import styles from './HomePage.module.css';
 
-/** 快速输入区展示的4种情绪 */
-const QUICK_EMOTIONS: EmotionType[] = ['joy', 'calm', 'sadness', 'wonder'];
+/** 快速输入区展示的6种情绪 */
+const QUICK_EMOTIONS: EmotionType[] = ['joy', 'calm', 'sadness', 'fear', 'wonder', 'nostalgia'];
 
 /** 根据当前时间返回问候语 */
 function getGreeting(): string {

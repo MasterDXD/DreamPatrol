@@ -67,9 +67,22 @@ const tagColors: Record<string, string> = {
 export async function seedDatabase(): Promise<void> {
   await getDatabase();
 
-  // 检查demo用户是否已存在，存在则跳过
-  const existing = queryOne('SELECT id FROM users WHERE username = ?', ['demo']);
-  if (existing) {
+  // 确保管理员账号存在（如果不存在则创建）
+  const existingAdmin = queryOne('SELECT id FROM users WHERE username = ?', ['admin']);
+  if (!existingAdmin) {
+    console.log('[Seed] 创建管理员账号...');
+    const adminId = crypto.randomUUID();
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminHash = await bcrypt.hash(adminPassword, 10);
+    run(
+      'INSERT INTO users (id, username, password_hash, role, is_active) VALUES (?, ?, ?, ?, ?)',
+      [adminId, 'admin', adminHash, 'admin', 1]
+    );
+  }
+
+  // 检查demo用户是否已存在，存在则跳过其他种子数据
+  const existingDemo = queryOne('SELECT id FROM users WHERE username = ?', ['demo']);
+  if (existingDemo) {
     console.log('[Seed] 种子数据已存在，跳过初始化');
     return;
   }
@@ -80,8 +93,8 @@ export async function seedDatabase(): Promise<void> {
   const userId = crypto.randomUUID();
   const passwordHash = await bcrypt.hash('123456', 10);
   run(
-    'INSERT INTO users (id, username, password_hash, role) VALUES (?, ?, ?, ?)',
-    [userId, 'demo', passwordHash, 'user']
+    'INSERT INTO users (id, username, password_hash, role, is_active) VALUES (?, ?, ?, ?, ?)',
+    [userId, 'demo', passwordHash, 'user', 1]
   );
 
   // 获取今天日期，用于计算近期日期
