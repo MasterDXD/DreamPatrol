@@ -222,4 +222,4 @@ cd web && npm test
 
 ## 许可证
 
-MIT License — 详见 [LICENSE](../Harness_V1_0609/LICENSE)
+MIT License — 详见 [LICENSE](LICENSE)

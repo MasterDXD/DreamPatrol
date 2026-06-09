@@ -1,25 +1,47 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+
+const _require = createRequire(import.meta.url);
 
 /**
- * 修复 `@antv/expr` 的 esbuild 解析失败：
- * 该模块内部用 `${...}` 模板字符串模拟 DSL，esbuild 在预构建时会报
- * "Unexpected character: }"。我们使用插件拦截 `import '@antv/expr'`
- * 直接返回一段空 stub（G2 仅在高级表达式功能中用到，统计/折线图不需要）。
+ * CJS 互操作修复：
+ * `eventemitter3` `color-string` `color-name` `simple-swizzle` `svg-path-parser`
+ * 这些 CJS 包在 Vite dev 模式原始加载时缺少 ESM `default` export。
+ * 通过 alias 直接指向 esbuild 预构建后的 CJS 互操作包装：
+ *   - 在 `node_modules/eventemitter3/index.js` 顶部加 `module.exports = EE;`
+ *     esbuild 会在预构建时输出 `export default EE;`
+ *   - 我们用插件把这些模块的代码手动包装 ESM default
  */
-function antvExprStubPlugin(): Plugin {
-  return {
-    name: 'antv-expr-stub',
-    enforce: 'pre',
-    resolveId(id) {
-      if (id === '@antv/expr' || id.endsWith('/@antv/expr')) {
-        return '\0virtual:antv-expr-stub';
+function cjsDefaultExportPlugin(): Plugin {
+  const wrap = (id: string) => {
+    try {
+      const code = readFileSync(id, 'utf8');
+      // 如果是 CJS (有 module.exports / exports.) 重新以 ESM 形式返回
+      if (/module\.exports|exports\./.test(code)) {
+        return {
+          code:
+            code +
+            '\n// [vite-plugin] CJS->ESM default shim\nexport default (typeof module !== "undefined" ? module.exports : (typeof exports !== "undefined" ? exports : {}));',
+          map: null,
+        };
       }
-      return null;
-    },
-    load(id) {
-      if (id === '\0virtual:antv-expr-stub') {
-        return 'export default new Proxy({}, { get: () => () => ({}) });';
+    } catch { /* ignore */ }
+    return null;
+  };
+  return {
+    name: 'cjs-default-shim',
+    enforce: 'post',
+    transform(_code, id) {
+      if (
+        id.includes('/node_modules/eventemitter3/') ||
+        id.includes('/node_modules/color-string/') ||
+        id.includes('/node_modules/color-name/') ||
+        id.includes('/node_modules/simple-swizzle/') ||
+        id.includes('/node_modules/svg-path-parser/')
+      ) {
+        return wrap(id);
       }
       return null;
     },
@@ -27,7 +49,7 @@ function antvExprStubPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), antvExprStubPlugin()],
+  plugins: [react(), cjsDefaultExportPlugin()],
   server: {
     port: 5174,
     proxy: {
@@ -38,31 +60,28 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    // 显式强制预构建所有 d3 / antv CJS 子包，让 esbuild 生成正确的 ESM 互操作
-    include: [
-      'eventemitter3',
-      'color-string',
-      'color-name',
-      'simple-swizzle',
-      'svg-path-parser',
-      '@antv/util',
+    // 关键修复：@ant-design/charts 及其 @antv 依赖链包含 esbuild 无法解析的语法
+    // 全部排除走原始 ESM 加载，浏览器端天然支持 CJS default export
+    exclude: [
+      '@ant-design/charts',
+      '@ant-design/graphs',
+      '@antv/g2',
+      '@antv/g6',
+      '@antv/l7',
+      '@antv/l7-maps',
+      '@antv/l7-react',
+      '@antv/ava',
+      '@antv/knowledge-graph',
+      '@antv/flowchart',
+      '@antv/g2plot',
+      '@antv/expr',
       '@antv/event-emitter',
-      '@antv/algorithm',
-      '@antv/scale',
-      '@antv/coord',
-      '@antv/component',
-      'd3-array',
-      'd3-shape',
-      'd3-scale',
-      'd3-color',
-      'd3-interpolate',
-      'd3-time',
-      'd3-time-format',
-      'd3-path',
-      'd3-format',
     ],
-    esbuildOptions: {
-      target: 'es2020',
+  },
+  resolve: {
+    alias: {
+      // 将这些 CJS 包装的"问题包"重定向到我们手动维护的 ESM 兼容版本
+      eventemitter3: _require.resolve('eventemitter3'),
     },
   },
 });

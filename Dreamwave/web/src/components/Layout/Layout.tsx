@@ -108,15 +108,21 @@ export default function Layout({ onLogout }: LayoutProps) {
           <div className={styles.themeRow}>
             <ThemeToggle />
           </div>
-          <button className={styles.collapseBtn} onClick={toggleCollapse} title={collapsed ? '展开菜单' : '收起菜单'}>
-            <i className={`fa-solid ${collapsed ? 'fa-angles-right' : 'fa-angles-left'} ${styles.collapseIcon}`}></i>
-            {!collapsed && <span className={styles.navLabel}>收起菜单</span>}
-          </button>
           <button className={styles.logoutBtn} onClick={handleLogout} title="退出登录">
             <i className="fa-solid fa-right-from-bracket"></i>
             <span className={styles.navLabel}>退出</span>
           </button>
         </div>
+
+        {/* 折叠按钮：固定在侧边栏右边中间 */}
+        <button
+          className={styles.collapseBtn}
+          onClick={toggleCollapse}
+          title={collapsed ? '展开菜单' : '收起菜单'}
+        >
+          <i className={`fa-solid ${collapsed ? 'fa-angles-right' : 'fa-angles-left'} ${styles.collapseIcon}`}></i>
+          <span className={styles.collapseLabel}>收起菜单</span>
+        </button>
       </aside>
 
       {/* Main Content */}

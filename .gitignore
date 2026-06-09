@@ -6,6 +6,9 @@ ECS/
 # 本地文件
 Files/
 
+# 不再发布到 GitHub
+Harness_V1_0609/
+
 # 依赖
 node_modules/
 .pnp
