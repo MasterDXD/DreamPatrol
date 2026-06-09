@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../../services/api';
 import type { Dream } from '../../types/dream';
@@ -6,14 +6,14 @@ import { EMOTION_META } from '../../constants/emotions';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Toast from '../../components/Toast/Toast';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
-import DreamImageModal from '../../components/DreamImageModal/DreamImageModal';
-import { loadImageArchive, loadInterpretArchive, loadDreamAIResults } from '../../services/dimilinks';
+import { loadImageArchive, loadInterpretArchive, loadDreamAIResults, hasApiKey, submitImageGeneration, pollImageTask, saveImageArchive } from '../../services/dimilinks';
 import { renderMarkdown } from '../../utils/renderMarkdown';
 import styles from './DreamDetailPage.module.css';
 
 export default function DreamDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [dream, setDream] = useState<Dream | null>(null);
   const [loading, setLoading] = useState(true);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -23,7 +23,9 @@ export default function DreamDetailPage() {
   const [relatedDreams, setRelatedDreams] = useState<Dream[]>([]);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [interpretHtml, setInterpretHtml] = useState<string | null>(null);
-  const [showImageModal, setShowImageModal] = useState(false);
+  const [imgStatus, setImgStatus] = useState<'idle' | 'loading' | 'error' | 'done'>('idle');
+  const [imgProgress, setImgProgress] = useState(0);
+  const [imgError, setImgError] = useState('');
 
   useEffect(() => {
     if (!id) return;
@@ -78,6 +80,51 @@ export default function DreamDetailPage() {
     loadAIResults();
     return () => { cancelled = true; };
   }, [id]);
+
+  useEffect(() => {
+    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+  }, []);
+
+  const handleGenerateImage = async () => {
+    if (!dream || imgStatus === 'loading') return;
+    const hasKey = await hasApiKey();
+    if (!hasKey) {
+      setImgError('请先在后台管理配置 AI API Key');
+      setImgStatus('error');
+      return;
+    }
+    setImgStatus('loading');
+    setImgProgress(0);
+    setImgError('');
+    try {
+      const result = await submitImageGeneration(dream.content, dream.id);
+      if (pollRef.current) clearInterval(pollRef.current);
+      pollRef.current = setInterval(async () => {
+        try {
+          const task = await pollImageTask(result.taskId, result.logId);
+          setImgProgress(task.progress);
+          if (task.status === 'succeeded') {
+            if (pollRef.current) clearInterval(pollRef.current);
+            const url = task.images[0]?.url || '';
+            setImageUrl(url);
+            setImgStatus('done');
+            saveImageArchive(dream.id, task.images);
+          } else if (task.status === 'failed') {
+            if (pollRef.current) clearInterval(pollRef.current);
+            setImgError(task.error || '生成失败');
+            setImgStatus('error');
+          }
+        } catch (err: any) {
+          if (pollRef.current) clearInterval(pollRef.current);
+          setImgError(err.message || '轮询异常');
+          setImgStatus('error');
+        }
+      }, 3000);
+    } catch (err: any) {
+      setImgError(err.message || '提交失败');
+      setImgStatus('error');
+    }
+  };
 
   const handleToggleFavorite = async () => {
     if (!dream) return;
@@ -151,10 +198,24 @@ export default function DreamDetailPage() {
               alt="梦境生图"
               className={styles.dreamImage}
             />
+          ) : imgStatus === 'loading' ? (
+            <div className={styles.dreamImagePlaceholder}>
+              <span className={styles.dreamImageIcon}>⏳</span>
+              <span className={styles.dreamImageText}>生成中 {imgProgress}%</span>
+              <div className={styles.progressBar}>
+                <div className={styles.progressFill} style={{ width: `${imgProgress}%` }} />
+              </div>
+            </div>
+          ) : imgStatus === 'error' ? (
+            <div className={styles.dreamImagePlaceholder}>
+              <span className={styles.dreamImageIcon}>❌</span>
+              <span className={styles.dreamImageText}>{imgError}</span>
+              <button className={styles.retryBtn} onClick={handleGenerateImage}>重试</button>
+            </div>
           ) : (
             <div
               className={styles.dreamImagePlaceholder}
-              onClick={() => setShowImageModal(true)}
+              onClick={handleGenerateImage}
               title="生成梦境图"
             >
               <span className={styles.dreamImageIcon}>✨</span>
@@ -222,11 +283,12 @@ export default function DreamDetailPage() {
               </div>
               <div className={styles.actionBtnWithLabel}>
                 <button
-                  onClick={() => setShowImageModal(true)}
+                  onClick={() => { setImageUrl(null); handleGenerateImage(); }}
                   className={`${styles.actionBtn} ${styles.imageBtn} ${imageUrl ? styles.imageBtnActive : ''}`}
                   title={imageUrl ? '重新生成图片' : '生成图片'}
+                  disabled={imgStatus === 'loading'}
                 >
-                  🖼️
+                  {imgStatus === 'loading' ? '⏳' : '🖼️'}
                 </button>
                 <span className={styles.actionBtnLabel}>生图</span>
               </div>
@@ -292,20 +354,7 @@ export default function DreamDetailPage() {
         />
       )}
 
-      {showImageModal && (
-        <DreamImageModal
-          dreamId={dream.id}
-          prompt={dream.content}
-          onClose={() => {
-            setShowImageModal(false);
-            // 关闭后重新加载最新结果
-            const archive = loadImageArchive(dream.id);
-            if (archive && archive.images.length > 0) {
-              setImageUrl(archive.images[0].url);
-            }
-          }}
-        />
-      )}
+      
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>

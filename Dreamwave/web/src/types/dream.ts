@@ -7,6 +7,7 @@ export interface Dream {
   content: string;
   emotion: EmotionType;
   narrative: string | null;
+  image_url: string | null;
   recorded_date: string;
   created_at: string;
   updated_at: string;

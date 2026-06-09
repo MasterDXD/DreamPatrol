@@ -96,6 +96,7 @@ export default defineConfig({
       'color-name',
       'simple-swizzle',
       'svg-path-parser',
+      'pdfast',
     ],
     esbuildOptions: {
       target: 'es2020',

@@ -6,19 +6,23 @@ function getToken(): string | null {
   return localStorage.getItem('dreamwave_admin_token');
 }
 
-async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const token = getToken();
+interface RequestOptions extends RequestInit {
+  skipAuth?: boolean;
+}
+
+async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { skipAuth, ...fetchOptions } = options;
+  const token = skipAuth ? null : getToken();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(options.headers as Record<string, string> || {}),
+    ...(fetchOptions.headers as Record<string, string> || {}),
   };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const res = await fetch(`${API_BASE}${path}`, { ...fetchOptions, headers });
 
   if (res.status === 401) {
     localStorage.removeItem('dreamwave_admin_token');
-    // 触发自定义事件，通知App组件进行401全局拦截
     window.dispatchEvent(new CustomEvent('auth:unauthorized'));
     throw new Error('认证已过期，请重新登录');
   }
@@ -120,7 +124,7 @@ interface AICallLogListResponse {
 export const adminApi = {
   login: (username: string, password: string) =>
     request<LoginResponse>('/auth/login', {
-      method: 'POST', body: JSON.stringify({ username, password }),
+      method: 'POST', body: JSON.stringify({ username, password }), skipAuth: true,
     }),
 
   getStats: () => request<StatsResponse>('/admin/stats'),

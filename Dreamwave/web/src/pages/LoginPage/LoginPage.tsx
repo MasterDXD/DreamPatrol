@@ -72,13 +72,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         )}
 
         <div className={styles.inputGroup}>
-          <label htmlFor="username" className={styles.srOnly}>邮箱 / 账号</label>
+          <label htmlFor="username" className={styles.srOnly}>账号</label>
           <input
             id="username"
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
-            placeholder="邮箱 / 账号"
+            placeholder="账号"
             autoComplete="username"
             className={styles.inputField}
           />

@@ -324,23 +324,23 @@
 .timeGroup {
   position: relative;
   z-index: 1;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 }
 
 .groupHeader {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--color-divider);
-  text-shadow: 0 0 16px rgba(167, 139, 250, 0.3), 0 0 32px rgba(126, 184, 218, 0.15);
+  color: rgba(148, 163, 184, 0.9);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  letter-spacing: 0.5px;
 }
 
 .groupList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 /* ===== 无结果 ===== */

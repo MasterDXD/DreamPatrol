@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
+import crypto from 'crypto';
 import { getDatabase, queryAll, queryOne, run } from '../db/database';
 import { authMiddleware } from '../middleware/auth';
 

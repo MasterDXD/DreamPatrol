@@ -238,8 +238,15 @@ export async function runMigrations(db: SqlJsDatabase): Promise<void> {
   if (!process.env.ADMIN_PASSWORD) {
     console.warn('[DB] WARNING: Using default admin password. Set ADMIN_PASSWORD for production.');
   }
-  const adminExists = db.exec("SELECT id FROM users WHERE username = 'admin'");
-  if (adminExists.length === 0 || adminExists[0].values.length === 0) {
+  const adminExists = db.exec("SELECT id, username, role, is_active FROM users WHERE username = 'admin'");
+  if (adminExists.length > 0 && adminExists[0].values.length > 0) {
+    const id = adminExists[0].values[0][0];
+    const hash = await bcrypt.hash(adminPassword, 10);
+    db.run(
+      "UPDATE users SET password_hash = ?, role = ?, is_active = 1 WHERE id = ?",
+      [hash, 'admin', id]
+    );
+  } else {
     const id = crypto.randomUUID();
     const hash = await bcrypt.hash(adminPassword, 10);
     db.run(
