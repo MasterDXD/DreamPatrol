@@ -2,7 +2,25 @@
 
 > 一个融合 **AI 多 Agent 协作框架** 与 **梦境记录 Web 应用** 的开源项目仓库。
 
+<div align="center">
+
+![巡梦 Logo](Dreamwave/参考页面/logo_light.png)
+
+**🌙 巡梦 · Dreamwave** · **⚙️ Harness Engineering**
+
 [![License: MIT](Harness_V1_0609/LICENSE)](Harness_V1_0609/LICENSE)
+
+</div>
+
+---
+
+## 品牌标识
+
+| Logo（浅色） | Logo（深色） | 品牌设计 |
+|:---:|:---:|:---:|
+| ![Logo Light](Dreamwave/参考页面/logo_light.png) | ![Logo Black](Dreamwave/参考页面/logo_black.png) | ![品牌设计](Dreamwave/参考页面/品牌设计.png) |
+
+> 品牌主题：梦境 · 情绪 · 星空。Logo 以"月相 + 梦境波纹"为视觉主体，呼应 Dreamwave（梦境之波）的产品名。
 
 ---
 
