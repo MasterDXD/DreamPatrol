@@ -95,6 +95,22 @@ docker compose up -d
 | 管理端 | 5174 | http://localhost:5174 |
 | API | 3100 | http://localhost:3100 |
 
+### 服务状态
+
+| 服务 | 名称 | 端口 | 状态 |
+|------|------|------|------|
+| server (后端API) | dreamwave-server | 3100 | healthy |
+| web (用户前端) | dreamwave-web | 8080 | running |
+| admin (管理后台) | dreamwave-admin | 5174 | running |
+
+### 测试账号密码
+
+| 类型 | 用户名 | 密码 |
+|------|--------|------|
+| 管理员 | `admin` | `admin123` |
+
+> 默认管理员账户：`admin` / `admin123`
+
 ---
 
 ## 功能清单
