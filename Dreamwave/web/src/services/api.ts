@@ -45,9 +45,14 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
   const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
 
+  // 仅对需要认证的接口抛出 AuthExpiredError
+  // 登录/注册接口返回 401 是正常的业务错误，不应触发全局登出
   if (res.status === 401) {
-    localStorage.removeItem('dreamwave_token');
-    throw new AuthExpiredError();
+    const isAuthEndpoint = path.startsWith('/auth/login') || path.startsWith('/auth/register');
+    if (!isAuthEndpoint) {
+      localStorage.removeItem('dreamwave_token');
+      throw new AuthExpiredError();
+    }
   }
 
   const contentType = res.headers.get('content-type');
@@ -105,7 +110,13 @@ export const api = {
       body: JSON.stringify({ username, password }),
     }),
 
-  getMe: () => request<{ id: string; username: string }>('/auth/me'),
+  getMe: () => request<{ id: string; username: string; created_at?: string; avatar?: string | null }>('/auth/me'),
+
+  updateProfile: (data: { avatar?: string }) =>
+    request<{ message: string }>('/auth/me', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
 
   logout: () =>
     request<{ message: string }>('/auth/logout', { method: 'POST' }),

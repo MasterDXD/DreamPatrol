@@ -76,6 +76,17 @@
   opacity: 0.9;
 }
 
+.interpretBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quotaHint {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0 0 12px;
+}
+
 .loadingBlock {
   display: flex;
   flex-direction: column;

@@ -38,12 +38,10 @@
 }
 
 .sidebarCollapsed .logoImg {
-  width: 48px;
+  width: 144px;
 }
 
-.sidebarCollapsed .logoText {
-  display: none;
-}
+
 
 .sidebarCollapsed .navLabel {
   opacity: 0;
@@ -90,27 +88,20 @@
 /* Logo */
 .logoSection {
   margin-bottom: 48px;
-  padding: 0 16px;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   transition: justify-content 300ms ease, padding 300ms ease;
 }
 
 .logoImg {
-  width: 56px;
+  width: 168px;
   display: block;
   transition: width 300ms ease;
 }
 
-.logoText {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--admin-accent);
-  white-space: nowrap;
-  transition: opacity 200ms ease;
-}
+
 
 /* Navigation */
 .nav {
@@ -235,4 +226,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  transition: opacity 200ms ease, transform 200ms ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contentTransitioning {
+  opacity: 0;
+  transform: translateY(8px);
 }

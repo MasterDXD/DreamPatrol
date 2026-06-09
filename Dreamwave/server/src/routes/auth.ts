@@ -87,7 +87,47 @@ router.post('/login', async (req: Request, res: Response) => {
 // GET /api/auth/me
 router.get('/me', authMiddleware, (_req: Request, res: Response) => {
   const { userId, username } = (_req as any).user as TokenPayload;
-  res.json({ id: userId, username });
+  const row = queryOne(
+    'SELECT id, username, created_at, avatar FROM users WHERE id = ?',
+    [userId]
+  ) as { id: string; username: string; created_at: string; avatar: string | null } | undefined;
+  if (!row) {
+    res.status(404).json({ error: '用户不存在' });
+    return;
+  }
+  res.json({
+    id: row.id,
+    username: row.username,
+    created_at: row.created_at,
+    avatar: row.avatar,
+  });
+});
+
+// PUT /api/auth/me — 更新当前用户信息（目前只支持 avatar）
+const updateProfileSchema = z.object({
+  avatar: z.string().min(1).max(500000).optional(),
+});
+router.put('/me', authMiddleware, (req: Request, res: Response) => {
+  const parse = updateProfileSchema.safeParse(req.body);
+  if (!parse.success) {
+    res.status(400).json({ error: parse.error.issues[0].message });
+    return;
+  }
+  const { userId } = (req as any).user as TokenPayload;
+  const updates: string[] = [];
+  const params: any[] = [];
+  if (parse.data.avatar !== undefined) {
+    updates.push('avatar = ?');
+    params.push(parse.data.avatar);
+  }
+  if (updates.length === 0) {
+    res.status(400).json({ error: '没有要更新的字段' });
+    return;
+  }
+  updates.push('updated_at = datetime("now")');
+  params.push(userId);
+  run(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`, params);
+  res.json({ message: '更新成功' });
 });
 
 // POST /api/auth/logout — 登出（将token加入黑名单）

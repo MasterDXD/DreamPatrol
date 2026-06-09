@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Dream, EmotionType } from '../../types/dream';
 import { EMOTION_META } from '../../constants/emotions';
+import { loadImageArchive } from '../../services/dimilinks';
 import styles from './DreamCard.module.css';
 
 interface DreamCardProps {
@@ -45,6 +47,30 @@ export default function DreamCard({ dream, compact = false, onClick }: DreamCard
   const navigate = useNavigate();
   const meta = EMOTION_META[dream.emotion as EmotionType];
   const hasImage = !!dream.image_url;
+  const [archiveThumb, setArchiveThumb] = useState<string | null>(null);
+
+  // 加载本地缓存的已生成梦境缩略图
+  useEffect(() => {
+    if (!dream.image_url && compact) {
+      const archive = loadImageArchive(dream.id);
+      if (archive?.images?.length) {
+        setArchiveThumb(archive.images[0].url);
+      }
+    }
+
+    // 监听本地存档更新（如其他页面刚刚生成了新图）
+    const handleArchiveUpdate = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.dreamId === dream.id && detail?.type === 'image') {
+        const archive = loadImageArchive(dream.id);
+        if (archive?.images?.length) {
+          setArchiveThumb(archive.images[0].url);
+        }
+      }
+    };
+    window.addEventListener('dream-archive-updated', handleArchiveUpdate);
+    return () => window.removeEventListener('dream-archive-updated', handleArchiveUpdate);
+  }, [dream.id, dream.image_url, compact]);
 
   const handleClick = () => {
     if (onClick) {
@@ -100,6 +126,13 @@ export default function DreamCard({ dream, compact = false, onClick }: DreamCard
                   <img
                     src={dream.image_url}
                     alt="梦境图像"
+                    className={styles.dreamCardMediaImage}
+                    loading="lazy"
+                  />
+                ) : archiveThumb ? (
+                  <img
+                    src={archiveThumb}
+                    alt="梦境缩略图"
                     className={styles.dreamCardMediaImage}
                     loading="lazy"
                   />

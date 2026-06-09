@@ -32,6 +32,21 @@ async function getAIConfig(): Promise<Record<string, string>> {
   return config;
 }
 
+// 检查用户今日用量是否超限，返回 { allowed, used, limit }
+function checkDailyLimit(config: Record<string, string>, userId: string, callType: 'image' | 'chat'): { allowed: boolean; used: number; limit: number } {
+  const limitKey = callType === 'image' ? 'daily_image_limit' : 'daily_chat_limit';
+  const limit = parseInt(config[limitKey] || '2', 10);
+  const today = new Date().toISOString().slice(0, 10);
+
+  const row = queryOne(
+    "SELECT COUNT(*) as count FROM ai_call_logs WHERE user_id = ? AND call_type = ? AND date(created_at) = ? AND status != 'failed'",
+    [userId, callType, today]
+  ) as ApiData | undefined;
+  const used = row?.count || 0;
+
+  return { allowed: used < limit, used, limit };
+}
+
 // POST /api/ai/image-generation — 代理文生图请求
 router.post('/image-generation', authMiddleware, async (req: Request, res: Response) => {
   const startTime = Date.now();
@@ -48,6 +63,14 @@ router.post('/image-generation', authMiddleware, async (req: Request, res: Respo
     const config = await getAIConfig();
     if (!config.api_key) {
       res.status(400).json({ error: '请先在后台管理配置 DimiLinks API Key' });
+      return;
+    }
+
+    // 检查每日生图限额
+    await getDatabase();
+    const imageLimit = checkDailyLimit(config, user.userId, 'image');
+    if (!imageLimit.allowed) {
+      res.status(429).json({ error: `今日生图次数已达上限（${imageLimit.limit}次/天）`, used: imageLimit.used, limit: imageLimit.limit });
       return;
     }
 
@@ -198,6 +221,14 @@ router.post('/chat/completions', authMiddleware, async (req: Request, res: Respo
       return;
     }
 
+    // 检查每日解读限额
+    await getDatabase();
+    const chatLimit = checkDailyLimit(config, user.userId, 'chat');
+    if (!chatLimit.allowed) {
+      res.status(429).json({ error: `今日解读次数已达上限（${chatLimit.limit}次/天）`, used: chatLimit.used, limit: chatLimit.limit });
+      return;
+    }
+
     // 创建调用记录
     logId = crypto.randomUUID();
     await getDatabase();
@@ -298,6 +329,24 @@ router.get('/config', authMiddleware, async (_req: Request, res: Response) => {
   } catch (err) {
     console.error('[AI] GET /config error:', err);
     res.status(500).json({ error: '获取AI配置失败' });
+  }
+});
+
+// GET /api/ai/usage — 获取当前用户今日用量和限额
+router.get('/usage', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const user = (req as any).user;
+    const config = await getAIConfig();
+    await getDatabase();
+    const imageUsage = checkDailyLimit(config, user.userId, 'image');
+    const chatUsage = checkDailyLimit(config, user.userId, 'chat');
+    res.json({
+      image: { used: imageUsage.used, limit: imageUsage.limit, remaining: Math.max(0, imageUsage.limit - imageUsage.used) },
+      chat: { used: chatUsage.used, limit: chatUsage.limit, remaining: Math.max(0, chatUsage.limit - chatUsage.used) },
+    });
+  } catch (err) {
+    console.error('[AI] GET /usage error:', err);
+    res.status(500).json({ error: '获取用量信息失败' });
   }
 });
 

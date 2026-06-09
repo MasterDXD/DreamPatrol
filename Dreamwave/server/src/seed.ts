@@ -146,3 +146,21 @@ export async function seedDatabase(): Promise<void> {
 
   console.log('[Seed] 种子数据创建完成：1个测试用户(demo/123456)，6条示例梦境');
 }
+
+// 确保每日限额配置键存在（兼容已有数据库）
+export async function ensureDailyLimitConfig(): Promise<void> {
+  await getDatabase();
+
+  const limitKeys: [string, string][] = [
+    ['daily_image_limit', '2'],
+    ['daily_chat_limit', '2'],
+  ];
+
+  for (const [key, defaultValue] of limitKeys) {
+    const existing = queryOne('SELECT value FROM ai_config WHERE key = ?', [key]);
+    if (!existing) {
+      run('INSERT INTO ai_config (key, value, updated_at) VALUES (?, ?, datetime("now"))', [key, defaultValue]);
+      console.log(`[Seed] 已插入默认配置: ${key} = ${defaultValue}`);
+    }
+  }
+}

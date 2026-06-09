@@ -137,9 +137,9 @@
 }
 
 .logoImage {
-  height: 50px;
+  height: 150px;
   width: auto;
-  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.4));
+  filter: drop-shadow(0 0 16px rgba(167, 139, 250, 0.5));
 }
 
 .appTitle::after {

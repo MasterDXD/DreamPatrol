@@ -14,11 +14,20 @@ import styles from './HomePage.module.css';
 const QUICK_EMOTIONS: EmotionType[] = ['joy', 'calm', 'sadness', 'fear', 'wonder', 'nostalgia'];
 
 /** 根据当前时间返回问候语 */
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return '早上好';
-  if (hour >= 12 && hour < 18) return '下午好';
-  return '晚上好';
+function getGreeting(hour: number): string {
+  if (hour >= 0 && hour < 5) return '凌晨好';
+  if (hour >= 5 && hour < 11) return '早上好';
+  if (hour >= 11 && hour < 13) return '中午好';
+  if (hour >= 13 && hour < 18) return '下午好';
+  if (hour >= 18 && hour < 23) return '晚上好';
+  return '夜深了';
+}
+
+/** 格式化当前时间（HH:MM） */
+function formatTime(date: Date): string {
+  const h = date.getHours().toString().padStart(2, '0');
+  const m = date.getMinutes().toString().padStart(2, '0');
+  return `${h}:${m}`;
 }
 
 /** 时间分组类型 */
@@ -75,6 +84,7 @@ export default function HomePage() {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [quickEmotion, setQuickEmotion] = useState<EmotionType | ''>('');
   const [quickText, setQuickText] = useState('');
+  const [now, setNow] = useState<Date>(() => new Date());
 
   const loadDreams = useCallback(async () => {
     setLoading(true);
@@ -125,6 +135,13 @@ export default function HomePage() {
     return () => window.removeEventListener('focus', onFocus);
   }, [loadDreams, isSearchMode]);
 
+  // 实时更新当前时间（每 30 秒刷新一次，分钟切换也能及时更新）
+  useEffect(() => {
+    const update = () => setNow(new Date());
+    const timer = setInterval(update, 30 * 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const toggleEmotionFilter = (emotion: string) => {
     setEmotionFilter(prev => prev === emotion ? '' : emotion);
     setIsSearchMode(false);
@@ -146,7 +163,8 @@ export default function HomePage() {
   /** 时间分组后的梦境 */
   const groupedDreams = useMemo(() => groupDreamsByTime(dreams), [dreams]);
 
-  const greeting = useMemo(getGreeting, []);
+  const greeting = useMemo(() => getGreeting(now.getHours()), [now]);
+  const currentTime = useMemo(() => formatTime(now), [now]);
 
   if (loading && dreams.length === 0) {
     return <div className={styles.container}><DreamCardSkeleton count={3} /></div>;
@@ -183,7 +201,10 @@ export default function HomePage() {
       {/* 欢迎区 - 仅首页显示 */}
       {!isDreamsPage && (
         <div className={styles.welcomeSection}>
-          <h1 className={styles.greeting}>{greeting}，星语者</h1>
+          <h1 className={styles.greeting}>
+            <span className={styles.greetingText}>{greeting}，星语者</span>
+            <span className={styles.greetingTime} aria-label="当前时间">{currentTime}</span>
+          </h1>
           <p className={styles.welcomeSub}>每一场梦，都值得被温柔记录</p>
         </div>
       )}
@@ -192,7 +213,25 @@ export default function HomePage() {
       {!isDreamsPage && (
         <div className={styles.bentoPanel}>
           <div className={styles.bentoGrid}>
-            {/* 左侧：情绪快选 */}
+            {/* 上方：快速文本输入 */}
+            <div className={styles.quickInputArea}>
+              <span className={styles.bentoLabel}>快速记梦</span>
+              <div className={styles.quickInputWrap}>
+                <input
+                  type="text"
+                  className={styles.quickInput}
+                  placeholder="梦见了什么…"
+                  value={quickText}
+                  onChange={e => setQuickText(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') handleQuickSubmit(); }}
+                />
+                <button className={styles.quickSubmitBtn} onClick={handleQuickSubmit}>
+                  记录
+                </button>
+              </div>
+            </div>
+
+            {/* 下方：情绪快选 */}
             <div className={styles.emotionQuickSelect}>
               <span className={styles.bentoLabel}>此刻的心情</span>
               <div className={styles.emotionGrid}>
@@ -211,24 +250,6 @@ export default function HomePage() {
                     </button>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* 右侧：快速文本输入 */}
-            <div className={styles.quickInputArea}>
-              <span className={styles.bentoLabel}>快速记梦</span>
-              <div className={styles.quickInputWrap}>
-                <input
-                  type="text"
-                  className={styles.quickInput}
-                  placeholder="梦见了什么…"
-                  value={quickText}
-                  onChange={e => setQuickText(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') handleQuickSubmit(); }}
-                />
-                <button className={styles.quickSubmitBtn} onClick={handleQuickSubmit}>
-                  记录
-                </button>
               </div>
             </div>
           </div>

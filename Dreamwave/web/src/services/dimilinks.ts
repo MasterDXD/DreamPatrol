@@ -64,6 +64,29 @@ export async function hasApiKey(): Promise<boolean> {
   return config.hasApiKey;
 }
 
+// ===== 每日用量查询 =====
+
+export interface DailyUsage {
+  image: { used: number; limit: number; remaining: number };
+  chat: { used: number; limit: number; remaining: number };
+}
+
+/** 获取当前用户今日 AI 用量和限额 */
+export async function getDailyUsage(): Promise<DailyUsage> {
+  const token = getToken();
+  try {
+    const res = await fetch(`${API_BASE}/ai/usage`, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data as DailyUsage;
+    }
+  } catch {}
+  // 默认值
+  return { image: { used: 0, limit: 2, remaining: 2 }, chat: { used: 0, limit: 2, remaining: 2 } };
+}
+
 // ===== 文生图 API =====
 
 export interface ImageGenerationResult {
@@ -217,6 +240,8 @@ export function saveImageArchive(dreamId: string, images: { url: string; fileId?
   if (!map[dreamId]) map[dreamId] = {};
   map[dreamId].image = { images, createdAt: Date.now() };
   saveArchive(map);
+  // 通知其他组件更新缩略图
+  window.dispatchEvent(new CustomEvent('dream-archive-updated', { detail: { dreamId, type: 'image' } }));
 }
 
 /** 读取生图结果（仅 localStorage） */

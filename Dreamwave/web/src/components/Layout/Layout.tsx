@@ -76,8 +76,8 @@ export default function Layout({ onLogout }: LayoutProps) {
             key={i}
             className={styles.meteor}
             style={{
-              '--meteor-delay': `${Math.random() * 8}s`,
-              '--meteor-duration': `${1 + Math.random() * 1}s`,
+              '--meteor-delay': `${Math.random() * 12}s`,
+              '--meteor-duration': `${3 + Math.random() * 2}s`,
               '--meteor-left': `${Math.random() * 100}%`,
               '--meteor-size': `${1 + Math.random() * 2}px`,
               '--meteor-rot': '-45deg',

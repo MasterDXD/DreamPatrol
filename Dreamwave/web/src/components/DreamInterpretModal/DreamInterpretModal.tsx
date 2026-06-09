@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { interpretDream, hasApiKey, loadInterpretArchive, saveInterpretArchive, loadDreamAIResults } from '../../services/dimilinks';
+import { interpretDream, hasApiKey, loadInterpretArchive, saveInterpretArchive, loadDreamAIResults, getDailyUsage } from '../../services/dimilinks';
+import type { DailyUsage } from '../../services/dimilinks';
 import { renderMarkdown } from '../../utils/renderMarkdown';
 import styles from './DreamInterpretModal.module.css';
 
@@ -14,6 +15,7 @@ export default function DreamInterpretModal({ dreamId, content, onClose }: Props
   const [resultHtml, setResultHtml] = useState('');
   const [error, setError] = useState('');
   const [archivedAt, setArchivedAt] = useState<number | null>(null);
+  const [usage, setUsage] = useState<DailyUsage | null>(null);
 
   // Escape 键关闭
   useEffect(() => {
@@ -29,6 +31,10 @@ export default function DreamInterpretModal({ dreamId, content, onClose }: Props
     let cancelled = false;
 
     const load = async () => {
+      // 加载今日用量
+      const u = await getDailyUsage();
+      if (!cancelled) setUsage(u);
+
       // 先用 localStorage 缓存快速展示
       const archive = loadInterpretArchive(dreamId);
       if (archive) {
@@ -62,6 +68,15 @@ export default function DreamInterpretModal({ dreamId, content, onClose }: Props
       return;
     }
 
+    // 检查配额
+    const u = await getDailyUsage();
+    setUsage(u);
+    if (u.chat.remaining <= 0) {
+      setError(`今日解读次数已达上限（${u.chat.limit}次/天）`);
+      setStatus('failed');
+      return;
+    }
+
     setStatus('loading');
     setError('');
     setArchivedAt(null);
@@ -73,9 +88,13 @@ export default function DreamInterpretModal({ dreamId, content, onClose }: Props
       // 存档
       saveInterpretArchive(dreamId, result.text);
       setArchivedAt(Date.now());
+      // 刷新用量
+      getDailyUsage().then(u2 => setUsage(u2));
     } catch (err: any) {
       setError(err.message || '解读失败');
       setStatus('failed');
+      // 刷新用量（可能是429错误）
+      getDailyUsage().then(u2 => setUsage(u2));
     }
   };
 
@@ -95,8 +114,13 @@ export default function DreamInterpretModal({ dreamId, content, onClose }: Props
           {status === 'idle' && (
             <div className={styles.intro}>
               <p>基于梦境内容，从心理学角度解读象征、情绪与潜意识含义。</p>
-              <button className={styles.interpretBtn} onClick={handleInterpret}>
-                开始解读
+              {usage && (
+                <p className={styles.quotaHint}>
+                  今日剩余解读次数：{usage.chat.remaining} / {usage.chat.limit}
+                </p>
+              )}
+              <button className={styles.interpretBtn} onClick={handleInterpret} disabled={usage !== null && usage.chat.remaining <= 0}>
+                {usage && usage.chat.remaining <= 0 ? '今日次数已用完' : '开始解读'}
               </button>
             </div>
           )}

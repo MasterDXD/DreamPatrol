@@ -38,9 +38,23 @@ export default function Layout({ onLogout }: LayoutProps) {
     return localStorage.getItem(COLLAPSE_KEY) === 'true';
   });
 
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [previousPath, setPreviousPath] = useState(location.pathname);
+
   useEffect(() => {
     localStorage.setItem(COLLAPSE_KEY, String(collapsed));
   }, [collapsed]);
+
+  useEffect(() => {
+    if (location.pathname !== previousPath) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setPreviousPath(location.pathname);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, previousPath]);
 
   const toggleCollapse = () => setCollapsed(prev => !prev);
 
@@ -56,7 +70,6 @@ export default function Layout({ onLogout }: LayoutProps) {
               alt="巡梦 XUNMENG"
               className={styles.logoImg}
             />
-            {!collapsed && <span className={styles.logoText}>XUNMENG</span>}
           </div>
 
           {/* Navigation */}
@@ -98,7 +111,7 @@ export default function Layout({ onLogout }: LayoutProps) {
 
       {/* Main Content */}
       <main className={styles.main}>
-        <div className={styles.mainInner}>
+        <div className={`${styles.mainInner} ${isTransitioning ? styles.contentTransitioning : ''}`}>
           <Outlet />
         </div>
       </main>

@@ -50,3 +50,13 @@ coverage/
 .harness/sessions/
 .harness/workspace/staging/
 .harness/data/
+
+# TypeScript 增量编译缓存
+*.tsbuildinfo
+
+# 部署压缩包
+*.tar.gz
+
+# 临时脚本
+create_admin.py
+deploy.py

@@ -83,7 +83,7 @@ export default function DreamManage() {
         );
       },
     },
-    { title: '用户', dataIndex: 'username' as const, key: 'username', width: 200 },
+    { title: '用户', dataIndex: 'username', key: 'username', width: 200 },
     {
       title: '情绪', dataIndex: 'emotion', key: 'emotion', width: 160,
       render: (emotion: string) => {

@@ -41,7 +41,7 @@ function AuthErrorBoundary({ children, onAuthExpired }: { children: ReactNode; o
     return () => window.removeEventListener('error', handler);
   }, [onAuthExpired]);
 
-  // 拦截未捕获的Promise rejection
+  // 拦截未捕获的Promise rejection（仅处理AuthExpiredError，其他错误正常传播）
   useEffect(() => {
     const handler = (event: PromiseRejectionEvent) => {
       if (event.reason instanceof AuthExpiredError) {
@@ -72,6 +72,7 @@ export default function App() {
         if (err instanceof AuthExpiredError) {
           handleAuthExpired();
         }
+        // 其他错误（网络错误等）不强制登出
       });
     }
   }, [authed, handleAuthExpired]);

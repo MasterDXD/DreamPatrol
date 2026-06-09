@@ -6,7 +6,7 @@ import { EMOTION_META } from '../../constants/emotions';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Toast from '../../components/Toast/Toast';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
-import { loadImageArchive, loadInterpretArchive, loadDreamAIResults, hasApiKey, submitImageGeneration, pollImageTask, saveImageArchive } from '../../services/dimilinks';
+import { loadImageArchive, loadInterpretArchive, loadDreamAIResults, hasApiKey, submitImageGeneration, pollImageTask, saveImageArchive, getDailyUsage } from '../../services/dimilinks';
 import { renderMarkdown } from '../../utils/renderMarkdown';
 import styles from './DreamDetailPage.module.css';
 
@@ -90,6 +90,13 @@ export default function DreamDetailPage() {
     const hasKey = await hasApiKey();
     if (!hasKey) {
       setImgError('请先在后台管理配置 AI API Key');
+      setImgStatus('error');
+      return;
+    }
+    // 检查配额
+    const usage = await getDailyUsage();
+    if (usage.image.remaining <= 0) {
+      setImgError(`今日生图次数已达上限（${usage.image.limit}次/天）`);
       setImgStatus('error');
       return;
     }

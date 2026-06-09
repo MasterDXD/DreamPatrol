@@ -7,7 +7,7 @@ import styles from './WelcomePage.module.css';
 
 /** 梦境背景图列表 — 每种情绪选一张，营造不同梦境氛围 */
 const DREAM_BG_IMAGES = [
-  { src: '/assets/images/风云海.png', label: '风云海' },
+  { src: '/assets/images/月明风清.png', label: '月明风清' },
   { src: '/assets/images/海上明月.png', label: '海上明月' },
   { src: '/assets/images/孔明灯.png', label: '孔明灯' },
   { src: '/assets/images/梦幻森林.png', label: '梦幻森林' },
@@ -42,6 +42,8 @@ export default function WelcomePage() {
   const particleLayerRef = useRef<HTMLDivElement>(null);
   const meteorLayerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
 
   // 背景轮换
   const [bgIndex, setBgIndex] = useState(0);
@@ -87,7 +89,25 @@ export default function WelcomePage() {
 
   const go = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(path);
+    if (loading) return;
+    setLoading(true);
+    // 模拟短暂加载动画后跳转
+    setTimeout(() => {
+      navigate(path);
+    }, 800);
+  };
+
+  // 涟漪点击效果
+  const handleRipple = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const id = Date.now();
+    setRipples((prev) => [...prev, { x, y, id }]);
+    setTimeout(() => {
+      setRipples((prev) => prev.filter((r) => r.id !== id));
+    }, 700);
   };
 
   const currentBg = DREAM_BG_IMAGES[bgIndex];
@@ -191,17 +211,36 @@ export default function WelcomePage() {
         <div className={styles.actions}>
           <button
             type="button"
-            className={styles.primaryBtn}
-            onClick={go('/register')}
+            className={`${styles.primaryBtn} ${loading ? styles.primaryBtnLoading : ''}`}
+            onClick={(e) => { handleRipple(e); go('/register')(e); }}
+            disabled={loading}
+            aria-busy={loading}
           >
-            <span className={styles.primaryBtnLabel}>开始旅程</span>
-            <span
-              className={`material-symbols-outlined ${styles.primaryBtnIcon}`}
-              style={{ fontVariationSettings: "'FILL' 0" }}
-              aria-hidden="true"
-            >
-              arrow_right_alt
+            <span className={styles.primaryBtnLabel}>
+              {loading ? '正在唤醒梦境…' : '开始旅程'}
             </span>
+            {loading ? (
+              <span className={styles.primaryBtnSpinner} aria-hidden="true">
+                <span className={styles.spinnerRing} />
+              </span>
+            ) : (
+              <span
+                className={`material-symbols-outlined ${styles.primaryBtnIcon}`}
+                style={{ fontVariationSettings: "'FILL' 0" }}
+                aria-hidden="true"
+              >
+                arrow_right_alt
+              </span>
+            )}
+            <span className={styles.primaryBtnProgress} />
+            {ripples.map((r) => (
+              <span
+                key={r.id}
+                className={styles.primaryBtnRipple}
+                style={{ left: r.x, top: r.y }}
+                aria-hidden="true"
+              />
+            ))}
             <span className={styles.primaryBtnHover} />
           </button>
 

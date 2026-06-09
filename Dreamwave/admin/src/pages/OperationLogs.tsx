@@ -49,7 +49,9 @@ export default function OperationLogs() {
       dataIndex: 'created_at',
       key: 'created_at',
       width: 180,
-      render: (text: string) => new Date(text).toLocaleString('zh-CN'),
+      render: (text: string) => {
+        try { return new Date(text).toLocaleString('zh-CN'); } catch { return text; }
+      },
     },
     {
       title: '操作人',

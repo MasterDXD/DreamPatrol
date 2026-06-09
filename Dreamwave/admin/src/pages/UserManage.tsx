@@ -40,9 +40,61 @@ export default function UserManage() {
   }, [users, searchText]);
 
   const columns = [
-    { title: '用户名', dataIndex: 'username', key: 'username' },
-    { title: '梦境数', dataIndex: 'dream_count', key: 'dream_count', width: 80 },
-    { title: '注册时间', dataIndex: 'created_at', key: 'created_at', width: 170, render: (v: string) => v?.slice(0, 19).replace('T', ' ') },
+    {
+      title: '用户',
+      key: 'user',
+      render: (_: unknown, record: User) => {
+        const avatarSrc = record.avatar
+          || `https://ui-avatars.com/api/?name=${encodeURIComponent(record.username)}&background=7c3aed&color=fff&size=64`;
+        return (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <img
+              src={avatarSrc}
+              alt={record.username}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                border: '2px solid rgba(124, 58, 237, 0.5)',
+                objectFit: 'cover',
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <div style={{ fontWeight: 500 }}>{record.username}</div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>
+                {record.id.slice(0, 8)}...
+              </div>
+            </div>
+          </div>
+        );
+      },
+    },
+    { title: '梦境数', dataIndex: 'dream_count', key: 'dream_count', width: 90 },
+    {
+      title: '注册时间',
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 180,
+      render: (v: string) => (
+        <div>
+          <div style={{ fontSize: 13 }}>{v?.slice(0, 19).replace('T', ' ')}</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
+            📅 {(() => {
+              if (!v) return '—';
+              const d = new Date(v);
+              const now = new Date();
+              const diffMs = now.getTime() - d.getTime();
+              const days = Math.floor(diffMs / 86400000);
+              if (days < 1) return '今天';
+              if (days < 7) return `${days}天前`;
+              if (days < 30) return `${Math.floor(days / 7)}周前`;
+              return `${Math.floor(days / 30)}个月前`;
+            })()}
+          </div>
+        </div>
+      ),
+    },
     {
       title: '状态', dataIndex: 'is_active', key: 'is_active', width: 80,
       render: (isActive: number) => isActive ? <Tag color="green">活跃</Tag> : <Tag color="red">禁用</Tag>,

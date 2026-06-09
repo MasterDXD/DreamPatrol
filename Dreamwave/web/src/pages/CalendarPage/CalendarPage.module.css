@@ -35,6 +35,10 @@
 .calendarSection {
   flex: 2;
   min-width: 0;
+  max-height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .sidePanel {
@@ -146,8 +150,10 @@
 .calendarBody {
   padding: 12px 28px 28px;
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .weekHeader {

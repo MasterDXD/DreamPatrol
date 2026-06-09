@@ -16,6 +16,7 @@ import {
   interpretDream,
   saveImageArchive,
   saveInterpretArchive,
+  getDailyUsage,
 } from '../../services/dimilinks';
 import styles from './NewDreamPage.module.css';
 
@@ -118,6 +119,13 @@ export default function NewDreamPage() {
       setImgStatus('error');
       return;
     }
+    // 检查配额
+    const usage = await getDailyUsage();
+    if (usage.image.remaining <= 0) {
+      setImgError(`今日生图次数已达上限（${usage.image.limit}次/天）`);
+      setImgStatus('error');
+      return;
+    }
     setImgStatus('loading');
     setImgProgress(0);
     try {
@@ -154,6 +162,13 @@ export default function NewDreamPage() {
     const hasKey = await hasApiKey();
     if (!hasKey) {
       setInterpError('请先在后台管理配置 AI API Key');
+      setInterpStatus('error');
+      return;
+    }
+    // 检查配额
+    const usage = await getDailyUsage();
+    if (usage.chat.remaining <= 0) {
+      setInterpError(`今日解读次数已达上限（${usage.chat.limit}次/天）`);
       setInterpStatus('error');
       return;
     }

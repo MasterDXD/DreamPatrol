@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { submitImageGeneration, pollImageTask, hasApiKey, loadImageArchive, saveImageArchive, loadDreamAIResults } from '../../services/dimilinks';
+import { submitImageGeneration, pollImageTask, hasApiKey, loadImageArchive, saveImageArchive, loadDreamAIResults, getDailyUsage } from '../../services/dimilinks';
+import type { DailyUsage } from '../../services/dimilinks';
 import styles from './DreamImageModal.module.css';
 
 interface Props {
@@ -14,6 +15,7 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
   const [images, setImages] = useState<{ url: string; fileId?: string }[]>([]);
   const [error, setError] = useState('');
   const [archivedAt, setArchivedAt] = useState<number | null>(null);
+  const [usage, setUsage] = useState<DailyUsage | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Escape 键关闭
@@ -30,6 +32,10 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
     let cancelled = false;
 
     const load = async () => {
+      // 加载今日用量
+      const u = await getDailyUsage();
+      if (!cancelled) setUsage(u);
+
       // 先用 localStorage 缓存快速展示
       const archive = loadImageArchive(dreamId);
       if (archive) {
@@ -76,6 +82,15 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
       return;
     }
 
+    // 检查配额
+    const u = await getDailyUsage();
+    setUsage(u);
+    if (u.image.remaining <= 0) {
+      setError(`今日生图次数已达上限（${u.image.limit}次/天）`);
+      setStatus('failed');
+      return;
+    }
+
     setStatus('submitting');
     setError('');
     setImages([]);
@@ -89,6 +104,8 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
     } catch (err: any) {
       setError(err.message || '提交失败');
       setStatus('failed');
+      // 刷新用量（可能是429错误）
+      getDailyUsage().then(u => setUsage(u));
     }
   };
 
@@ -107,6 +124,8 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
           // 存档
           saveImageArchive(dreamId, result.images);
           setArchivedAt(Date.now());
+          // 刷新用量
+          getDailyUsage().then(u => setUsage(u));
         } else if (result.status === 'failed') {
           if (pollRef.current) clearInterval(pollRef.current);
           setError(result.error || '生成失败');
@@ -139,9 +158,16 @@ export default function DreamImageModal({ dreamId, prompt, onClose }: Props) {
           </div>
 
           {status === 'idle' && (
-            <button className={styles.genBtn} onClick={startGeneration}>
-              生成图片
-            </button>
+            <div className={styles.intro}>
+              {usage && (
+                <p className={styles.quotaHint}>
+                  今日剩余生图次数：{usage.image.remaining} / {usage.image.limit}
+                </p>
+              )}
+              <button className={styles.genBtn} onClick={startGeneration} disabled={usage !== null && usage.image.remaining <= 0}>
+                {usage && usage.image.remaining <= 0 ? '今日次数已用完' : '生成图片'}
+              </button>
+            </div>
           )}
 
           {(status === 'submitting' || status === 'polling') && (

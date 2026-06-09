@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import type { Dream, EmotionType } from '../../types/dream';
 import { EMOTION_META } from '../../constants/emotions';
@@ -23,7 +22,6 @@ function emotionGlow(color: string): string {
 }
 
 export default function CalendarPage() {
-  const navigate = useNavigate();
   const today = new Date();
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth() + 1);
@@ -35,6 +33,8 @@ export default function CalendarPage() {
   const [recordedDates, setRecordedDates] = useState<string[]>([]);
   const [dateEmotions, setDateEmotions] = useState<Map<string, EmotionType[]>>(new Map());
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDateLoading, setIsDateLoading] = useState(false);
   const [fading, setFading] = useState(false);
 
   /* 加载记录日期列表和情绪分布数据 */
@@ -44,6 +44,8 @@ export default function CalendarPage() {
       setRecordedDates(datesData.dates);
     } catch (err: any) {
       setToast({ message: err.message || '加载日历数据失败', type: 'error' });
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -73,11 +75,15 @@ export default function CalendarPage() {
 
   useEffect(() => {
     if (selectedDate) {
+      setIsDateLoading(true);
       api.getDreamsByDate(selectedDate)
         .then(data => setDreamsByDate(data.dreams))
         .catch(() => {
           setToast({ message: '加载日期梦境失败', type: 'error' });
           setDreamsByDate([]);
+        })
+        .finally(() => {
+          setIsDateLoading(false);
         });
     }
   }, [selectedDate]);
@@ -197,18 +203,6 @@ export default function CalendarPage() {
               ))}
             </div>
           </aside>
-        </div>
-        <div className={`${styles.glassPanelLight} ${styles.mobileDreamSection} ${styles.skeleton}`}>
-          <div className={`${styles.mobileDreamTitle} ${styles.skeletonTitle}`}></div>
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className={`${styles.mobileDreamItem} ${styles.skeletonMobileItem}`}>
-              <div className={styles.skeletonMobileBar}></div>
-              <div className={styles.mobileDreamInfo}>
-                <div className={styles.skeletonMobileTitle}></div>
-                <div className={styles.skeletonMobileMeta}></div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     );
@@ -330,37 +324,6 @@ export default function CalendarPage() {
             )}
           </div>
         </aside>
-      </div>
-
-      {/* Mobile dream section */}
-      <div className={`${styles.glassPanelLight} ${styles.mobileDreamSection}`}>
-        <h3 className={styles.mobileDreamTitle}>{selectedDateDisplay} 的梦境</h3>
-        {isDateLoading ? (
-          <div className={styles.mobileLoading}>
-            <div className={styles.loadingSpinner}></div>
-          </div>
-        ) : dreamsByDate.length === 0 ? (
-          <p className={styles.noDreamsText}>这一天没有梦</p>
-        ) : (
-          dreamsByDate.map(dream => (
-            <div
-              key={dream.id}
-              onClick={() => navigate(`/dream/${dream.id}`)}
-              className={styles.mobileDreamItem}
-            >
-              <div
-                className={styles.mobileEmotionBar}
-                style={{ backgroundColor: EMOTION_META[dream.emotion].color }}
-              />
-              <div className={styles.mobileDreamInfo}>
-                <div className={styles.mobileDreamItemTitle}>{dream.title}</div>
-                <div className={styles.mobileDreamItemMeta}>
-                  {EMOTION_META[dream.emotion].icon} {EMOTION_META[dream.emotion].label}
-                </div>
-              </div>
-            </div>
-          ))
-        )}
       </div>
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}

@@ -145,6 +145,8 @@ const migrations: Migration[] = [
         ['image_format', 'png'],
         ['chat_model', 'deepseek-v4-flash'],
         ['chat_temperature', '0.7'],
+        ['daily_image_limit', '2'],
+        ['daily_chat_limit', '2'],
         ['system_prompt', `你是一位温和、专业的梦境研究者，熟悉荣格、弗洛伊德及现代积极心理学。
 请基于用户提供的「梦境画面描述」，输出一份结构化的中文解读。
 要求：
@@ -191,6 +193,13 @@ const migrations: Migration[] = [
     description: '给 users 表添加 token_invalidated_before 字段（密码修改后使旧 session 失效）',
     up: (db: SqlJsDatabase) => {
       try { db.run('ALTER TABLE users ADD COLUMN token_invalidated_before TEXT'); } catch (e) { /* 列已存在 */ }
+    },
+  },
+  {
+    version: 8,
+    description: '给 users 表添加 avatar 字段（用户头像）',
+    up: (db: SqlJsDatabase) => {
+      try { db.run('ALTER TABLE users ADD COLUMN avatar TEXT'); } catch (e) { /* 列已存在 */ }
     },
   },
 ];

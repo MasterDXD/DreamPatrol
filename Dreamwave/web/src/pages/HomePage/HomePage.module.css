@@ -65,12 +65,130 @@
 }
 
 .greeting {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  text-shadow: 0 0 24px rgba(167, 139, 250, 0.5), 0 0 48px rgba(126, 184, 218, 0.25);
-  animation: glowPulse 4s ease-in-out infinite;
-  margin-bottom: 4px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(20, 25, 55, 0.25);
+  background-image: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, 0.12) 0%,
+    rgba(126, 184, 218, 0.05) 50%,
+    rgba(217, 70, 239, 0.12) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    0 0 40px rgba(167, 139, 250, 0.1);
+  transition: all 300ms ease;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.greetingText {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e0d4ff 25%,
+    #a78bfa 50%,
+    #d4a5ff 75%,
+    #ffffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradientShift 8s ease infinite;
+  text-shadow: 0 0 24px rgba(167, 139, 250, 0.35);
+  display: inline-block;
+  filter: drop-shadow(0 2px 8px rgba(167, 139, 250, 0.4));
+}
+
+.greetingTime {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Menlo', monospace;
+  letter-spacing: 0.1em;
+  color: rgba(208, 188, 255, 0.9);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(167, 139, 250, 0.14);
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 14px rgba(167, 139, 250, 0.22);
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  transition: all 300ms ease;
+  align-self: center;
+}
+
+.greetingTime::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4cd7f6;
+  margin-right: 6px;
+  box-shadow: 0 0 6px #4cd7f6, 0 0 12px rgba(76, 215, 246, 0.5);
+  animation: livePulse 1.6s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%      { opacity: 0.4; transform: scale(0.7); }
+}
+
+.greeting::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transition: left 800ms ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.greeting:hover::after {
+  left: 100%;
+}
+
+.greeting:hover {
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(167, 139, 250, 0.2);
+  transform: translateY(-1px);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0 0, 0% 50%; }
+  50% { background-position: 0 0, 100% 50%; }
 }
 
 .welcomeSub {
@@ -99,8 +217,8 @@
 }
 
 .bentoGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -122,7 +240,7 @@
 
 .emotionGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   flex: 1;
 }
@@ -177,9 +295,10 @@
 
 .quickInputWrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
   flex: 1;
+  align-items: stretch;
 }
 
 .quickInputRow {
@@ -190,7 +309,7 @@
 
 .quickInput {
   flex: 1;
-  min-height: 80px;
+  min-height: 48px;
   padding: 12px 14px;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--color-border);
@@ -365,13 +484,26 @@
   }
 }
 
-/* ===== 响应式：小屏幕 Bento 改为单列 ===== */
-@media (max-width: 560px) {
-  .bentoGrid {
-    grid-template-columns: 1fr;
+/* ===== 响应式：小屏幕 ===== */
+@media (max-width: 768px) {
+  .emotionGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .emotionGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .greeting {
-    font-size: 24px;
+    font-size: 22px;
+    padding: 8px 14px;
+    gap: 8px;
+  }
+
+  .greetingTime {
+    font-size: 13px;
+    padding: 3px 9px;
   }
 }

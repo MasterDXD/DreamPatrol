@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { ConfigProvider, theme, App as AntApp, Spin } from 'antd';
+import { ConfigProvider, theme, App as AntApp } from 'antd';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import './admin-theme.css';
@@ -23,11 +23,27 @@ function PageLoading() {
   return (
     <div style={{
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: '200px',
+      minHeight: '400px',
+      gap: 16,
     }}>
-      <Spin size="large" tip="加载中..." style={{ color: '#a78bfa' }} />
+      <div style={{
+        width: 48,
+        height: 48,
+        border: '3px solid rgba(167, 139, 250, 0.2)',
+        borderTopColor: '#a78bfa',
+        borderRadius: '50%',
+        animation: 'spinnerRotate 1s linear infinite',
+        boxShadow: '0 0 20px rgba(167, 139, 250, 0.3)',
+      }}></div>
+      <span style={{
+        color: '#c6c6cd',
+        fontSize: 13,
+        letterSpacing: 2,
+        animation: 'textPulse 2s ease-in-out infinite',
+      }}>加载中...</span>
     </div>
   );
 }

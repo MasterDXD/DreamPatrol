@@ -140,6 +140,31 @@ export default function AIConfig() {
         </Form>
       </Card>
 
+      <Card title="用户每日限额" style={{ marginBottom: 16 }}>
+        <Form layout="vertical">
+          <Form.Item label="每日生图限额" help="每个用户每天可生成的图片数量">
+            <InputNumber
+              min={0}
+              max={100}
+              value={parseInt(config.daily_image_limit || '2', 10)}
+              onChange={v => updateField('daily_image_limit', String(v ?? 2))}
+              style={{ width: '100%' }}
+              addonAfter="次/天"
+            />
+          </Form.Item>
+          <Form.Item label="每日解读限额" help="每个用户每天可使用的梦境解读次数">
+            <InputNumber
+              min={0}
+              max={100}
+              value={parseInt(config.daily_chat_limit || '2', 10)}
+              onChange={v => updateField('daily_chat_limit', String(v ?? 2))}
+              style={{ width: '100%' }}
+              addonAfter="次/天"
+            />
+          </Form.Item>
+        </Form>
+      </Card>
+
       <Button type="primary" onClick={handleSave} loading={saving} size="large">
         保存配置
       </Button>

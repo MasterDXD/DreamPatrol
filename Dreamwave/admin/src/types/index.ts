@@ -5,6 +5,7 @@ export interface User {
   is_active: number;
   created_at: string;
   dream_count?: number;
+  avatar?: string | null;
 }
 
 export interface Dream {

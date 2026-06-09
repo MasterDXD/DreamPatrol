@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import app from './app';
 import { getDatabase, closeDatabase } from './db/database';
-import { seedDatabase } from './seed';
+import { seedDatabase, ensureDailyLimitConfig } from './seed';
 
 // 修复终端中文乱码：强制UTF-8输出
 if (process.stdout && typeof process.stdout.setEncoding === 'function') {
@@ -23,6 +23,13 @@ async function start() {
       await seedDatabase();
     } catch (seedErr) {
       console.warn('[Dreamwave] 种子数据初始化跳过:', seedErr);
+    }
+
+    // 确保每日限额配置键存在
+    try {
+      await ensureDailyLimitConfig();
+    } catch (limitErr) {
+      console.warn('[Dreamwave] 限额配置初始化跳过:', limitErr);
     }
 
     const server = app.listen(PORT, () => {

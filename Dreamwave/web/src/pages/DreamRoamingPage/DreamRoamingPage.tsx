@@ -13,6 +13,7 @@ import {
   loadInterpretArchive,
   saveInterpretArchive,
   loadDreamAIResults,
+  getDailyUsage,
 } from '../../services/dimilinks';
 import type { Dream } from '../../types/dream';
 import styles from './DreamRoamingPage.module.css';
@@ -185,6 +186,14 @@ export default function DreamRoamingPage() {
       return;
     }
 
+    // 检查配额
+    const imgUsage = await getDailyUsage();
+    if (imgUsage.image.remaining <= 0) {
+      setImgError(`今日生图次数已达上限（${imgUsage.image.limit}次/天）`);
+      setImgStatus('error');
+      return;
+    }
+
     setImgStatus('loading');
     setImgProgress(0);
     setImgError('');
@@ -226,6 +235,14 @@ export default function DreamRoamingPage() {
 
     if (!(await hasApiKey())) {
       setInterpError('请先在后台管理配置 AI API Key');
+      setInterpStatus('error');
+      return;
+    }
+
+    // 检查配额
+    const chatUsage = await getDailyUsage();
+    if (chatUsage.chat.remaining <= 0) {
+      setInterpError(`今日解读次数已达上限（${chatUsage.chat.limit}次/天）`);
       setInterpStatus('error');
       return;
     }

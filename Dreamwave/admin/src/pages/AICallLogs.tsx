@@ -90,6 +90,7 @@ export default function AICallLogs() {
           <Select.Option value="failed">❌ 失败</Select.Option>
           <Select.Option value="pending">⏳ 等待中</Select.Option>
           <Select.Option value="submitted">📤 已提交</Select.Option>
+          <Select.Option value="in_progress">🔄 进行中</Select.Option>
         </Select>
         <Button type="primary" onClick={handleFilter}>筛选</Button>
       </div>

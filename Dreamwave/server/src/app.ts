@@ -30,13 +30,15 @@ const authLimiter = rateLimit({
 // 中间件
 app.use(helmet());
 app.use(limiter);
-const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176').split(',');
+const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176,http://114.55.129.88:8080,http://114.55.129.88:5174').split(',');
 app.use(cors({
   origin: (origin, callback) => {
+    // 允许无 origin 的请求（如服务端请求、nginx 同源代理）
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed'));
+      console.warn(`[CORS] Rejected origin: ${origin}`);
+      callback(null, false);
     }
   },
   credentials: true,

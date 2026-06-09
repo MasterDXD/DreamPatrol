@@ -84,7 +84,7 @@ router.get('/users', authMiddleware, adminMiddleware, async (_req: Request, res:
   try {
     await getDatabase();
     const users = queryAll(
-      `SELECT u.id, u.username, u.role, u.is_active, u.created_at,
+      `SELECT u.id, u.username, u.role, u.is_active, u.created_at, u.avatar,
               (SELECT COUNT(*) FROM dreams WHERE user_id = u.id) as dream_count
        FROM users u WHERE u.role = 'user' ORDER BY u.created_at DESC`
     );
@@ -193,7 +193,7 @@ router.put('/ai-config', authMiddleware, adminMiddleware, auditLog('更新AI配�
       res.status(400).json({ error: '无效的配置数据' });
       return;
     }
-    const allowedKeys = ['api_key', 'image_model', 'image_size', 'image_resolution', 'image_format', 'chat_model', 'chat_temperature', 'system_prompt'];
+    const allowedKeys = ['api_key', 'image_model', 'image_size', 'image_resolution', 'image_format', 'chat_model', 'chat_temperature', 'system_prompt', 'daily_image_limit', 'daily_chat_limit'];
     for (const [key, value] of Object.entries(updates)) {
       if (allowedKeys.includes(key)) {
         run(
