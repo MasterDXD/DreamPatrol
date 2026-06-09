@@ -1,0 +1,542 @@
+/* ============================================================
+   DreamPlazaPage - 梦境广场（社区瀑布流）
+   设计参考：梦境广场.html
+   ============================================================ */
+
+.page {
+  min-height: 100%;
+  padding-bottom: 48px;
+  position: relative;
+}
+
+/* ----------- 页面标题区 ----------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #d4e4fa;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ----------- 搜索栏 ----------- */
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(45, 50, 90, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 240px;
+  transition: border-color 200ms ease;
+}
+
+.searchBar:focus-within {
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.searchIcon {
+  font-size: 18px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 13px;
+  width: 100%;
+  padding: 2px 0;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+/* ----------- 筛选标签栏 ----------- */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.filterBar::-webkit-scrollbar {
+  display: none;
+}
+
+.filterBtn {
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(45, 50, 90, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 220ms ease;
+  font-family: inherit;
+}
+
+.filterBtn:hover {
+  color: #fff;
+  background: rgba(45, 50, 90, 0.6);
+}
+
+.filterBtnActive {
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.1);
+}
+
+.filterDivider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.filterBtnWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filterBtnIcon {
+  font-size: 16px;
+}
+
+/* ----------- 瀑布流布局 ----------- */
+.masonryGrid {
+  column-count: 1;
+  column-gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .masonryGrid {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1200px) {
+  .masonryGrid {
+    column-count: 3;
+  }
+}
+
+/* ----------- 梦境卡片 ----------- */
+.card {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+  background: rgba(20, 25, 55, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 400ms ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 20px rgba(167, 139, 250, 0.15);
+}
+
+/* ----------- 卡片图片区 ----------- */
+.cardImageWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(87, 27, 193, 0.2);
+}
+
+.cardImageWrapLg {
+  height: 260px;
+}
+
+.cardImageWrapMd {
+  height: 200px;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.cardImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 25, 55, 0.9) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cardImageTags {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.cardImageTag {
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* ----------- 卡片内容区 ----------- */
+.cardBody {
+  padding: 16px 18px;
+}
+
+.cardTitle {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+  text-shadow: 0 0 8px rgba(167, 139, 250, 0.4);
+  line-height: 1.3;
+}
+
+.cardText {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin: 0 0 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ----------- 卡片底部 ----------- */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cardAuthor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  object-fit: cover;
+}
+
+.cardAvatarFallback {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(87, 27, 193, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cardAuthorName {
+  font-size: 12px;
+  color: #fff;
+}
+
+.cardActions {
+  display: flex;
+  gap: 14px;
+}
+
+.cardAction {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 200ms ease, transform 200ms ease;
+  padding: 0;
+  font-family: inherit;
+}
+
+.cardAction:hover {
+  color: #fff;
+}
+
+.cardActionLiked {
+  color: #f472b6;
+}
+
+.cardActionIcon {
+  font-size: 16px;
+  transition: transform 200ms ease;
+}
+
+.cardAction:hover .cardActionIcon {
+  transform: scale(1.15);
+}
+
+/* ----------- 纯文本卡片 ----------- */
+.cardTextOnly {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.12) 0%, rgba(124, 58, 237, 0.04) 100%);
+}
+
+.cardTextOnly .cardBody {
+  padding-top: 18px;
+}
+
+.cardTextOnlyTags {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cardTextOnlyTag {
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.cardTextOnlyTagMuted {
+  color: #94a3b8;
+}
+
+.cardQuote {
+  font-size: 16px;
+  font-style: italic;
+  font-family: 'Plus Jakarta Sans', 'Georgia', serif;
+  color: #fff;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+/* ----------- 加载更多 ----------- */
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  padding-bottom: 24px;
+}
+
+.loadMoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: rgba(45, 50, 90, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+  font-family: inherit;
+}
+
+.loadMoreBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.loadMoreIcon {
+  font-size: 18px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------- 空状态 ----------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.emptyHint {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* ----------- 加载骨架 ----------- */
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeletonCard {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+  background: rgba(20, 25, 55, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonImage {
+  height: 200px;
+  background: rgba(87, 27, 193, 0.15);
+}
+
+.skeletonBody {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeletonLine {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+}
+
+.skeletonLine:first-child {
+  width: 60%;
+  height: 18px;
+}
+
+.skeletonLine:nth-child(2) {
+  width: 100%;
+}
+
+.skeletonLine:nth-child(3) {
+  width: 85%;
+}
+
+.skeletonLine:last-child {
+  width: 40%;
+  height: 10px;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* ----------- 响应式 ----------- */
+@media (max-width: 640px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .searchBar {
+    width: 160px;
+  }
+
+  .cardImageWrapLg {
+    height: 200px;
+  }
+
+  .cardImageWrapMd {
+    height: 160px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+}
+
+/* ----------- 减动效偏好 ----------- */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardImage,
+  .loadMoreBtn,
+  .cardActionIcon {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -10,6 +10,7 @@ interface LayoutProps {
 const NAV_ITEMS = [
   { path: '/', icon: 'fa-solid fa-house', label: '首页' },
   { path: '/dreams', icon: 'fa-solid fa-cloud-moon', label: '我的梦境' },
+  { path: '/plaza', icon: 'fa-solid fa-users', label: '梦境广场' },
   { path: '/stats', icon: 'fa-solid fa-star', label: '情绪星图' },
   { path: '/calendar', icon: 'fa-regular fa-calendar', label: '梦境日历' },
   { path: '/settings', icon: 'fa-solid fa-gear', label: '设置' },
@@ -17,7 +18,7 @@ const NAV_ITEMS = [
 
 const MOBILE_NAV = [
   { path: '/', icon: 'fa-solid fa-house', label: '首页' },
-  { path: '/dreams', icon: 'fa-solid fa-cloud-moon', label: '梦境' },
+  { path: '/plaza', icon: 'fa-solid fa-users', label: '广场' },
   { path: '/calendar', icon: 'fa-regular fa-calendar', label: '日历' },
   { path: '/settings', icon: 'fa-solid fa-user', label: '我的' },
 ];

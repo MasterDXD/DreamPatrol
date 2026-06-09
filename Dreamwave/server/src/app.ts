@@ -30,7 +30,7 @@ const authLimiter = rateLimit({
 // 中间件
 app.use(helmet());
 app.use(limiter);
-const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176,http://114.55.129.88:8080,http://114.55.129.88:5174').split(',');
+const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173,http://localhost:5174').split(',').map(s => s.trim()).filter(Boolean);
 app.use(cors({
   origin: (origin, callback) => {
     // 允许无 origin 的请求（如服务端请求、nginx 同源代理）
@@ -38,7 +38,7 @@ app.use(cors({
       callback(null, true);
     } else {
       console.warn(`[CORS] Rejected origin: ${origin}`);
-      callback(null, false);
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
     }
   },
   credentials: true,
@@ -59,9 +59,30 @@ app.use('/api/tags', tagRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/ai', aiRoutes);
 
-// 健康检查
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'dreamwave', timestamp: new Date().toISOString() });
+// 健康检查（包含数据库连通性）
+app.get('/api/health', async (_req, res) => {
+  const health: { status: string; service: string; timestamp: string; database?: string } = {
+    status: 'ok',
+    service: 'dreamwave',
+    timestamp: new Date().toISOString(),
+  };
+  try {
+    const { getDatabase, queryOne } = await import('./db/database');
+    await getDatabase();
+    const row = queryOne('SELECT 1 as ok');
+    health.database = row?.ok === 1 ? 'ok' : 'error';
+    if (health.database !== 'ok') {
+      health.status = 'degraded';
+      res.status(503).json(health);
+      return;
+    }
+  } catch (err) {
+    health.status = 'degraded';
+    health.database = 'unreachable';
+    res.status(503).json(health);
+    return;
+  }
+  res.json(health);
 });
 
 // 404处理

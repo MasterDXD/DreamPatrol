@@ -12,6 +12,7 @@ const DreamDetailPage = lazy(() => import('./pages/DreamDetailPage/DreamDetailPa
 const CalendarPage = lazy(() => import('./pages/CalendarPage/CalendarPage'));
 const StatsPage = lazy(() => import('./pages/StatsPage/StatsPage'));
 const EditDreamPage = lazy(() => import('./pages/EditDreamPage/EditDreamPage'));
+const DreamPlazaPage = lazy(() => import('./pages/DreamPlazaPage/DreamPlazaPage'));
 const DreamRoamingPage = lazy(() => import('./pages/DreamRoamingPage/DreamRoamingPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage/SettingsPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
@@ -98,6 +99,7 @@ export default function App() {
             <Route path="dream/:id" element={<div className="page-enter"><DreamDetailPage /></div>} />
             <Route path="dream/:id/edit" element={<div className="page-enter"><EditDreamPage /></div>} />
             <Route path="dream/:id/roaming" element={<DreamRoamingPage />} />
+            <Route path="plaza" element={<div className="page-enter"><DreamPlazaPage /></div>} />
             <Route path="calendar" element={<div className="page-enter"><CalendarPage /></div>} />
             <Route path="stats" element={<div className="page-enter"><StatsPage /></div>} />
             <Route path="settings" element={<div className="page-enter"><SettingsPage /></div>} />

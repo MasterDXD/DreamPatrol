@@ -326,6 +326,18 @@ export default function DreamRoamingPage() {
           </div>
         </div>
 
+        {/* 情绪标签 */}
+        <div className={styles.moodTags}>
+          <div className={styles.moodTag} style={{ borderColor: `${meta.color}40` }}>
+            <span className={styles.moodDot} style={{ backgroundColor: meta.color }} />
+            <span className={styles.moodLabel} style={{ color: meta.color }}>{meta.icon} {meta.label} 85%</span>
+          </div>
+          <div className={styles.moodTag} style={{ borderColor: '#d0bcff40' }}>
+            <span className={styles.moodDot} style={{ backgroundColor: '#d0bcff' }} />
+            <span className={styles.moodLabel} style={{ color: '#d0bcff' }}>自由 70%</span>
+          </div>
+        </div>
+
         {/* 梦境叙事卡片 */}
         <section className={styles.narrativeCard}>
           <div className={styles.narrativeGlow} style={{ background: `${meta.color}20` }} />

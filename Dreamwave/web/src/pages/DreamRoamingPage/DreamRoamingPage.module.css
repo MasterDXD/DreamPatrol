@@ -210,6 +210,39 @@
   color: #c6c6cd;
 }
 
+/* ----------- 情绪百分比标签（参考幻梦云端） ----------- */
+.moodTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.moodTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(5, 20, 36, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.moodDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.moodLabel {
+  font-family: 'Geist', 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
 /* ----------- 梦境叙事卡片 ----------- */
 .narrativeCard {
   position: relative;

@@ -60,3 +60,17 @@ coverage/
 # 临时脚本
 create_admin.py
 deploy.py
+check_docker.py
+check_status.py
+cleanup_and_up.py
+inspect_dockerfiles.py
+poll_build.py
+rebuild.py
+rebuild_clean.py
+start_background_build.py
+test_auth.py
+deploy_continue.py
+fix_and_rebuild.py
+
+# 音频备份
+_backup_*/

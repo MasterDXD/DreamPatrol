@@ -3,3 +3,10 @@ dist/
 data/
 .env
 *.db
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+coverage/

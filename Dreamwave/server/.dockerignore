@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# 环境变量与本地配置（绝对不能进入镜像）
+.env
+.env.*
+!.env.example
+
+# 依赖与构建产物
+node_modules
+dist
+build
+*.tsbuildinfo
+
+# 测试
+coverage
+**/__tests__
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+vitest.config.ts
+.env.test
+
+# 文档与开发脚本
+docs
+README.md
+*.md
+
+# IDE / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# 数据与日志
+data
+*.db
+*.log
+npm-debug.log*
