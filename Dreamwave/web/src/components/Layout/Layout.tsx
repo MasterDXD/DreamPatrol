@@ -62,7 +62,6 @@ export default function Layout({ onLogout }: LayoutProps) {
           {/* Logo */}
           <div className={styles.logoSection}>
             <img src="/assets/logo.jpg" alt="巡梦" className={styles.logoTitle} />
-            {!collapsed && <p className={styles.logoSub}>巡梦</p>}
           </div>
 
           {/* Navigation */}

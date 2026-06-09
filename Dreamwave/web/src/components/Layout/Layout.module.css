@@ -80,7 +80,7 @@
 }
 
 .sidebarCollapsed .logoTitle {
-  height: 100px;
+  height: 75px;
 }
 
 .sidebarCollapsed .logoSub {
@@ -138,8 +138,9 @@
 }
 
 .logoTitle {
-  height: 200px;
+  height: 120px;
   width: auto;
+  max-width: 100%;
   display: block;
   object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.6));

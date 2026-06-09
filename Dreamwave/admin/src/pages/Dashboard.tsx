@@ -81,7 +81,6 @@ export default function Dashboard() {
                   colorField="type"
                   color={pieData.map((d) => d.color)}
                   radius={0.9}
-                  label={{ type: 'outer', content: '{name} {percentage}' }}
                   legend={{ position: 'bottom' as const }}
                   interactions={[{ type: 'pie-legend-active' }, { type: 'element-active' }]}
                 />

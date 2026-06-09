@@ -336,6 +336,33 @@ docker compose up -d
 
 ---
 
+## 项目质量指标
+
+| 指标 | 值 |
+|------|-----|
+| TypeScript 编译 | 0 errors（3个项目） |
+| 后端测试 | 35/35 通过 |
+| 前端测试 | 6/6 通过 |
+| API 端点 | 29个 |
+| 数据库表 | 6张 |
+| 前端页面 | 10个（web）+ 7个（admin） |
+| 前端组件 | 15个独立组件 |
+| 安全措施 | JWT环境变量 + CORS限制 + 速率限制 + Token黑名单 + 异步bcrypt |
+| 部署方式 | Docker Compose（3容器） |
+
+---
+
+## 项目文档
+
+| 文档 | 路径 | 说明 |
+|------|------|------|
+| 开发计划 | [docs/开发计划.md](Dreamwave/docs/开发计划.md) | 完整功能模块划分与技术选型 |
+| 开发进度 | [docs/开发进度.md](Dreamwave/docs/开发进度.md) | 51个任务完成状态与验证结果 |
+| 资源清单 | [docs/资源检查清单与更新说明.md](Dreamwave/docs/资源检查清单与更新说明.md) | 代码审查与命名规范检查 |
+| 子项目 README | [Dreamwave/README.md](Dreamwave/README.md) | Dreamwave 项目详细说明 |
+
+---
+
 ## 资源版权
 
 所有图片、音频资源版权说明见 [Dreamwave/web/public/assets/资源清单与版权说明.md](Dreamwave/web/public/assets/资源清单与版权说明.md)
