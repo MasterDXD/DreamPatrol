@@ -1,0 +1,655 @@
+/* ============================================================
+   DreamRoamingPage - 沉浸式梦境漫游
+   设计参考：幻梦云端-梦境漫游.html
+   ============================================================ */
+
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #051424;
+  color: #d4e4fa;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  opacity: 1;
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.entering {
+  opacity: 0;
+}
+
+/* ----------- 沉浸式背景 ----------- */
+.bgLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bgImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  filter: blur(2px);
+}
+
+.bgGradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.8;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(5, 20, 36, 0.2) 0%, rgba(5, 20, 36, 0.6) 50%, rgba(5, 20, 36, 0.95) 100%);
+}
+
+/* ----------- 大气星云 ----------- */
+.nebula1 {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(87, 27, 193, 0.15);
+  border-radius: 9999px;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 1;
+  animation: nebulaFloat 12s ease-in-out infinite;
+}
+
+.nebula2 {
+  position: fixed;
+  bottom: 20%;
+  right: 15%;
+  width: 28rem;
+  height: 28rem;
+  background: rgba(76, 215, 246, 0.08);
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 1;
+  animation: nebulaFloat 16s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+@keyframes nebulaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ----------- 顶部导航栏 ----------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 56px;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.headerBackBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: #bec6e0;
+  cursor: pointer;
+  transition: background 200ms ease;
+  font-size: 22px;
+}
+
+.headerBackBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.headerTitle {
+  flex: 1;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #bec6e0;
+  text-shadow: 0 0 10px rgba(190, 198, 224, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerSpacer {
+  width: 40px;
+}
+
+/* ----------- 主内容区 ----------- */
+.main {
+  position: relative;
+  z-index: 10;
+  padding: 72px 24px 120px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: contentEnter 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+}
+
+@keyframes contentEnter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ----------- 元信息行 ----------- */
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.8;
+}
+
+.metaLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metaDate {
+  font-family: 'Geist', 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #c6c6cd;
+}
+
+.emotionPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(5, 20, 36, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.emotionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.emotionLabel {
+  font-family: 'Geist', 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #c6c6cd;
+}
+
+/* ----------- 梦境叙事卡片 ----------- */
+.narrativeCard {
+  position: relative;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.narrativeGlow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+  transition: transform 700ms ease;
+}
+
+.narrativeCard:hover .narrativeGlow {
+  transform: scale(1.1);
+}
+
+.narrativeTitle {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #d0bcff;
+  text-shadow: 0 0 10px rgba(190, 198, 224, 0.5);
+  margin-bottom: 12px;
+  line-height: 1.3;
+  position: relative;
+}
+
+.narrativeText {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #c6c6cd;
+  position: relative;
+}
+
+.narrativeSection {
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.narrativeDivider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin-bottom: 12px;
+}
+
+.narrativeExtra {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #909097;
+  font-style: italic;
+}
+
+/* ----------- 潜意识解读卡片 ----------- */
+.interpretCard {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.interpretHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.interpretIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 27, 33, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(76, 215, 246, 0.2);
+  flex-shrink: 0;
+}
+
+.interpretTitle {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #d4e4fa;
+  flex: 1;
+}
+
+.interpretTrigger {
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(87, 27, 193, 0.6), rgba(0, 141, 165, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: box-shadow 200ms ease, filter 200ms ease;
+  flex-shrink: 0;
+}
+
+.interpretTrigger:hover {
+  box-shadow: 0 0 20px rgba(76, 215, 246, 0.4);
+  filter: brightness(1.1);
+}
+
+.interpretContent {
+  background: rgba(1, 15, 31, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 15px;
+  line-height: 1.7;
+  color: #c6c6cd;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* 解读内容中的章节标题 */
+.interpretContent :global(.interpSection) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4cd7f6;
+  margin: 14px 0 8px;
+  padding: 4px 0 4px 10px;
+  border-left: 3px solid #4cd7f6;
+}
+
+.interpretContent :global(.interpSection:first-child) {
+  margin-top: 0;
+}
+
+.interpretContent :global(.interpPara) {
+  margin: 6px 0;
+  padding-left: 4px;
+  line-height: 1.7;
+}
+
+.interpretContent :global(.interpList) {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.interpretContent :global(.interpItem) {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(20, 25, 55, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.interpretContent :global(.interpItem:hover) {
+  border-color: rgba(76, 215, 246, 0.3);
+}
+
+.interpretContent :global(.interpBullet) {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4cd7f6;
+  color: #051424;
+  font-size: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 兼容旧版 */
+.interpretContent h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4cd7f6;
+  margin: 14px 0 8px;
+  padding: 4px 0 4px 10px;
+  border-left: 3px solid #4cd7f6;
+}
+
+.interpretContent p { margin: 6px 0; }
+
+.interpretContent ul {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+
+.interpretContent li {
+  margin: 4px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(20, 25, 55, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ----------- 梦境画廊卡片 ----------- */
+.galleryCard {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.galleryHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.galleryImage {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.galleryImage img {
+  width: 100%;
+  display: block;
+}
+
+/* ----------- 加载与错误 ----------- */
+.loadingWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+  color: #c6c6cd;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #4cd7f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.miniSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #4cd7f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.loadingBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(76, 215, 246, 0.05);
+  border-radius: 12px;
+  font-size: 13px;
+  color: #c6c6cd;
+}
+
+.progressBar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #4cd7f6;
+  border-radius: 2px;
+  transition: width 300ms ease;
+}
+
+.errorBox {
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 180, 171, 0.1);
+  color: #ffb4ab;
+  font-size: 13px;
+}
+
+.backBtn {
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(87, 27, 193, 0.6), rgba(0, 141, 165, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ----------- 底部音乐控制栏 ----------- */
+.musicBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(5, 20, 36, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.musicToggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(5, 20, 36, 0.5);
+  color: #bec6e0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease, border-color 200ms ease;
+  flex-shrink: 0;
+}
+
+.musicToggle:hover {
+  background: rgba(87, 27, 193, 0.4);
+  border-color: #4cd7f6;
+}
+
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 200px;
+}
+
+.volumeSlider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4cd7f6;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(76, 215, 246, 0.4);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4cd7f6;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px rgba(76, 215, 246, 0.4);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------- 响应式 ----------- */
+@media (max-width: 640px) {
+  .main {
+    padding: 64px 16px 100px;
+  }
+
+  .narrativeTitle {
+    font-size: 22px;
+  }
+
+  .narrativeText {
+    font-size: 15px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+
+  .volumeControl {
+    max-width: 140px;
+  }
+}
+
+/* ----------- 减动效偏好 ----------- */
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .main,
+  .narrativeGlow,
+  .nebula1,
+  .nebula2,
+  .emotionDot {
+    animation: none !important;
+    transition: none !important;
+  }
+}

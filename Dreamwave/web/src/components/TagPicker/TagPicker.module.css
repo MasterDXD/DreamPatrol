@@ -1,31 +1,31 @@
 .container {
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .label {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: block;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 16px;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
   border: 1.5px solid var(--color-border);
   background: var(--color-surface);
   cursor: pointer;
   transition: border-color 150ms ease, background 150ms ease;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .tag:hover {
@@ -51,13 +51,13 @@
 .addBtn {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 16px;
+  padding: 4px 10px;
+  border-radius: 12px;
   border: 1.5px dashed var(--color-border);
   background: transparent;
   color: var(--color-text-secondary);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
   transition: border-color 150ms ease;
 }
 

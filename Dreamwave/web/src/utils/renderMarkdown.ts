@@ -16,6 +16,12 @@ function escapeHtml(text: string): string {
     .replace(/'/g, '&#39;');
 }
 
+/** 将 **xxx** 解析为 <strong>，先转义再插入标签 */
+function inlineBold(text: string): string {
+  // 文本已经过 escapeHtml，但 ** 不含需要转义的字符，可直接处理
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
 /** 增强 Markdown 渲染，带语义化类名和章节图标，跳过 # 梦境之名 */
 export function renderMarkdown(md: string): string {
   const lines = md.split(/\r?\n/);
@@ -49,12 +55,12 @@ export function renderMarkdown(md: string): string {
     } else if (/^[-*]\s+/.test(t)) {
       if (!inList) { html += '<ul class="interpList">'; inList = true; listIndex = 0; }
       listIndex++;
-      html += `<li class="interpItem"><span class="interpBullet">${listIndex}</span>${escapeHtml(t.replace(/^[-*]\s+/, ''))}</li>`;
+      html += `<li class="interpItem"><span class="interpBullet">${listIndex}</span>${inlineBold(escapeHtml(t.replace(/^[-*]\s+/, '')))}</li>`;
     } else if (t === '') {
       if (inList) { html += '</ul>'; inList = false; }
     } else {
       if (inList) { html += '</ul>'; inList = false; }
-      html += `<p class="interpPara">${escapeHtml(t)}</p>`;
+      html += `<p class="interpPara">${inlineBold(escapeHtml(t))}</p>`;
     }
   }
   if (inList) html += '</ul>';

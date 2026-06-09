@@ -132,7 +132,7 @@ router.put('/password', authMiddleware, async (req: Request, res: Response) => {
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
-    run('UPDATE users SET password_hash = ?, updated_at = datetime("now") WHERE id = ?', [newHash, userId]);
+    run('UPDATE users SET password_hash = ?, token_invalidated_before = datetime("now"), updated_at = datetime("now") WHERE id = ?', [newHash, userId]);
 
     // 将当前token加入黑名单，强制重新登录
     const authHeader = req.headers.authorization;

@@ -38,7 +38,7 @@ services:
     container_name: dreamwave-web
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       server:
         condition: service_healthy

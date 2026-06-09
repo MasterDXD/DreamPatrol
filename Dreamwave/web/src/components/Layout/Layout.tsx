@@ -83,15 +83,35 @@ export default function Layout({ onLogout }: LayoutProps) {
           </nav>
         </div>
 
-        {/* Bottom: Collapse + Theme + Logout */}
+        {/* Bottom: User Profile + Theme + Logout */}
         <div className={styles.sidebarBottom}>
+          <div className={styles.userProfile}>
+            <img
+              className={styles.userAvatar}
+              src="/assets/images/avatar-default.png"
+              alt="用户头像"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.src.includes('ui-avatars')) {
+                  img.src = 'https://ui-avatars.com/api/?name=Dreamer&background=7c3aed&color=fff&size=80';
+                }
+              }}
+            />
+            <div className={styles.userInfo}>
+              <div className={styles.userGreeting}>
+                <span>晚安</span>
+                <i className="fa-solid fa-moon"></i>
+              </div>
+              <span className={styles.userDreamCount}>梦境探索者</span>
+            </div>
+          </div>
+          <div className={styles.themeRow}>
+            <ThemeToggle />
+          </div>
           <button className={styles.collapseBtn} onClick={toggleCollapse} title={collapsed ? '展开菜单' : '收起菜单'}>
             <i className={`fa-solid ${collapsed ? 'fa-angles-right' : 'fa-angles-left'} ${styles.collapseIcon}`}></i>
             {!collapsed && <span className={styles.navLabel}>收起菜单</span>}
           </button>
-          <div className={styles.themeRow}>
-            <ThemeToggle />
-          </div>
           <button className={styles.logoutBtn} onClick={handleLogout} title="退出登录">
             <i className="fa-solid fa-right-from-bracket"></i>
             <span className={styles.navLabel}>退出</span>

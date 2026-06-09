@@ -250,3 +250,31 @@ export async function loadDreamAIResults(dreamId: string): Promise<DreamAIResult
   } catch {}
   return { image: null, interpretation: null, pendingImageTask: null };
 }
+
+/** 批量从后端获取多个梦境的 AI 结果 */
+export async function batchLoadDreamAIResults(dreamIds: string[]): Promise<Record<string, DreamAIResults>> {
+  if (dreamIds.length === 0) return {};
+  const token = getToken();
+  try {
+    const res = await fetch(`${API_BASE}/ai/dreams/results`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ dream_ids: dreamIds }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const results: Record<string, DreamAIResults> = data.results || {};
+      // 同步到 localStorage 缓存
+      for (const [id, result] of Object.entries(results)) {
+        const r = result as DreamAIResults;
+        if (r.image?.url) saveImageArchive(id, [{ url: r.image.url }]);
+        if (r.interpretation?.text) saveInterpretArchive(id, r.interpretation.text);
+      }
+      return results;
+    }
+  } catch {}
+  return {};
+}

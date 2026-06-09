@@ -223,7 +223,7 @@ export default function NewDreamPage() {
         value={content}
         onChange={e => setContent(e.target.value)}
         placeholder="昨晚，你梦见了什么…"
-        autoFocus rows={8} maxLength={5000}
+        autoFocus rows={5} maxLength={5000}
         className={styles.textarea}
       />
       <div className={styles.charCount}>

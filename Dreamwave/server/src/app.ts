@@ -14,14 +14,14 @@ const app = express();
 // 速率限制
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15分钟
-  max: 100, // 每个IP最多100次请求
+  max: 500, // 每个IP最多500次请求（SPA频繁交互需要较高上限）
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: '请求过于频繁，请稍后再试', code: 'RATE_LIMIT' },
 });
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 50, // 认证接口：开发环境放宽，生产环境可调回 10
+  max: 30, // 认证接口：防止暴力破解
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: '登录尝试过多，请稍后再试', code: 'AUTH_RATE_LIMIT' },

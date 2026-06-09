@@ -91,19 +91,17 @@ export default function Login({ onLogin }: LoginProps) {
       }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <h1 style={{
-            fontSize: 28,
-            fontWeight: 800,
-            letterSpacing: 6,
-            color: 'transparent',
-            background: 'linear-gradient(135deg, #7eb8da 0%, #a78bfa 40%, #c4b5fd 70%, #f0abfc 100%)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            filter: 'drop-shadow(0 0 12px rgba(167, 139, 250, 0.4))',
-            marginBottom: 6,
-          }}>
-            巡梦
-          </h1>
+          <img
+            src="/assets/logo.jpg"
+            alt="巡梦"
+            style={{
+              height: 48,
+              width: 'auto',
+              objectFit: 'contain',
+              marginBottom: 6,
+              filter: 'drop-shadow(0 0 12px rgba(167, 139, 250, 0.4))',
+            }}
+          />
           <p style={{
             fontSize: 13,
             color: '#94a3b8',

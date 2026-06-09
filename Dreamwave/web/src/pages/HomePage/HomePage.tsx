@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import type { Dream, EmotionType } from '../../types/dream';
@@ -75,51 +75,6 @@ export default function HomePage() {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [quickEmotion, setQuickEmotion] = useState<EmotionType | ''>('');
   const [quickText, setQuickText] = useState('');
-  const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef<any>(null);
-
-  /** 初始化 Web Speech API */
-  const getSpeechRecognition = useCallback(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) return null;
-    return new SpeechRecognition();
-  }, []);
-
-  const toggleListening = useCallback(() => {
-    if (isListening) {
-      recognitionRef.current?.stop();
-      setIsListening(false);
-      return;
-    }
-    const recognition = getSpeechRecognition();
-    if (!recognition) {
-      setToast({ message: '当前浏览器不支持语音识别', type: 'error' });
-      return;
-    }
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'zh-CN';
-    recognition.onresult = (event: any) => {
-      let finalTranscript = '';
-      let interimTranscript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript;
-        } else {
-          interimTranscript += transcript;
-        }
-      }
-      if (finalTranscript) {
-        setQuickText(prev => prev + finalTranscript);
-      }
-    };
-    recognition.onerror = () => setIsListening(false);
-    recognition.onend = () => setIsListening(false);
-    recognitionRef.current = recognition;
-    recognition.start();
-    setIsListening(true);
-  }, [isListening, getSpeechRecognition]);
 
   const loadDreams = useCallback(async () => {
     setLoading(true);
@@ -263,23 +218,14 @@ export default function HomePage() {
             <div className={styles.quickInputArea}>
               <span className={styles.bentoLabel}>快速记梦</span>
               <div className={styles.quickInputWrap}>
-                <div className={styles.quickInputRow}>
-                  <input
-                    type="text"
-                    className={styles.quickInput}
-                    placeholder="梦见了什么…"
-                    value={quickText}
-                    onChange={e => setQuickText(e.target.value)}
-                    onKeyDown={e => { if (e.key === 'Enter') handleQuickSubmit(); }}
-                  />
-                  <button
-                    className={`${styles.voiceToggleBtn} ${isListening ? styles.voiceToggleBtnActive : ''}`}
-                    onClick={toggleListening}
-                    title={isListening ? '停止语音输入' : '语音输入'}
-                  >
-                    {isListening ? '⏹' : '🎤'}
-                  </button>
-                </div>
+                <input
+                  type="text"
+                  className={styles.quickInput}
+                  placeholder="梦见了什么…"
+                  value={quickText}
+                  onChange={e => setQuickText(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') handleQuickSubmit(); }}
+                />
                 <button className={styles.quickSubmitBtn} onClick={handleQuickSubmit}>
                   记录
                 </button>
@@ -317,7 +263,7 @@ export default function HomePage() {
         <div className={styles.noResults}>没有找到匹配的梦境</div>
       ) : isSearchMode ? (
         dreams.map(dream => (
-          <DreamCard key={dream.id} dream={dream} onFavoriteToggle={loadDreams} />
+          <DreamCard key={dream.id} dream={dream} />
         ))
       ) : (
         GROUP_ORDER.map(group => {
@@ -328,7 +274,7 @@ export default function HomePage() {
               <h2 className={styles.groupHeader}>{GROUP_LABELS[group]}</h2>
               <div className={styles.groupList}>
                 {groupDreams.map(dream => (
-                  <DreamCard key={dream.id} dream={dream} onFavoriteToggle={loadDreams} />
+                  <DreamCard key={dream.id} dream={dream} />
                 ))}
               </div>
             </div>

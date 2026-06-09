@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../../services/api';
 import type { Dream } from '../../types/dream';
@@ -6,7 +6,6 @@ import { EMOTION_META } from '../../constants/emotions';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Toast from '../../components/Toast/Toast';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
-import { useEmotionTheme } from '../../hooks/useEmotionTheme';
 import { loadImageArchive, loadInterpretArchive, loadDreamAIResults } from '../../services/dimilinks';
 import { renderMarkdown } from '../../utils/renderMarkdown';
 import styles from './DreamDetailPage.module.css';
@@ -23,10 +22,6 @@ export default function DreamDetailPage() {
   const [relatedDreams, setRelatedDreams] = useState<Dream[]>([]);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [interpretHtml, setInterpretHtml] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // 设置情绪主题CSS变量
-  useEmotionTheme(dream?.emotion ?? null, containerRef);
 
   useEffect(() => {
     if (!id) return;
@@ -124,7 +119,7 @@ export default function DreamDetailPage() {
   const narrativeDisabled = isGenerating || !!dream.narrative || !!narrative;
 
   return (
-    <div ref={containerRef} className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.inner}>
         {/* Back button */}
         <button onClick={() => navigate(-1)} className={styles.backBtn}>

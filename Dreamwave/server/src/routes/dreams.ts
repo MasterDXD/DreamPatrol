@@ -446,19 +446,23 @@ router.post('/:dreamId/tags', authMiddleware, async (req: Request, res: Response
       return;
     }
 
-    // 验证所有标签属于当前用户
-    for (const tagId of tagIds) {
-      const tag = queryOne('SELECT id FROM tags WHERE id = ? AND user_id = ?', [tagId, userId]);
-      if (!tag) {
-        res.status(404).json({ error: `标签 ${tagId} 不存在` });
-        return;
-      }
+    // 验证所有标签属于当前用户（批量 IN 查询）
+    const placeholders = tagIds.map(() => '?').join(',');
+    const validTags = queryAll(
+      `SELECT id FROM tags WHERE id IN (${placeholders}) AND user_id = ?`,
+      [...tagIds, userId]
+    ) as any[];
+    const validTagIds = new Set(validTags.map(t => t.id));
+    const invalidTags = tagIds.filter((id: string) => !validTagIds.has(id));
+    if (invalidTags.length > 0) {
+      res.status(404).json({ error: `标签 ${invalidTags[0]} 不存在` });
+      return;
     }
 
-    // 插入关联（忽略已存在的）
-    for (const tagId of tagIds) {
-      try { run('INSERT OR IGNORE INTO dream_tags (dream_id, tag_id) VALUES (?, ?)', [dreamId, tagId]); } catch {}
-    }
+    // 批量插入关联（忽略已存在的）
+    const values = tagIds.map((tagId: string) => `(?, ?)`).join(',');
+    const params = tagIds.flatMap((tagId: string) => [dreamId, tagId]);
+    try { run(`INSERT OR IGNORE INTO dream_tags (dream_id, tag_id) VALUES ${values}`, params); } catch {}
 
     res.json({ message: '添加成功' });
   } catch (err) {

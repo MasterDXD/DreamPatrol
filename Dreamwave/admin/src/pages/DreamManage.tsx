@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Input, Popconfirm, message, Tag, Space, Modal } from 'antd';
+import { Table, Button, Input, Popconfirm, message, Tag, Space, Modal, Typography } from 'antd';
 import { adminApi } from '../services/api';
 import { EMOTION_LABELS } from '../constants/emotions';
 import type { Dream } from '../types';
 
+const { Paragraph, Title } = Typography;
 
 export default function DreamManage() {
   const [dreams, setDreams] = useState<Dream[]>([]);
@@ -125,126 +126,59 @@ export default function DreamManage() {
 
       {/* 梦境详情弹窗 */}
       <Modal
+        title={detailDream?.title || '梦境详情'}
         open={!!detailDream}
         onCancel={() => setDetailDream(null)}
         footer={null}
         width={720}
-        closable
-        styles={{
-          content: {
-            background: 'rgba(18, 33, 49, 0.95)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: 20,
-            padding: 0,
-            overflow: 'hidden',
-          },
-          header: {
-            background: 'linear-gradient(135deg, rgba(87, 27, 193, 0.15), rgba(76, 215, 246, 0.08))',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-            padding: '20px 28px',
-          },
-          body: { padding: '24px 28px 28px' },
-        }}
-        title={
-          detailDream ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{
-                fontSize: 20,
-                fontWeight: 700,
-                color: '#fff',
-                textShadow: '0 0 12px rgba(167,139,250,0.5)',
-                letterSpacing: '0.02em',
-              }}>
-                {detailDream.title}
-              </span>
-            </div>
-          ) : '梦境详情'
-        }
       >
         {detailDream && (
           <div>
-            {/* 情绪 & 日期 */}
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24,
-            }}>
-              <Tag color={EMOTION_LABELS[detailDream.emotion]?.color || '#999'} style={{
-                borderRadius: 9999, padding: '3px 14px', fontSize: 13,
-              }}>
+            <div style={{ marginBottom: 16 }}>
+              <Tag color={EMOTION_LABELS[detailDream.emotion]?.color || '#999'}>
                 {EMOTION_LABELS[detailDream.emotion]?.label || detailDream.emotion}
               </Tag>
-              <span style={{ color: '#94a3b8', fontSize: 13 }}>
+              <span style={{ color: '#94a3b8', marginLeft: 8 }}>
                 {detailDream.recorded_date}
               </span>
             </div>
 
             {/* 梦境图 */}
             {detailDream.image_url && (
-              <div style={{ marginBottom: 24 }}>
-                <h4 style={{
-                  color: '#c6c6cd', fontSize: 12, fontWeight: 600,
-                  textTransform: 'uppercase', letterSpacing: '0.08em',
-                  marginBottom: 10,
-                }}>
-                  梦境图
-                </h4>
-                <div style={{
-                  borderRadius: 16, overflow: 'hidden',
-                  border: '1px solid rgba(167,139,250,0.2)',
-                  boxShadow: '0 0 24px rgba(167,139,250,0.1)',
-                  background: 'rgba(0,0,0,0.3)',
-                }}>
-                  <img
-                    src={getImageFullUrl(detailDream.image_url)}
-                    alt="梦境图"
-                    style={{
-                      width: '100%', maxHeight: 380, objectFit: 'contain', display: 'block',
-                    }}
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                  />
-                </div>
+              <div style={{ marginBottom: 20 }}>
+                <Title level={5}>梦境图</Title>
+                <img
+                  src={getImageFullUrl(detailDream.image_url)}
+                  alt="梦境图"
+                  style={{
+                    width: '100%', maxHeight: 400, objectFit: 'contain',
+                    borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)',
+                    background: 'rgba(0,0,0,0.2)',
+                  }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
               </div>
             )}
 
-            {/* 梦境内容 */}
-            <div style={{ marginBottom: 24 }}>
-              <h4 style={{
-                color: '#c6c6cd', fontSize: 12, fontWeight: 600,
-                textTransform: 'uppercase', letterSpacing: '0.08em',
-                marginBottom: 10,
-              }}>
-                梦境内容
-              </h4>
-              <div style={{
-                padding: 20, borderRadius: 16,
-                background: 'rgba(5, 20, 36, 0.5)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                color: '#e2e8f0', lineHeight: 1.9, fontSize: 14,
-                whiteSpace: 'pre-wrap',
-              }}>
-                {detailDream.content}
-              </div>
-            </div>
+            <Title level={5}>梦境内容</Title>
+            <Paragraph>{detailDream.content}</Paragraph>
 
             {/* 梦境解读 */}
             {detailDream.interpretation && (
-              <div style={{ marginBottom: 24 }}>
-                <h4 style={{
-                  color: '#d0bcff', fontSize: 12, fontWeight: 600,
-                  textTransform: 'uppercase', letterSpacing: '0.08em',
-                  marginBottom: 10,
-                  textShadow: '0 0 8px rgba(167,139,250,0.4)',
-                }}>
-                  溯梦心语
-                </h4>
-                <div style={{
-                  padding: 20, borderRadius: 16,
-                  background: 'linear-gradient(135deg, rgba(87, 27, 193, 0.12), rgba(167, 139, 250, 0.06))',
-                  border: '1px solid rgba(167,139,250,0.18)',
-                  boxShadow: '0 0 20px rgba(167,139,250,0.06)',
-                  color: '#e2e8f0', lineHeight: 1.9, fontSize: 14,
-                  whiteSpace: 'pre-wrap',
-                }}>
+              <div style={{ marginTop: 16 }}>
+                <Title level={5}>溯梦心语</Title>
+                <div
+                  style={{
+                    padding: 16,
+                    borderRadius: 12,
+                    background: 'rgba(167, 139, 250, 0.08)',
+                    border: '1px solid rgba(167, 139, 250, 0.15)',
+                    color: '#e2e8f0',
+                    lineHeight: 1.8,
+                    fontSize: 14,
+                    whiteSpace: 'pre-wrap',
+                  }}
+                >
                   {detailDream.interpretation}
                 </div>
               </div>
@@ -252,24 +186,9 @@ export default function DreamManage() {
 
             {/* 叙事解读 */}
             {detailDream.narrative && (
-              <div>
-                <h4 style={{
-                  color: '#4cd7f6', fontSize: 12, fontWeight: 600,
-                  textTransform: 'uppercase', letterSpacing: '0.08em',
-                  marginBottom: 10,
-                  textShadow: '0 0 8px rgba(76,215,246,0.4)',
-                }}>
-                  叙事解读
-                </h4>
-                <div style={{
-                  padding: 20, borderRadius: 16,
-                  background: 'linear-gradient(135deg, rgba(0, 141, 165, 0.1), rgba(76, 215, 246, 0.05))',
-                  border: '1px solid rgba(76,215,246,0.15)',
-                  color: '#c6c6cd', lineHeight: 1.9, fontSize: 14,
-                  whiteSpace: 'pre-wrap',
-                }}>
-                  {detailDream.narrative}
-                </div>
+              <div style={{ marginTop: 16 }}>
+                <Title level={5}>叙事解读</Title>
+                <Paragraph type="secondary">{detailDream.narrative}</Paragraph>
               </div>
             )}
           </div>

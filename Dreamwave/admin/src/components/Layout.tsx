@@ -52,7 +52,7 @@ export default function Layout({ onLogout }: LayoutProps) {
           {/* Logo */}
           <div className={styles.logoSection}>
             <img
-              src="/assets/logo_black.png"
+              src="/assets/logo.jpg"
               alt="巡梦 XUNMENG"
               className={styles.logoImg}
             />

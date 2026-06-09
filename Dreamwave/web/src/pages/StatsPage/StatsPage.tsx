@@ -77,7 +77,7 @@ export default function StatsPage() {
           <div className={styles.kpiTop}>
             <span className={styles.kpiLabel}>记录总数</span>
             <div className={`${styles.kpiIcon} ${styles.kpiIconTertiary}`}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
               </svg>
             </div>
@@ -87,7 +87,7 @@ export default function StatsPage() {
             <span className={styles.kpiUnit}>场</span>
           </div>
           <p className={styles.kpiTrend}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
             比上月增加 12%
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function StatsPage() {
           <div className={styles.kpiTop}>
             <span className={styles.kpiLabel}>平均深度</span>
             <div className={`${styles.kpiIcon} ${styles.kpiIconSecondary}`}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z"/>
               </svg>
             </div>
@@ -114,7 +114,7 @@ export default function StatsPage() {
           <div className={styles.kpiTop}>
             <span className={styles.kpiLabel}>连续记录</span>
             <div className={`${styles.kpiIcon} ${styles.kpiIconPrimary}`}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
               </svg>
             </div>
@@ -124,7 +124,7 @@ export default function StatsPage() {
             <span className={styles.kpiUnit}>天</span>
           </div>
           <p className={styles.kpiTrendPrimary}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
             保持记录习惯
           </p>
         </div>
@@ -205,7 +205,7 @@ export default function StatsPage() {
                   x="100" y="92"
                   textAnchor="middle"
                   fill="#ffffff"
-                  fontSize="28"
+                  fontSize="18"
                   fontWeight="600"
                   fontFamily="inherit"
                 >
@@ -215,7 +215,7 @@ export default function StatsPage() {
                   x="100" y="115"
                   textAnchor="middle"
                   fill="#94a3b8"
-                  fontSize="12"
+                  fontSize="9"
                   fontFamily="inherit"
                 >
                   主导情绪
@@ -318,28 +318,30 @@ export default function StatsPage() {
         {/* Row 4: AI Insight (span 12) */}
         <div className={styles.aiCard}>
           <div className={styles.aiDecorIcon}>
-            <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
             </svg>
           </div>
           <div className={styles.aiContent}>
             <div className={styles.aiIconSquare}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
                 <path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z"/>
               </svg>
             </div>
-            <h3 className={styles.aiTitle}>AI 织梦洞察</h3>
-            <p className={styles.aiText}>
-              {dominant
-                ? `本周你的梦境中主导情绪为「${dominantMeta?.label || dominant.emotion}」，占比 ${dominantPct}%。${
-                    secondaryEmotions.length > 0
-                      ? `次要情绪包括${secondaryEmotions
-                          .map(e => EMOTION_META[e.emotion as keyof typeof EMOTION_META]?.label || e.emotion)
-                          .join('和')}。`
-                      : ''
-                  }${stats.topTags.length > 0 ? `高频元素「${stats.topTags[0].name}」反复出现，暗示着内心正在经历深层的情感整合。建议在睡前进行10分钟的冥想，帮助潜意识平稳着陆。` : '建议保持记录习惯，更多数据将帮助生成更精准的洞察。'}`
-                : '记录更多梦境后，AI 将为你生成个性化的潜意识洞察。'}
-            </p>
+            <div className={styles.aiTextWrap}>
+              <h3 className={styles.aiTitle}>AI 织梦洞察</h3>
+              <p className={styles.aiText}>
+                {dominant
+                  ? `本周你的梦境中主导情绪为「${dominantMeta?.label || dominant.emotion}」，占比 ${dominantPct}%。${
+                      secondaryEmotions.length > 0
+                        ? `次要情绪包括${secondaryEmotions
+                            .map(e => EMOTION_META[e.emotion as keyof typeof EMOTION_META]?.label || e.emotion)
+                            .join('和')}。`
+                        : ''
+                    }${stats.topTags.length > 0 ? `高频元素「${stats.topTags[0].name}」反复出现，暗示着内心正在经历深层的情感整合。建议在睡前进行10分钟的冥想，帮助潜意识平稳着陆。` : '建议保持记录习惯，更多数据将帮助生成更精准的洞察。'}`
+                  : '记录更多梦境后，AI 将为你生成个性化的潜意识洞察。'}
+              </p>
+            </div>
           </div>
         </div>
       </div>

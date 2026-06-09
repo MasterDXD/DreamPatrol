@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 import type { Dream, EmotionType } from '../../types/dream';
 import { EMOTION_META } from '../../constants/emotions';
 import Toast from '../../components/Toast/Toast';
+import DreamCard from '../../components/DreamCard/DreamCard';
 import styles from './CalendarPage.module.css';
 
 const MONTH_NAMES = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
@@ -145,24 +146,6 @@ export default function CalendarPage() {
     return `${parseInt(m)}月${parseInt(d)}日`;
   }, [selectedDate]);
 
-  // Format dream time from created_at
-  function formatDreamTime(createdAt: string): string {
-    try {
-      const d = new Date(createdAt);
-      const h = d.getHours();
-      const min = String(d.getMinutes()).padStart(2, '0');
-      if (h >= 0 && h < 5) return `凌晨 ${String(h).padStart(2, '0')}:${min}`;
-      if (h >= 5 && h < 8) return `清晨 ${String(h).padStart(2, '0')}:${min}`;
-      if (h >= 8 && h < 12) return `上午 ${String(h).padStart(2, '0')}:${min}`;
-      if (h >= 12 && h < 14) return `中午 ${String(h).padStart(2, '0')}:${min}`;
-      if (h >= 14 && h < 18) return `下午 ${String(h).padStart(2, '0')}:${min}`;
-      if (h >= 18 && h < 21) return `傍晚 ${String(h).padStart(2, '0')}:${min}`;
-      return `夜晚 ${String(h).padStart(2, '0')}:${min}`;
-    } catch {
-      return '';
-    }
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.mainLayout}>
@@ -268,36 +251,9 @@ export default function CalendarPage() {
             {dreamsByDate.length === 0 ? (
               <p className={styles.noDreamsText}>这一天没有梦</p>
             ) : (
-              dreamsByDate.map(dream => {
-                const meta = EMOTION_META[dream.emotion];
-                return (
-                  <div
-                    key={dream.id}
-                    onClick={() => navigate(`/dream/${dream.id}`)}
-                    className={`${styles.glassPanelLight} ${styles.dreamCard}`}
-                  >
-                    <div className={styles.dreamCardTop}>
-                      <div className={styles.dreamCardLeft}>
-                        <div
-                          className={styles.emotionIconCircle}
-                          style={{
-                            background: `${meta.color}20`,
-                            border: `1px solid ${meta.color}50`,
-                          }}
-                        >
-                          {meta.icon}
-                        </div>
-                        <span className={styles.dreamCardTime}>{formatDreamTime(dream.created_at)}</span>
-                      </div>
-                    </div>
-                    <h3 className={styles.dreamCardTitle}>{dream.title}</h3>
-                    <p className={styles.dreamCardPreview}>{dream.content}</p>
-                    <div className={styles.dreamCardTags}>
-                      <span className={styles.emotionTag}>{meta.label}</span>
-                    </div>
-                  </div>
-                );
-              })
+              dreamsByDate.map(dream => (
+                <DreamCard key={dream.id} dream={dream} compact />
+              ))
             )}
           </div>
         </aside>

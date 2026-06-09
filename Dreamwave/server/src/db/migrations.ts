@@ -185,6 +185,13 @@ const migrations: Migration[] = [
       try { db.run('ALTER TABLE dreams ADD COLUMN interpretation TEXT'); } catch (e) { /* 列已存在 */ }
     },
   },
+  {
+    version: 7,
+    description: '给 users 表添加 token_invalidated_before 字段（密码修改后使旧 session 失效）',
+    up: (db: SqlJsDatabase) => {
+      try { db.run('ALTER TABLE users ADD COLUMN token_invalidated_before TEXT'); } catch (e) { /* 列已存在 */ }
+    },
+  },
 ];
 
 export async function runMigrations(db: SqlJsDatabase): Promise<void> {

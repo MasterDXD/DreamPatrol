@@ -341,4 +341,77 @@ router.get('/dream/:dreamId/results', authMiddleware, async (req: Request, res: 
   }
 });
 
+// POST /api/ai/dreams/results — 批量获取多个梦境的 AI 结果
+router.post('/dreams/results', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const user = (req as any).user;
+    const { dream_ids } = req.body as { dream_ids?: string[] };
+
+    if (!Array.isArray(dream_ids) || dream_ids.length === 0) {
+      res.json({ results: {} });
+      return;
+    }
+
+    // 限制最多 100 个
+    const ids = dream_ids.slice(0, 100);
+    await getDatabase();
+
+    const placeholders = ids.map(() => '?').join(',');
+
+    // 批量获取所有生图记录
+    const imageLogs = queryAll(
+      `SELECT dream_id, result_url, status, created_at FROM ai_call_logs WHERE dream_id IN (${placeholders}) AND user_id = ? AND call_type = 'image' AND status = 'succeeded' AND result_url IS NOT NULL ORDER BY created_at DESC`,
+      [...ids, user.userId]
+    ) as any[];
+
+    // 批量获取所有解读记录
+    const chatLogs = queryAll(
+      `SELECT dream_id, result_text, status, created_at FROM ai_call_logs WHERE dream_id IN (${placeholders}) AND user_id = ? AND call_type = 'chat' AND status = 'succeeded' AND result_text IS NOT NULL ORDER BY created_at DESC`,
+      [...ids, user.userId]
+    ) as any[];
+
+    // 批量获取进行中的生图任务
+    const pendingImages = queryAll(
+      `SELECT dream_id, id as log_id, task_id FROM ai_call_logs WHERE dream_id IN (${placeholders}) AND user_id = ? AND call_type = 'image' AND status IN ('pending', 'submitted') ORDER BY created_at DESC`,
+      [...ids, user.userId]
+    ) as any[];
+
+    // 按梦境 ID 组织结果（每类只取最新一条）
+    const imageMap = new Map<string, { url: string; createdAt: string }>();
+    for (const log of imageLogs) {
+      if (!imageMap.has(log.dream_id)) {
+        imageMap.set(log.dream_id, { url: log.result_url, createdAt: log.created_at });
+      }
+    }
+
+    const chatMap = new Map<string, { text: string; createdAt: string }>();
+    for (const log of chatLogs) {
+      if (!chatMap.has(log.dream_id)) {
+        chatMap.set(log.dream_id, { text: log.result_text, createdAt: log.created_at });
+      }
+    }
+
+    const pendingMap = new Map<string, { logId: string; taskId: string }>();
+    for (const log of pendingImages) {
+      if (!pendingMap.has(log.dream_id)) {
+        pendingMap.set(log.dream_id, { logId: log.log_id, taskId: log.task_id || '' });
+      }
+    }
+
+    const results: Record<string, any> = {};
+    for (const id of ids) {
+      results[id] = {
+        image: imageMap.get(id) || null,
+        interpretation: chatMap.get(id) || null,
+        pendingImageTask: pendingMap.get(id) || null,
+      };
+    }
+
+    res.json({ results });
+  } catch (err) {
+    console.error('[AI] POST /dreams/results error:', err);
+    res.status(500).json({ error: '批量获取AI结果失败' });
+  }
+});
+
 export default router;

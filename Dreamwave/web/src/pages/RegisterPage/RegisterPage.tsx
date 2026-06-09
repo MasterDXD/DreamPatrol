@@ -76,7 +76,9 @@ export default function RegisterPage({ onRegister }: RegisterPageProps) {
         )}
 
         <div className={styles.inputGroup}>
+          <label htmlFor="reg-username" className={styles.srOnly}>用户名</label>
           <input
+            id="reg-username"
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
@@ -86,7 +88,9 @@ export default function RegisterPage({ onRegister }: RegisterPageProps) {
           />
         </div>
         <div className={styles.inputGroup}>
+          <label htmlFor="reg-password" className={styles.srOnly}>密码</label>
           <input
+            id="reg-password"
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -96,7 +100,9 @@ export default function RegisterPage({ onRegister }: RegisterPageProps) {
           />
         </div>
         <div className={styles.inputGroupLast}>
+          <label htmlFor="reg-confirm-password" className={styles.srOnly}>确认密码</label>
           <input
+            id="reg-confirm-password"
             type="password"
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}

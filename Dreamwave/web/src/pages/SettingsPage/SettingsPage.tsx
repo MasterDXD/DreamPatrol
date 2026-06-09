@@ -125,30 +125,36 @@ export default function SettingsPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>修改密码</h2>
         <div className={styles.formGroup}>
-          <label className={styles.label}>当前密码</label>
+          <label className={styles.label} htmlFor="current-password">当前密码</label>
           <input
+            id="current-password"
             type="password"
             className={styles.input}
             value={currentPassword}
             onChange={e => setCurrentPassword(e.target.value)}
+            autoComplete="current-password"
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>新密码</label>
+          <label className={styles.label} htmlFor="new-password">新密码</label>
           <input
+            id="new-password"
             type="password"
             className={styles.input}
             value={newPassword}
             onChange={e => setNewPassword(e.target.value)}
+            autoComplete="new-password"
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>确认新密码</label>
+          <label className={styles.label} htmlFor="confirm-new-password">确认新密码</label>
           <input
+            id="confirm-new-password"
             type="password"
             className={styles.input}
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
           />
         </div>
         <button
