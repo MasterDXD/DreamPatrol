@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import WhiteNoise from '../WhiteNoise/WhiteNoise';
 import AmbientMusic, { isAmbientMusicVisible } from '../AmbientMusic/AmbientMusic';
 import styles from './Layout.module.css';
 
@@ -64,7 +62,7 @@ export default function Layout({ onLogout }: LayoutProps) {
           {/* Logo */}
           <div className={styles.logoSection}>
             <img src="/assets/logo.jpg" alt="巡梦" className={styles.logoTitle} />
-            {!collapsed && <p className={styles.logoSub}>Dream Rover</p>}
+            {!collapsed && <p className={styles.logoSub}>巡梦</p>}
           </div>
 
           {/* Navigation */}
@@ -105,9 +103,7 @@ export default function Layout({ onLogout }: LayoutProps) {
               <span className={styles.userDreamCount}>梦境探索者</span>
             </div>
           </div>
-          <div className={styles.themeRow}>
-            <ThemeToggle />
-          </div>
+
           <button className={styles.logoutBtn} onClick={handleLogout} title="退出登录">
             <i className="fa-solid fa-right-from-bracket"></i>
             <span className={styles.navLabel}>退出</span>
@@ -159,9 +155,6 @@ export default function Layout({ onLogout }: LayoutProps) {
           </Link>
         ))}
       </nav>
-
-      {/* 白噪音控制面板 */}
-      <WhiteNoise />
 
       {/* 氛围音乐 */}
       {showMusic && <AmbientMusic />}

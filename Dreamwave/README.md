@@ -9,7 +9,7 @@
 
 </div>
 
-[![License: MIT](../Harness_V1_0609/LICENSE)](../Harness_V1_0609/LICENSE)
+[![License: MIT](LICENSE)](LICENSE)
 
 ## 品牌标识
 
@@ -129,27 +129,35 @@ docker compose up -d
 
 ### 用户前端（web/）
 
-- ✅ 文本录入梦境 + 语音录入（Web Speech API）
-- ✅ 6 种情绪标记：喜悦 / 平静 / 悲伤 / 恐惧 / 奇妙 / 怀念
-- ✅ 梦境卡片列表（时间倒序 + 情绪氛围背景）
-- ✅ 梦境详情页（情绪主题 + AI 叙事生成）
-- ✅ 日历视图（月历 + 情绪标记点）
-- ✅ 编辑 / 删除梦境
-- ✅ 情绪统计 + 洞察报告
-- ✅ 用户注册 / 登录
-- ✅ 主题切换（明 / 暗）
-- ✅ 白噪音播放（雨声 / 夏夜 / 林风）
-- ✅ 沉浸式动效（流星 / 星空 / 萤火虫）
+| 功能 | 状态 | 说明 |
+|------|------|------|
+| 梦境记录 | ✅ | 文本录入 + 语音录入（Web Speech API） |
+| 情绪标记 | ✅ | 6种情绪维度（喜悦/平静/悲伤/恐惧/奇妙/怀念） |
+| 标签系统 | ✅ | 自定义标签 + 梦境关联 + 标签筛选 |
+| 搜索功能 | ✅ | 关键字搜索 + 情绪/标签/收藏组合筛选 |
+| 梦境卡片 | ✅ | 时间倒序 + 情绪氛围背景 + 收藏星标 |
+| 梦境详情 | ✅ | 情绪主题 + AI 叙事生成 + 相关梦境推荐 |
+| 日历视图 | ✅ | 月历 + 情绪标记点 + 日期筛选 |
+| 编辑删除 | ✅ | 编辑/删除已有梦境 |
+| 情绪统计 | ✅ | 个人情绪趋势图 + 梦境频率统计 + 标签统计 |
+| 收藏功能 | ✅ | 收藏/取消收藏重要梦境 |
+| 导出功能 | ✅ | 梦境导出为 Markdown/TXT/JSON |
+| 白噪音 | ✅ | 雨声 / 夏夜 / 林风三种环境音 |
+| 沉浸动效 | ✅ | 流星 / 星空 / 萤火虫 / 星云动画 |
+| 暗色模式 | ✅ | 亮/暗主题切换 |
+| 用户认证 | ✅ | 注册 / 登录 / 修改密码 / Token 刷新 |
 
 ### 后台管理（admin/）
 
-- ✅ 数据概览统计（梦境数 / 用户数 / 情绪分布）
-- ✅ 梦境管理（搜索 / 删除）
-- ✅ 用户管理（启用 / 禁用）
-- ✅ AI 调用日志
-- ✅ AI 配置管理
-- ✅ 操作日志审计
-- ✅ 系统设置
+| 功能 | 状态 | 说明 |
+|------|------|------|
+| 数据概览 | ✅ | 梦境数 / 用户数 / 情绪分布统计 + 趋势图表 |
+| 梦境管理 | ✅ | 查看所有梦境 + 搜索 + 删除 + 详情弹窗 |
+| 用户管理 | ✅ | 用户列表 + 分页搜索 + 启用/禁用 |
+| AI 配置 | ✅ | AI 模型参数配置 |
+| AI 调用日志 | ✅ | AI 解读调用记录与统计 |
+| 操作日志 | ✅ | 管理员操作记录审计 |
+| 系统设置 | ✅ | 基础配置管理 |
 
 ## 技术栈
 
@@ -166,25 +174,72 @@ docker compose up -d
 
 ## API 概览
 
+### 认证（6个）
+
 | 路径 | 方法 | 说明 | 鉴权 |
 |------|------|------|------|
 | `/api/auth/register` | POST | 用户注册 | 否 |
 | `/api/auth/login` | POST | 用户登录 | 否 |
+| `/api/auth/me` | GET | 获取当前用户 | 是 |
 | `/api/auth/logout` | POST | 用户登出（Token 加入黑名单） | 是 |
-| `/api/dreams` | GET | 梦境列表（分页 / 筛选） | 是 |
+| `/api/auth/refresh` | POST | 刷新 Token | 是 |
+| `/api/auth/password` | PUT | 修改密码 | 是 |
+
+### 梦境（16个）
+
+| 路径 | 方法 | 说明 | 鉴权 |
+|------|------|------|------|
+| `/api/dreams` | GET | 梦境列表（分页 / 情绪筛选） | 是 |
 | `/api/dreams` | POST | 创建梦境 | 是 |
+| `/api/dreams/search` | GET | 搜索（关键字/情绪/标签/收藏） | 是 |
+| `/api/dreams/stats` | GET | 个人统计 | 是 |
+| `/api/dreams/export` | GET | 导出（markdown/txt/json） | 是 |
+| `/api/dreams/dates/list` | GET | 有记录的日期列表 | 是 |
+| `/api/dreams/date/:date` | GET | 按日期查询 | 是 |
 | `/api/dreams/:id` | GET | 梦境详情 | 是 |
 | `/api/dreams/:id` | PUT | 更新梦境 | 是 |
 | `/api/dreams/:id` | DELETE | 删除梦境 | 是 |
-| `/api/tags` | GET | 标签列表 | 是 |
+| `/api/dreams/:id/narrative` | POST | 生成叙事 | 是 |
+| `/api/dreams/:id/favorite` | PUT | 切换收藏 | 是 |
+| `/api/dreams/:id/related` | GET | 相关梦境推荐 | 是 |
+| `/api/dreams/:id/tags` | GET | 获取标签列表 | 是 |
+| `/api/dreams/:id/tags` | POST | 添加标签 | 是 |
+| `/api/dreams/:id/tags/:tagId` | DELETE | 移除标签 | 是 |
+
+### 标签（4个）
+
+| 路径 | 方法 | 说明 | 鉴权 |
+|------|------|------|------|
+| `/api/tags` | GET | 获取所有标签 | 是 |
+| `/api/tags` | POST | 创建标签 | 是 |
+| `/api/tags/:id` | PUT | 更新标签 | 是 |
+| `/api/tags/:id` | DELETE | 删除标签 | 是 |
+
+### AI（1个）
+
+| 路径 | 方法 | 说明 | 鉴权 |
+|------|------|------|------|
 | `/api/ai/interpret` | POST | AI 梦境解读 | 是 |
-| `/api/admin/stats` | GET | 管理统计 | 管理员 |
+
+### 管理（7个）
+
+| 路径 | 方法 | 说明 | 鉴权 |
+|------|------|------|------|
+| `/api/admin/stats` | GET | 统计概览 | 管理员 |
+| `/api/admin/stats/trends` | GET | 趋势数据 | 管理员 |
+| `/api/admin/dreams` | GET | 梦境列表 | 管理员 |
+| `/api/admin/dreams/:id` | DELETE | 删除梦境 | 管理员 |
 | `/api/admin/users` | GET | 用户列表 | 管理员 |
-| `/api/admin/dreams` | GET | 全部梦境 | 管理员 |
-| `/api/admin/ai-config` | GET / PUT | AI 配置 | 管理员 |
-| `/api/admin/ai-logs` | GET | AI 调用日志 | 管理员 |
-| `/api/admin/operation-logs` | GET | 操作日志 | 管理员 |
+| `/api/admin/users/:id/status` | PUT | 切换用户状态 | 管理员 |
+| `/api/admin/logs` | GET | 操作日志 | 管理员 |
+
+### 系统（1个）
+
+| 路径 | 方法 | 说明 | 鉴权 |
+|------|------|------|------|
 | `/api/health` | GET | 健康检查 | 否 |
+
+**API 端点总计：29个**
 
 ## 环境变量
 

@@ -114,16 +114,17 @@ export async function pollImageTask(taskId: string, logId?: string): Promise<Ima
   } catch {
     throw new Error(`查询任务失败：服务器返回了非预期格式 (${res.status})`);
   }
-  if (!res.ok) throw new Error(data.error || `查询失败 (${res.status})`);
+  if (!res.ok) throw new Error(data.error?.message || data.error || `查询失败 (${res.status})`);
 
   const status = data.status as string;
-  const progress = data.progress ?? 0;
+  const progress = data.progress ?? data.processed_images ?? data.task_progress ?? 0;
 
   if (status === 'succeeded') {
-    const imgs = (data.result?.data || []).map((d: any) => {
+    const imgArray = data.result?.data || data.images || data.result?.images || [];
+    const imgs = imgArray.map((d: any) => {
       let url = d.url || '';
       if (url.startsWith('/')) url = 'https://dimilinks.com' + url;
-      return { url, fileId: d.file_id };
+      return { url, fileId: d.file_id || d.id };
     });
     return { taskId, images: imgs, status: 'succeeded', progress: 100 };
   }
@@ -134,7 +135,7 @@ export async function pollImageTask(taskId: string, logId?: string): Promise<Ima
       images: [],
       status: 'failed',
       progress: 100,
-      error: data.error?.message || '生成失败',
+      error: data.error?.message || data.message || data.error || '生成失败',
     };
   }
 

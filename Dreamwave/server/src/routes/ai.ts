@@ -135,12 +135,13 @@ router.get('/tasks/:taskId', authMiddleware, async (req: Request, res: Response)
     }
 
     const status: string = data.status as string;
+    const progress = data.progress ?? data.processed_images ?? 0;
 
     // 更新调用记录
     if (log_id && typeof log_id === 'string') {
       await getDatabase();
       if (status === 'succeeded') {
-        const imgs: { url: string; fileId?: string }[] = (data.result?.data || []).map((d: ApiData) => {
+        const imgs: { url: string; fileId?: string }[] = (data.result?.data || data.images || []).map((d: ApiData) => {
           let url: string = d.url || '';
           if (url.startsWith('/')) url = DIMILINKS_BASE.replace('/v1', '') + url;
           return { url, fileId: d.file_id };
@@ -151,7 +152,7 @@ router.get('/tasks/:taskId', authMiddleware, async (req: Request, res: Response)
           ['succeeded', resultUrl, log_id]
         );
       } else if (status === 'failed') {
-        const errMsg: string = data.error?.message || '生成失败';
+        const errMsg: string = data.error?.message || data.message || '生成失败';
         run(
           'UPDATE ai_call_logs SET status = ?, error_message = ?, completed_at = datetime("now") WHERE id = ?',
           ['failed', errMsg, log_id]
@@ -159,7 +160,19 @@ router.get('/tasks/:taskId', authMiddleware, async (req: Request, res: Response)
       }
     }
 
-    res.json(data);
+    // 统一返回格式，兼容不同 API 版本
+    if (status === 'succeeded') {
+      const imgs = (data.result?.data || data.images || []).map((d: ApiData) => {
+        let url = d.url || '';
+        if (url.startsWith('/')) url = DIMILINKS_BASE.replace('/v1', '') + url;
+        return { url, fileId: d.file_id };
+      });
+      res.json({ task_id: taskId, status, progress: 100, result: { data: imgs } });
+    } else if (status === 'failed') {
+      res.json({ task_id: taskId, status, progress: 100, error: { message: data.error?.message || data.message || '生成失败' } });
+    } else {
+      res.json({ task_id: taskId, status, progress });
+    }
   } catch (err: any) {
     console.error('[AI] GET /tasks/:taskId error:', err);
     res.status(500).json({ error: '查询任务状态失败' });

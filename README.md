@@ -43,8 +43,24 @@ DreamPatrol/
 └── Dreamwave/                # 梦境记录 Web 应用
     ├── docs/                 # 开发文档（计划、进度、资源清单）
     ├── server/               # 后端服务 (Express + sql.js + JWT)
+    │   ├── src/
+    │   │   ├── db/           # 数据库（sql.js + 版本化迁移）
+    │   │   ├── middleware/   # 中间件（认证/审计/错误处理/Token黑名单）
+    │   │   ├── routes/       # 路由（auth/dreams/tags/ai/admin）
+    │   │   ├── utils/        # 工具（情绪映射/叙事生成）
+    │   │   └── __tests__/    # 测试（单元+集成+API测试）
+    │   └── data/             # SQLite数据文件
     ├── web/                  # 用户前端 (React + TypeScript + Vite)
+    │   ├── src/
+    │   │   ├── pages/        # 页面（Home/NewDream/Detail/Calendar/Stats/Settings/Roaming）
+    │   │   ├── components/   # 组件（DreamCard/EmotionPicker/TagPicker/SearchBar/WhiteNoise等）
+    │   │   ├── hooks/        # Hooks（useEmotionTheme/useFireflyParticles/useMeteors/useStarTrail）
+    │   │   └── services/     # API封装
+    │   └── public/assets/    # 资源（18张情绪背景图/6种情绪图标/3种白噪音）
     ├── admin/                # 后台管理 (React + Ant Design + Vite)
+    │   └── src/
+    │       ├── pages/        # 页面（Dashboard/DreamManage/UserManage/AIConfig/AICallLogs/OperationLogs）
+    │       └── components/   # 组件（Layout）
     ├── 参考页面/             # 早期静态参考页面与设计稿
     ├── docker-compose.yml
     ├── LICENSE
@@ -125,25 +141,29 @@ docker compose up -d
 
 ### 用户前端（web/）
 
-- 文本录入梦境 + 语音录入（Web Speech API）
-- 6 种情绪标记：喜悦 / 平静 / 悲伤 / 恐惧 / 奇妙 / 怀念
-- 梦境卡片列表（时间倒序 + 情绪氛围背景）
-- 梦境详情页（情绪主题 + AI 叙事生成）
-- 日历视图（月历 + 情绪标记点）
-- 编辑 / 删除梦境
-- 情绪统计 + 洞察报告
-- 用户注册 / 登录
-- 主题切换（明 / 暗）
-- 白噪音播放（雨声 / 夏夜 / 林风）
-- 沉浸式动效（流星 / 星空 / 萤火虫）
+- 📝 **梦境记录**：文本录入 + 语音录入（Web Speech API）
+- 💭 **情绪标记**：6 种情绪维度（喜悦 / 平静 / 悲伤 / 恐惧 / 奇妙 / 怀念）
+- 🗂️ **标签系统**：自定义标签 + 梦境关联 + 标签筛选
+- 🔍 **搜索功能**：关键字搜索 + 情绪/标签/收藏组合筛选
+- 📅 **日历视图**：月历 + 情绪标记点 + 日期筛选
+- 📊 **情绪统计**：个人情绪趋势图 + 梦境频率统计 + 标签统计
+- 🔖 **收藏功能**：收藏/取消收藏重要梦境
+- 📤 **导出功能**：梦境导出为 Markdown/TXT/JSON
+- 🎵 **沉浸氛围**：白噪音播放（雨声 / 夏夜 / 林风）+ 情绪主题背景
+- ✨ **沉浸式动效**：流星 / 星空 / 萤火虫 / 星云动画
+- 🌙 **暗色模式**：亮/暗主题切换
+- 🔄 **梦境关联**：基于情绪/标签的相关梦境推荐
+- 🔐 **用户管理**：注册 / 登录 / 修改密码 / Token 刷新
 
 ### 后台管理（admin/）
 
-- 数据概览统计（梦境数 / 用户数 / 情绪分布）
-- 梦境管理（搜索 / 删除）
-- 用户管理（启用 / 禁用）
-- AI 调用日志 / AI 配置管理
-- 操作日志审计 / 系统设置
+- 📈 **数据概览**：梦境数 / 用户数 / 情绪分布统计 + 趋势图表
+- 💭 **梦境管理**：查看所有梦境 + 搜索 + 删除 + 详情弹窗
+- 👥 **用户管理**：用户列表 + 分页搜索 + 启用/禁用
+- 🤖 **AI 配置**：AI 模型参数配置
+- 📋 **AI 调用日志**：AI 解读调用记录与统计
+- 📝 **操作日志审计**：管理员操作记录
+- ⚙️ **系统设置**：基础配置管理
 
 ---
 

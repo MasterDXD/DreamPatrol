@@ -95,7 +95,7 @@ export default function Login({ onLogin }: LoginProps) {
             src="/assets/logo.jpg"
             alt="巡梦"
             style={{
-              height: 48,
+              height: 24,
               width: 'auto',
               objectFit: 'contain',
               marginBottom: 6,
