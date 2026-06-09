@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>梦境织者 - 开启巡梦之旅</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@500&amp;family=Ma+Shan+Zheng&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary": "#bec6e0",
+                "surface": "#051424",
+                "outline": "#909097",
+                "on-tertiary": "#003640",
+                "surface-variant": "#273647",
+                "on-surface-variant": "#c6c6cd",
+                "on-tertiary-container": "#008da5",
+                "on-secondary": "#3c0091",
+                "on-primary-fixed-variant": "#3f465c",
+                "surface-container-lowest": "#010f1f",
+                "error-container": "#93000a",
+                "primary-fixed-dim": "#bec6e0",
+                "on-error": "#690005",
+                "on-tertiary-fixed": "#001f26",
+                "inverse-surface": "#d4e4fa",
+                "surface-container-high": "#1c2b3c",
+                "surface-tint": "#bec6e0",
+                "surface-container-highest": "#273647",
+                "surface-container-low": "#0d1c2d",
+                "surface-container": "#122131",
+                "primary-container": "#0f172a",
+                "on-tertiary-fixed-variant": "#004e5c",
+                "on-primary-container": "#798098",
+                "on-error-container": "#ffdad6",
+                "secondary": "#d0bcff",
+                "outline-variant": "#45464d",
+                "inverse-primary": "#565e74",
+                "error": "#ffb4ab",
+                "surface-dim": "#051424",
+                "tertiary": "#4cd7f6",
+                "surface-bright": "#2c3a4c",
+                "secondary-container": "#571bc1",
+                "secondary-fixed-dim": "#d0bcff",
+                "inverse-on-surface": "#233143",
+                "tertiary-fixed-dim": "#4cd7f6",
+                "on-secondary-fixed-variant": "#5516be",
+                "tertiary-container": "#001b21",
+                "on-secondary-fixed": "#23005c",
+                "on-background": "#d4e4fa",
+                "background": "#051424",
+                "on-secondary-container": "#c4abff",
+                "primary-fixed": "#dae2fd",
+                "secondary-fixed": "#e9ddff",
+                "tertiary-fixed": "#acedff",
+                "on-primary": "#283044",
+                "on-primary-fixed": "#131b2e",
+                "on-surface": "#d4e4fa"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-sm": "12px",
+                "gutter": "16px",
+                "container-margin": "24px",
+                "stack-md": "24px",
+                "stack-lg": "48px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Inter"
+                ],
+                "label-md": [
+                        "Geist"
+                ],
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-sm": [
+                        "Geist"
+                ],
+                "calligraphy": [
+                        "Ma Shan Zheng", "cursive"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "40px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "fontWeight": "500"
+                        }
+                ],
+                "title-giant": [
+                        "120px",
+                        {
+                                "lineHeight": "1.1",
+                                "fontWeight": "400",
+                                "letterSpacing": "0.1em"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .glass-panel {
+            background: rgba(28, 43, 60, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .glowing-text {
+            text-shadow: 0 0 20px rgba(190, 198, 224, 0.5), 0 0 40px rgba(76, 215, 246, 0.3);
+        }
+
+        .ambient-glow {
+            box-shadow: 0 0 30px rgba(87, 27, 193, 0.4);
+        }
+
+        .skeuomorphic-button {
+            background: linear-gradient(135deg, rgba(87, 27, 193, 0.8), rgba(0, 141, 165, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(76, 215, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .skeuomorphic-button:hover {
+            transform: scale(0.98);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 30px rgba(76, 215, 246, 0.6);
+        }
+
+        .skeuomorphic-button:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Subtle floating animation for background elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float-slow {
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .animate-float-medium {
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden flex flex-col items-center justify-center relative selection:bg-secondary-container selection:text-white font-body-md text-body-md">
+<!-- Immersive Background Image -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background z-10"></div>
+<img alt="A breathtaking night sky featuring a large, luminous full moon partially obscured by ethereal, translucent clouds. The sky is a deep, dark indigo and navy blue, speckled with distant stars. The lighting is soft and otherworldly, radiating from the moon and catching the edges of the clouds, creating a sense of serene, expansive mystery fitting for a dreamscape." class="w-full h-full object-cover object-center animate-float-slow opacity-80" data-alt="A breathtaking night sky featuring a large, luminous full moon partially obscured by ethereal, translucent clouds. The sky is a deep, dark indigo and navy blue, speckled with distant stars. The lighting is soft and otherworldly, radiating from the moon and catching the edges of the clouds, creating a sense of serene, expansive mystery fitting for a dreamscape." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKQhb9OQJy--l4w68KZvkB44VZssET0u30nNm5V3cSsu6Z9BE_wIw6Br2sduO2N_i_qNot27gqXykGKTBk9IC8zF7V6rg_ViAifU2Gr_eyYyqwl-_voI3HlAOm2ng74JXAn3ed_IHoOao4VND3dinoQo9PegQUYXINBXytBLFkHT6WMd_b7zo3XOKuPpU00HU8Rrmr6x1wrAOSTqDgZrd_JWWPmVH7Xi0jwK5u8haVzxNa3zW9W_Gou3gkf67kEnwbpKnUmEWoaO4"/>
+</div>
+<!-- Atmospheric Nebulas -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none mix-blend-screen">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary-container/20 rounded-full blur-[100px] animate-float-medium"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-tertiary-fixed-dim/10 rounded-full blur-[120px] animate-float-slow" style="animation-delay: -5s;"></div>
+</div>
+<!-- Particle Container -->
+<div class="absolute inset-0 z-10 pointer-events-none" id="particles"></div>
+<!-- Main Content Container -->
+<main class="relative z-20 flex flex-col items-center justify-center text-center w-full px-container-margin max-w-[800px] mx-auto h-screen">
+<!-- Subtle Brand Header (Top) -->
+<div class="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">waves</span>
+<span class="font-headline-md text-label-md text-primary tracking-widest uppercase">梦境织者</span>
+</div>
+<!-- Central Title area -->
+<div class="flex flex-col items-center gap-stack-md mb-stack-lg">
+<h1 class="font-[Ma\ Shan\ Zheng] text-[80px] md:text-title-giant text-primary glowing-text select-none">
+                巡梦
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto leading-relaxed">
+                潜入潜意识的深海，记录并探索那些在星空下绽放的隐秘思绪。
+            </p>
+</div>
+<!-- Actions -->
+<div class="flex flex-col items-center gap-stack-md w-full max-w-sm">
+<button class="skeuomorphic-button w-full py-4 px-8 rounded-full font-headline-md text-headline-md text-white flex items-center justify-center gap-3 group relative overflow-hidden">
+<span class="relative z-10">开始旅程</span>
+<span class="material-symbols-outlined relative z-10 group-hover:translate-x-1 transition-transform" style="font-variation-settings: 'FILL' 0;">arrow_right_alt</span>
+<!-- Inner button glow effect -->
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<a class="font-label-md text-label-md text-primary hover:text-tertiary transition-colors border-b border-primary/30 hover:border-tertiary pb-1" href="#">
+                已有账号？点击登录
+            </a>
+</div>
+<!-- Footer subtly placed -->
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-40 font-label-sm text-label-sm text-on-surface-variant text-center">
+<p>探索自我 · 拥抱宁静</p>
+</div>
+</main>
+<script>
+        // Simple firefly particle system
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                createParticle();
+            }
+
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Randomize properties
+                const size = Math.random() * 3 + 1;
+                const xPos = Math.random() * 100;
+                const yPos = Math.random() * 100;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                const opacity = Math.random() * 0.5 + 0.2;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${xPos}vw`;
+                particle.style.top = `${yPos}vh`;
+                particle.style.boxShadow = `0 0 ${size * 2}px ${size}px rgba(76, 215, 246, 0.6)`;
+                
+                // Animation setup
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 0 },
+                    { transform: `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px) scale(1.5)`, opacity: opacity, offset: 0.5 },
+                    { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px) scale(1)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    iterations: Infinity,
+                    easing: 'ease-in-out'
+                });
+
+                container.appendChild(particle);
+            }
+        });
+    </script>
+</body></html>

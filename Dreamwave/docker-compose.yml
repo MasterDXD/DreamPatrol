@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    container_name: dreamwave-server
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    environment:
+      - NODE_ENV=production
+      - PORT=3100
+    env_file:
+      - .env
+    volumes:
+      - dreamwave-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3100/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  web:
+    build: ./web
+    container_name: dreamwave-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      server:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  admin:
+    build: ./admin
+    container_name: dreamwave-admin
+    restart: unless-stopped
+    ports:
+      - "5174:80"
+    depends_on:
+      server:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  dreamwave-data:
+    driver: local

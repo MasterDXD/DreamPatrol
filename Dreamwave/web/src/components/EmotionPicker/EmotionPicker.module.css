@@ -1,0 +1,13 @@
+.picker { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+.option {
+  display: flex; flex-direction: column; align-items: center;
+  padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  cursor: pointer; transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+.option:hover { transform: scale(1.05); }
+.selected { background: rgba(76,215,246,0.1); border-color: var(--emotion-color, var(--color-accent)); }
+.icon { font-size: 24px; margin-bottom: 4px; }
+.label { font-size: var(--font-size-xs); color: var(--color-text-secondary); }

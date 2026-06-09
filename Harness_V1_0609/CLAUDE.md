@@ -1,6 +1,6 @@
-# AIProject - Harness Engineering 多Agent项目 (v2.72.0)
+# AIProject - Harness Engineering 多Agent项目 (v2.73.6)
 
-> 版本：v2.72.0
+> 版本：v2.73.6
 
 ## 项目概述
 
@@ -58,7 +58,7 @@ project-root/
 └── CLAUDE.md                  # 项目总入口文件
 ```
 
-## Agent角色体系（v2.72.0：6职能型 + 5任务型 + 5语言审查员 + 1人类角色 + 8专业角色 + 3业务型 = 28个Agent）
+## Agent角色体系（v2.73.6：6职能型 + 5任务型 + 5语言审查员 + 1人类角色 + 8专业角色 + 3业务型 = 28个Agent）
 
 ### 职能型Agent（6个）
 - **Team Lead（团队负责人）**：项目拆解、任务分配、进度监控、成果验收。编排者模式——从"个人贡献者"进化为"编排者"，设定方向、定义质量标准、审查AI产出，聚焦判断力而非执行力
@@ -944,7 +944,7 @@ if (!enforcer.canExecute(agent, skillId)) { /* 阻止执行 */ }
 同步脚本：`node scripts/sync-editor-rules.js`
 
 ## 项目配置
-详细配置参见 .harness/config.json，包含模型选择、Token预算、权限配置、Hook配置等。当前版本：2.7.170。
+详细配置参见 .harness/config.json，包含模型选择、Token预算、权限配置、Hook配置等。当前版本：2.73.6。
 
 ## 工作区说明
 - .harness/workspace/staging/ — 待审核代码暂存区

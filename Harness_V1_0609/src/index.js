@@ -337,11 +337,11 @@ function create(projectRoot, options) {
 
 /**
  * 模块分组定义
- * 
+ *
  * 稳定性标记：
  * @stable - 核心API，保证向后兼容
  * @experimental - 实验性API，可能变更
- * 
+ *
  * stable: runtime, gate, permission, infrastructure, errors, utils, constants, i18n
  * experimental: collaboration, agent, web, tui, quality
  */

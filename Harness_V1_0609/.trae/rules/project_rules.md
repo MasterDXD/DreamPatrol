@@ -1,6 +1,6 @@
-# Harness Engineering 多Agent框架 v2.73.0 — Trae编辑器项目规则
+# Harness Engineering 多Agent框架 v2.73.6 — Trae编辑器项目规则
 
-> 版本：v2.73.0
+> 版本：v2.73.6
 
 ## 项目概述
 本项目基于 Harness Engineering 多Agent架构范式，采用"分层分责+文档驱动+流程管控+容错自愈"的工程化方法论。框架包含384+源文件、220+类、240+导出模块、250+ API端点、5325+测试用例。在Trae编辑器中，你作为用户与AI协作，AI按照以下Agent角色和规则执行任务。
@@ -216,7 +216,7 @@
 - session-start-hook.md — 会话启动Hook（自动注入规则）
 
 ## 项目配置
-详细配置参见 .harness/config.json，包含模型选择、Token预算、权限配置、Hook配置等。当前版本：2.33.0。
+详细配置参见 .harness/config.json，包含模型选择、Token预算、权限配置、Hook配置等。当前版本：2.73.6。
 
 ## 运行时引擎（v2.0引入，v2.7.180扩展）
 

@@ -1,0 +1,510 @@
+/* ============================================================
+   WelcomePage - 沉浸式落地页
+   设计参考：首页代码参考.html
+   优化：响应式、动效、无障碍、性能
+   ============================================================ */
+
+:root {
+  /* 局部 token，便于后续接入主题系统 */
+  --welcome-bg: #051424;
+  --welcome-on-bg: #d4e4fa;
+  --welcome-primary: #bec6e0;
+  --welcome-secondary: #c6c6cd;
+  --welcome-accent: #4cd7f6;
+  --welcome-secondary-container: #571bc1;
+  --welcome-tertiary-container: #008da5;
+  --welcome-on-tertiary-container: #008da5;
+  --welcome-gradient-top: rgba(5, 20, 36, 0.4);
+  --welcome-gradient-mid: rgba(5, 20, 36, 0);
+  --welcome-gradient-bottom: rgba(5, 20, 36, 1);
+  --welcome-surface: rgba(5, 20, 36, 0.5);
+}
+
+/* 亮色模式覆盖 */
+[data-theme="light"] {
+  --welcome-bg: #f5f3ff;
+  --welcome-on-bg: #1e1b4b;
+  --welcome-primary: #4c1d95;
+  --welcome-secondary: #6b7280;
+  --welcome-accent: #7c3aed;
+  --welcome-secondary-container: #8b5cf6;
+  --welcome-tertiary-container: #6d28d9;
+  --welcome-on-tertiary-container: #6d28d9;
+  --welcome-gradient-top: rgba(245, 243, 255, 0.6);
+  --welcome-gradient-mid: rgba(245, 243, 255, 0);
+  --welcome-gradient-bottom: rgba(245, 243, 255, 1);
+  --welcome-surface: rgba(255, 255, 255, 0.6);
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--welcome-bg);
+  color: var(--welcome-on-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  isolation: isolate;
+  /* 默认不可见，等字体+图片就绪后由 JS 添加 .ready 类来渐显 */
+  opacity: 0;
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.page.ready {
+  opacity: 1;
+}
+
+/* 图标字体未加载时隐藏文字内容，避免闪现 "waves" / "arrow_right_alt" */
+/* 全局兜底见 index.html 与 main.tsx：未就绪时 .material-symbols-outlined 透明 */
+.material-symbols-outlined {
+  color: transparent;
+}
+.material-symbols-outlined.fonts-ready,
+.page.ready .material-symbols-outlined {
+  color: inherit;
+}
+
+/* ----------- 背景：星空图 + 渐变蒙层 ----------- */
+.bgImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.bgImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  animation: float 15s ease-in-out infinite;
+  opacity: 0.8;
+  z-index: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  transition: opacity 800ms ease;
+}
+.bgFadeOut {
+  opacity: 0;
+}
+.bgImage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--welcome-gradient-top) 0%,
+    var(--welcome-gradient-mid) 50%,
+    var(--welcome-gradient-bottom) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ----------- 大气星云 ----------- */
+.nebulaLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.nebula1 {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(87, 27, 193, 0.2);
+  border-radius: 9999px;
+  filter: blur(100px);
+  animation: float 10s ease-in-out infinite;
+  will-change: transform;
+}
+.nebula2 {
+  position: absolute;
+  bottom: 25%;
+  right: 25%;
+  width: 31.25rem;
+  height: 31.25rem;
+  background: rgba(76, 215, 246, 0.1);
+  border-radius: 9999px;
+  filter: blur(120px);
+  animation: float 15s ease-in-out infinite;
+  animation-delay: -5s;
+  will-change: transform;
+}
+
+/* ----------- 粒子容器 ----------- */
+.particleLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  contain: layout style;
+}
+
+/* ----------- 流星层 ----------- */
+.meteorLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ----------- 主体内容 ----------- */
+.main {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  width: 100%;
+  /* clamp 让大屏更舒展、小屏不被压扁 */
+  padding: clamp(96px, 12vh, 140px) 24px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* ----------- 顶部品牌标识 ----------- */
+.brand {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+.brand:hover { opacity: 0.85; }
+
+.brandIcon {
+  color: var(--welcome-primary);
+  font-size: 22px;
+}
+.brandText {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--welcome-primary);
+}
+
+/* ----------- 标题区 ----------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 3vh, 28px);
+  margin-bottom: clamp(36px, 6vh, 56px);
+  /* 进入动画：稍后于 pageEnter，制造层次 */
+  animation: heroEnter 900ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+@keyframes heroEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.title {
+  font-family: 'Ma Shan Zheng', cursive;
+  /* 移动端 80px → 桌面端 120px，过渡更平滑 */
+  font-size: clamp(80px, 14vw, 120px);
+  font-weight: 400;
+  color: var(--welcome-primary);
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 20px rgba(190, 198, 224, 0.5),
+    0 0 40px rgba(76, 215, 246, 0.3);
+  user-select: none;
+  margin: 0;
+  line-height: 1.1;
+  /* 标题进入更晚一点 */
+  animation: glowPulse 4s ease-in-out 600ms infinite;
+}
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(190, 198, 224, 0.5),
+      0 0 40px rgba(76, 215, 246, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(190, 198, 224, 0.8),
+      0 0 60px rgba(76, 215, 246, 0.5);
+  }
+}
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--welcome-secondary);
+  max-width: 28rem;
+  margin: 0;
+}
+
+/* ----------- 行动按钮 ----------- */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 24rem;
+  animation: heroEnter 900ms cubic-bezier(0.22, 1, 0.36, 1) 240ms both;
+}
+
+.primaryBtn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 16px 32px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(87, 27, 193, 0.8),
+    rgba(0, 141, 165, 0.8)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(76, 215, 246, 0.4);
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background 0.2s ease,
+    filter 0.2s ease;
+}
+.primaryBtn:hover {
+  transform: scale(0.98);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(76, 215, 246, 0.6);
+  filter: brightness(1.05);
+}
+.primaryBtn:focus-visible {
+  outline: 2px solid var(--welcome-accent);
+  outline-offset: 4px;
+}
+.primaryBtn:active {
+  transform: scale(0.95);
+  background: linear-gradient(
+    135deg,
+    rgba(87, 27, 193, 1),
+    rgba(0, 141, 165, 1)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.primaryBtnLabel {
+  position: relative;
+  z-index: 1;
+}
+.primaryBtnIcon {
+  position: relative;
+  z-index: 1;
+  font-size: 28px;
+  transition: transform 0.3s ease;
+}
+.primaryBtn:hover .primaryBtnIcon {
+  transform: translateX(4px);
+}
+.primaryBtnHover {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.primaryBtn:hover .primaryBtnHover {
+  opacity: 1;
+}
+
+.secondaryLink {
+  font-family: 'Geist', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--welcome-primary);
+  border-bottom: 1px solid rgba(190, 198, 224, 0.3);
+  padding-bottom: 4px;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.secondaryLink:hover {
+  color: var(--welcome-accent);
+  border-color: var(--welcome-accent);
+}
+.secondaryLink:focus-visible {
+  outline: 2px solid var(--welcome-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ----------- 底部文案 ----------- */
+.footer {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Geist', 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--welcome-secondary);
+  opacity: 0.4;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ----------- 图片标题标签 ----------- */
+.bgLabel {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+.bgLabelText {
+  display: inline-block;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 12px rgba(76, 215, 246, 0.4);
+  transition: opacity 600ms ease, transform 600ms ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+.bgLabelFadeOut {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* ----------- 图片指示器 ----------- */
+.bgIndicators {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bgIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bgIndicator:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+.bgIndicatorActive {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--welcome-accent);
+  box-shadow: 0 0 8px rgba(76, 215, 246, 0.5);
+}
+.bgIndicatorActive:hover {
+  background: var(--welcome-accent);
+  transform: scale(1);
+}
+
+/* ----------- 浮动动画 ----------- */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ----------- 响应式微调 ----------- */
+@media (max-width: 480px) {
+  .main {
+    padding-top: 88px;
+  }
+  .brand {
+    /* 极窄屏让品牌更紧贴顶部，避免与 hero 撞行 */
+    top: 20px;
+  }
+  .footer {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .bgLabel {
+    bottom: 72px;
+  }
+  .bgLabelText {
+    font-size: 16px;
+  }
+  .bgIndicators {
+    bottom: 44px;
+    gap: 6px;
+  }
+  .bgIndicator {
+    width: 6px;
+    height: 6px;
+  }
+  .bgIndicatorActive {
+    width: 18px;
+  }
+}
+
+/* ----------- 可访问性：尊重用户的减动效偏好 ----------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .actions,
+  .title,
+  .bgImg,
+  .nebula1,
+  .nebula2,
+  .bgLabelText {
+    animation: none !important;
+  }
+  .bgImg,
+  .bgLabelText {
+    transition: none !important;
+  }
+  .page { transition: none; }
+}

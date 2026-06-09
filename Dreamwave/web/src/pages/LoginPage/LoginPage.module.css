@@ -1,0 +1,359 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #051424;
+  position: relative;
+  overflow: hidden;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(5, 20, 36, 0.3);
+  mix-blend-mode: multiply;
+}
+
+.nebula1 {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 26rem;
+  height: 26rem;
+  background: rgba(167, 139, 250, 0.15);
+  border-radius: 9999px;
+  filter: blur(100px);
+  z-index: 1;
+  pointer-events: none;
+  animation: nebulaFloat 10s ease-in-out infinite;
+}
+
+.nebula2 {
+  position: absolute;
+  bottom: 15%;
+  right: 10%;
+  width: 30rem;
+  height: 30rem;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 9999px;
+  filter: blur(120px);
+  z-index: 1;
+  pointer-events: none;
+  animation: nebulaFloat 14s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.nebula3 {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(217, 70, 239, 0.08);
+  border-radius: 9999px;
+  filter: blur(80px);
+  z-index: 1;
+  pointer-events: none;
+  animation: nebulaFloat 12s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.particleLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particleLayer > div {
+  position: absolute;
+  background-color: rgba(167, 139, 250, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes nebulaFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nebula1, .nebula2, .nebula3 {
+    animation: none !important;
+  }
+}
+
+/* Glass Card Container */
+.form {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 28rem;
+  padding: 2.5rem 2rem;
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 32px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.appTitle {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #d4e4fa;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #c6c6cd;
+}
+
+/* Login Form */
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Field Group */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Label */
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #c6c6cd;
+  display: block;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgotLink {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4cd7f6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgotLink:hover {
+  color: #acedff;
+}
+
+/* Input Well (glass-card inner input container) */
+.inputWell {
+  background: var(--color-surface);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.inputWell:focus-within {
+  border-color: rgba(76, 215, 246, 0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px rgba(76, 215, 246, 0.2);
+}
+
+.inputIcon {
+  color: #45464d;
+  margin-right: 0.75rem;
+  font-size: 20px;
+}
+
+.inputField {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d4e4fa;
+  font-size: 16px;
+  line-height: 1.6;
+  outline: none;
+  padding: 0;
+}
+
+.inputField::placeholder {
+  color: #45464d;
+}
+
+.inputField:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Password Toggle */
+.togglePassword {
+  background: none;
+  border: none;
+  color: #45464d;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.togglePassword:hover {
+  color: #d4e4fa;
+}
+
+/* Error Box */
+.errorBox {
+  padding: 10px 14px;
+  border-radius: 0.5rem;
+  background: rgba(255, 180, 171, 0.12);
+  color: #ffb4ab;
+  font-size: 14px;
+  border: 1px solid rgba(255, 180, 171, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+/* Submit Button (btn-glow) */
+.submitBtn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(87, 27, 193, 0.8), rgba(76, 215, 246, 0.8));
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(87, 27, 193, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.submitBtn:hover {
+  box-shadow: 0 6px 20px rgba(76, 215, 246, 0.6);
+  transform: scale(0.98);
+}
+
+.submitBtn:active {
+  transform: scale(0.95);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.dividerLine {
+  height: 1px;
+  background: rgba(69, 70, 77, 0.3);
+  flex-grow: 1;
+}
+
+.dividerText {
+  font-size: 12px;
+  font-weight: 500;
+  color: #45464d;
+}
+
+/* Social Section */
+.socialSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.socialButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #c6c6cd;
+  transition: background-color 0.2s ease;
+}
+
+.socialBtn:hover {
+  background: #1c2b3c;
+}
+
+/* Footer */
+.footer {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #c6c6cd;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.link {
+  color: #4cd7f6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #acedff;
+}

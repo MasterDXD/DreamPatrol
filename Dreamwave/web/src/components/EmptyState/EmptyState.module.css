@@ -1,0 +1,14 @@
+.container {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: var(--space-2xl); text-align: center; animation: fadeInUp 300ms ease;
+}
+.message { font-size: var(--font-size-md); color: var(--color-text-secondary); margin-bottom: var(--space-lg); }
+.actionBtn {
+  padding: var(--space-sm) var(--space-lg); border-radius: var(--radius-full);
+  background: linear-gradient(135deg, rgba(87,27,193,0.8), rgba(0,141,165,0.8));
+  color: white; font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 15px rgba(76,215,246,0.3);
+}
+.actionBtn:hover { box-shadow: 0 0 25px rgba(76,215,246,0.5); transform: scale(1.02); }

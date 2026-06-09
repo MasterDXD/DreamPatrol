@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>梦境织者 - 情绪星图</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#131b2e",
+                        "on-secondary-fixed": "#23005c",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "surface-tint": "#bec6e0",
+                        "on-primary-container": "#798098",
+                        "surface-variant": "#273647",
+                        "on-tertiary-fixed": "#001f26",
+                        "inverse-primary": "#565e74",
+                        "surface-dim": "#051424",
+                        "surface-container": "#122131",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-low": "#0d1c2d",
+                        "on-background": "#d4e4fa",
+                        "background": "#051424",
+                        "tertiary": "#4cd7f6",
+                        "on-tertiary": "#003640",
+                        "on-surface": "#d4e4fa",
+                        "on-surface-variant": "#c6c6cd",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "on-tertiary-container": "#008da5",
+                        "secondary-container": "#571bc1",
+                        "on-secondary": "#3c0091",
+                        "secondary": "#d0bcff",
+                        "outline": "#909097",
+                        "inverse-on-surface": "#233143",
+                        "on-primary": "#283044",
+                        "primary-container": "#0f172a",
+                        "surface-container-high": "#1c2b3c",
+                        "secondary-fixed": "#e9ddff",
+                        "inverse-surface": "#d4e4fa",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "tertiary-container": "#001b21",
+                        "primary": "#bec6e0",
+                        "surface": "#051424",
+                        "primary-fixed-dim": "#bec6e0",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#273647",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#acedff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-lowest": "#010f1f",
+                        "outline-variant": "#45464d",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#c4abff",
+                        "on-error": "#690005",
+                        "surface-bright": "#2c3a4c",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "brand-primary": "#a78bfa",
+                        "brand-gradient-start": "#8b5cf6",
+                        "brand-gradient-end": "#d946ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "stack-md": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "gutter": "16px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcicFOIlkmMKIaqx32YhKvcj_J43juRSovMWCnSnyCPX8q4DB6si8Qp35-NTEFbk2GTvsNQL5Q-aL7Q0Za8ikOOsYKJF_4arLOzcsFZwZEo7YV5uGwwwD8S3ll8d-_0oDc2Nd03PLIf9YNLdybPqiSp7UIRDTK4IEIzE5oFgIAmQT3EWnkQG77rzO1XaaWtlYXZ7v7Kig5uKPefyVeFaZHhSH8wPJZpBbevR9_i9UmcFz7PupOzqZWB1xpGEGY3MUbUq61h_CzLBs');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphic Card Utility */
+        .glass-panel {
+            background: rgba(20, 25, 55, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* SVG Chart Animations */
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 2s ease-out forwards;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(190, 198, 224, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(190, 198, 224, 0.4); }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md text-body-md min-h-screen flex overflow-x-hidden relative">
+<!-- Component: SideNavBar -->
+<nav class="glass-panel h-screen w-64 fixed left-0 top-0 border-r border-white/5 flex flex-col py-stack-md px-4 overflow-y-auto z-50">
+<!-- Brand / Header -->
+<div class="flex flex-col items-start mb-12 px-2 pt-4">
+<h2 class="text-3xl font-bold text-white tracking-widest text-glow mb-1">巡梦</h2>
+<p class="text-xs text-on-surface-variant">Dream Rover</p>
+</div>
+<!-- Navigation Links -->
+<ul class="flex flex-col space-y-2 flex-1">
+<!-- 首页 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">home</span>
+<span class="font-medium">首页</span>
+</a>
+</li>
+<!-- 我的梦境 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">cloud</span>
+<span class="font-medium">我的梦境</span>
+</a>
+</li>
+<!-- 情绪星图 (Active) -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-white/10 text-white shadow-[0_0_15px_rgba(167,139,250,0.2)] border border-white/10 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center text-brand-primary" style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+<span class="font-medium">情绪星图</span>
+</a>
+</li>
+<!-- 梦境日历 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">calendar_month</span>
+<span class="font-medium">梦境日历</span>
+</a>
+</li>
+<!-- 灵感集 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">menu_book</span>
+<span class="font-medium">灵感集</span>
+</a>
+</li>
+<!-- 睡眠空间 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">bed</span>
+<span class="font-medium">睡眠空间</span>
+</a>
+</li>
+<!-- 设置 -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">settings</span>
+<span class="font-medium">设置</span>
+</a>
+</li>
+</ul>
+<!-- User Profile -->
+<div class="mt-auto pt-6 border-t border-white/10 px-2 flex items-center gap-3">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-white/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLjnFfBQCslLDzOnuVdBpJyMQRI0fGctZPZ8JFt6PBnQ3VNzddOGx44QMMe-VqOML3KcglQ6sSP5bHC87sElAbIj47exJ5O8NV8dSwHkOFbsS4DJYRkIXJFolYIA-XGEOqr_2JN1hSgueBegH_qKfUX0fryX0g8F4uQukCA3u0CaSernPVfJWeBU8PvjfGKd6G3W4LrHT8pkHV9XwXeympH220QzRrU1HxVE9pQUF9Plq9gsenCf922R3zpqwZBrs2rbj_49WJjUM"/>
+<div>
+<div class="flex items-center gap-1">
+<p class="text-sm font-medium text-white">晚安</p>
+<span class="material-symbols-outlined text-[14px] text-brand-primary">dark_mode</span>
+</div>
+<p class="text-xs text-on-surface-variant">已记录了 128 个梦</p>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 relative z-10 flex flex-col min-h-screen w-[calc(100%-16rem)]">
+<!-- Component: TopAppBar -->
+<header class="glass-panel border-b-0 border-white/5 w-full h-16 sticky top-0 z-40 flex items-center justify-between px-container-margin rounded-b-2xl mx-4 mt-4 !w-[calc(100%-2rem)] shadow-lg">
+<div class="flex items-center">
+<h1 class="font-headline-md text-headline-md font-bold text-white text-glow">情绪星图</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-brand-primary transition-colors hover:opacity-80 p-2 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-brand-primary transition-colors hover:opacity-80 p-2 rounded-full hover:bg-white/5 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-brand-primary rounded-full shadow-[0_0_5px_#a78bfa]"></span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="flex-1 px-container-margin py-stack-lg max-w-[1200px] mx-auto w-full">
+<!-- Page Header -->
+<div class="mb-stack-lg">
+<h2 class="font-headline-lg text-headline-lg text-white mb-2 tracking-tight">潜意识解析</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">你本月的梦境模式与情绪波动已生成，基于过去30天的记录。</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Row 1: KPI Stats -->
+<div class="col-span-12 md:col-span-4 glass-panel rounded-3xl p-6 flex flex-col justify-between group hover:border-brand-primary/30 transition-colors">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">记录总数</span>
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-brand-primary border border-white/10">
+<span class="material-symbols-outlined text-[20px]">book</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-white">24<span class="text-headline-md text-on-surface-variant ml-1">场</span></div>
+<p class="font-label-sm text-label-sm text-brand-primary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 比上月增加 12%
+                        </p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 glass-panel rounded-3xl p-6 flex flex-col justify-between group hover:border-brand-primary/30 transition-colors">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">平均深度</span>
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[#4cd7f6] border border-white/10">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-white">深层</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">
+                            65% 的梦境达到清晰边界
+                        </p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 glass-panel rounded-3xl p-6 flex flex-col justify-between group hover:border-brand-primary/30 transition-colors">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant">清醒梦境</span>
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[#d0bcff] border border-white/10">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-white">3<span class="text-headline-md text-on-surface-variant ml-1">次</span></div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">
+                            本周保持稳定意识状态
+                        </p>
+</div>
+</div>
+<!-- Row 2: Main Charts -->
+<!-- Line Chart: Dream Frequency & Depth -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-3xl p-stack-md flex flex-col h-[400px]">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-white">梦境深度趋势</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">过去两周的潜意识活跃度</p>
+</div>
+<button class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors font-label-md text-label-md text-white flex items-center gap-2">
+                            14 天 <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="flex-1 relative w-full h-full">
+<!-- High-Fidelity SVG Line Chart -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 800 250">
+<defs>
+<lineargradient id="lineGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#a78bfa"></stop>
+<stop offset="50%" stop-color="#4cd7f6"></stop>
+<stop offset="100%" stop-color="#d946ef"></stop>
+</lineargradient>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="8"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+<lineargradient id="areaGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#a78bfa" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#a78bfa" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<path d="M 0 50 L 800 50 M 0 125 L 800 125 M 0 200 L 800 200" fill="none" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4" stroke-width="1"></path>
+<!-- Area Fill -->
+<path d="M 0 250 L 0 150 C 100 120, 200 180, 300 100 C 400 20, 500 150, 600 80 C 700 10, 750 90, 800 60 L 800 250 Z" fill="url(#areaGradient)" opacity="0.6"></path>
+<!-- Main Line with Glow -->
+<path class="draw-line" d="M 0 150 C 100 120, 200 180, 300 100 C 400 20, 500 150, 600 80 C 700 10, 750 90, 800 60" fill="none" filter="url(#glow)" stroke="url(#lineGradient)" stroke-linecap="round" stroke-width="4"></path>
+<!-- Data Points -->
+<circle class="opacity-0" cx="300" cy="100" fill="#141937" filter="url(#glow)" r="6" stroke="#4cd7f6" stroke-width="3" style="animation: fade-in 0.5s ease 1s forwards;"></circle>
+<circle class="opacity-0" cx="600" cy="80" fill="#141937" filter="url(#glow)" r="6" stroke="#d946ef" stroke-width="3" style="animation: fade-in 0.5s ease 1.5s forwards;"></circle>
+</svg>
+<!-- X Axis Labels (Mock) -->
+<div class="absolute bottom-0 left-0 w-full flex justify-between text-label-sm text-on-surface-variant pt-4 translate-y-full">
+<span>10/01</span>
+<span>10/04</span>
+<span>10/07</span>
+<span>10/10</span>
+<span>10/14</span>
+</div>
+</div>
+</div>
+<!-- Donut Chart: Mood Distribution -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-3xl p-stack-md flex flex-col h-[400px]">
+<h3 class="font-headline-md text-headline-md text-white mb-2">情绪分布</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-6">梦境中的主导情绪</p>
+<div class="flex-1 relative flex items-center justify-center">
+<svg class="w-48 h-48 transform -rotate-90" viewbox="0 0 200 200">
+<!-- Background Track -->
+<circle cx="100" cy="100" fill="none" r="80" stroke="rgba(255,255,255,0.05)" stroke-width="16"></circle>
+<!-- Segment 1: Calm (Teal) 45% -->
+<circle class="draw-line" cx="100" cy="100" fill="none" r="80" stroke="#4cd7f6" stroke-dasharray="502" stroke-dashoffset="276" stroke-linecap="round" stroke-width="16"></circle>
+<!-- Segment 2: Mysterious (Purple) 30% -->
+<circle class="draw-line" cx="100" cy="100" fill="none" r="80" stroke="#a78bfa" stroke-dasharray="502" stroke-dashoffset="351" stroke-linecap="round" stroke-width="16" transform="rotate(162 100 100)"></circle>
+<!-- Segment 3: Anxious (Red/Pink) 15% -->
+<circle class="draw-line" cx="100" cy="100" fill="none" r="80" stroke="#ffb4ab" stroke-dasharray="502" stroke-dashoffset="426" stroke-linecap="round" stroke-width="16" transform="rotate(270 100 100)"></circle>
+<!-- Center Text -->
+<g transform="rotate(90 100 100)">
+<text class="font-headline-md" fill="#ffffff" font-size="28" font-weight="600" text-anchor="middle" x="100" y="95">平静</text>
+<text class="font-label-sm" fill="#94a3b8" font-size="12" text-anchor="middle" x="100" y="115">主导情绪</text>
+</g>
+</svg>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap justify-center gap-4 mt-4">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#4cd7f6] shadow-[0_0_8px_#4cd7f6]"></span><span class="font-label-sm text-label-sm text-white">平静 (45%)</span></div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#a78bfa] shadow-[0_0_8px_#a78bfa]"></span><span class="font-label-sm text-label-sm text-white">神秘 (30%)</span></div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></span><span class="font-label-sm text-label-sm text-white">焦虑 (15%)</span></div>
+</div>
+</div>
+<!-- Row 3: Tag Cloud & Text Insights -->
+<div class="col-span-12 lg:col-span-7 glass-panel rounded-3xl p-stack-md flex flex-col min-h-[300px]">
+<h3 class="font-headline-md text-headline-md text-white mb-2">高频元素</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mb-6">潜意识中反复出现的意象</p>
+<div class="flex-1 flex flex-wrap content-start gap-3 mt-4">
+<!-- varying sizes and opacities for "cloud" effect -->
+<span class="px-5 py-2.5 rounded-full border border-[#4cd7f6]/40 bg-[#4cd7f6]/10 text-[#4cd7f6] font-body-lg text-body-lg shadow-[0_0_15px_rgba(76,215,246,0.15)] backdrop-blur-md cursor-pointer hover:bg-[#4cd7f6]/20 transition-all">海洋</span>
+<span class="px-4 py-2 rounded-full border border-[#a78bfa]/30 bg-[#a78bfa]/10 text-[#a78bfa] font-body-md text-body-md backdrop-blur-md cursor-pointer hover:bg-[#a78bfa]/20 transition-all">飞翔</span>
+<span class="px-6 py-3 rounded-full border border-white/20 bg-white/10 text-white font-headline-md text-headline-md backdrop-blur-md cursor-pointer hover:bg-white/20 transition-all">老房子</span>
+<span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-on-surface-variant font-label-md text-label-md backdrop-blur-md cursor-pointer hover:bg-white/10 transition-all">迷路</span>
+<span class="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-on-surface-variant font-body-md text-body-md backdrop-blur-md cursor-pointer hover:bg-white/10 transition-all">森林</span>
+<span class="px-5 py-2 rounded-full border border-[#d946ef]/30 bg-[#d946ef]/10 text-[#d946ef] font-body-lg text-body-lg backdrop-blur-md cursor-pointer hover:bg-[#d946ef]/20 transition-all">火车</span>
+<span class="px-3 py-1.5 rounded-full border border-error/30 bg-error/10 text-error font-label-md text-label-md backdrop-blur-md cursor-pointer hover:bg-error/20 transition-all">坠落</span>
+<span class="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-on-surface-variant font-body-md text-body-md backdrop-blur-md cursor-pointer hover:bg-white/10 transition-all">镜子</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 glass-panel rounded-3xl p-stack-md flex flex-col justify-center relative overflow-hidden">
+<!-- Decorative background element -->
+<div class="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
+<span class="material-symbols-outlined text-[150px] text-brand-primary mix-blend-overlay">psychology</span>
+</div>
+<div class="relative z-10">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#8b5cf6] to-[#d946ef] flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(167,139,250,0.4)]">
+<span class="material-symbols-outlined text-white">auto_awesome</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white mb-4">AI 织梦解读</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            本月你的梦境中频繁出现“海洋”与“老房子”。这通常暗示着内心正在经历深层的情感整合。水元素代表未处理的情绪，而熟悉的建筑则象征着寻找安全感。建议在睡前进行10分钟的冥想，帮助潜意识平稳着陆。
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body></html>

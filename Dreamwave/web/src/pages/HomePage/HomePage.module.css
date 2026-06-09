@@ -1,0 +1,377 @@
+/* ===== 容器与全局 ===== */
+.container {
+  animation: fadeInUp 300ms ease;
+  position: relative;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ===== 装饰模糊圆 ===== */
+.blurCircle1 {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 70%);
+  top: -60px;
+  right: -80px;
+  filter: blur(40px);
+  pointer-events: none;
+  animation: floatSlow 12s ease-in-out infinite;
+  z-index: 0;
+}
+
+.blurCircle2 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(126, 184, 218, 0.15) 0%, transparent 70%);
+  top: 200px;
+  left: -60px;
+  filter: blur(36px);
+  pointer-events: none;
+  animation: floatSlow 15s ease-in-out infinite reverse;
+  z-index: 0;
+}
+
+.blurCircle3 {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(208, 112, 224, 0.12) 0%, transparent 70%);
+  bottom: 120px;
+  right: -40px;
+  filter: blur(32px);
+  pointer-events: none;
+  animation: floatSlow 18s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes floatSlow {
+  0% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-14px) translateX(8px); }
+  66% { transform: translateY(10px) translateX(-6px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* ===== 欢迎区 ===== */
+.welcomeSection {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+  padding: 4px 0;
+}
+
+.greeting {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-shadow: 0 0 24px rgba(167, 139, 250, 0.5), 0 0 48px rgba(126, 184, 218, 0.25);
+  animation: glowPulse 4s ease-in-out infinite;
+  margin-bottom: 4px;
+}
+
+.welcomeSub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(167, 139, 250, 0.4), 0 0 40px rgba(126, 184, 218, 0.2); }
+  50% { text-shadow: 0 0 30px rgba(167, 139, 250, 0.7), 0 0 60px rgba(126, 184, 218, 0.4); }
+}
+
+/* ===== Bento 快速输入面板 ===== */
+.bentoPanel {
+  position: relative;
+  z-index: 1;
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.35);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.bentoLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* --- 左侧：情绪快选 --- */
+.emotionQuickSelect {
+  display: flex;
+  flex-direction: column;
+}
+
+.emotionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex: 1;
+}
+
+.emotionQuickBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+  cursor: pointer;
+}
+
+.emotionQuickBtn:hover {
+  border-color: var(--eq-color, var(--color-primary));
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--eq-color, var(--color-primary)) 35%, transparent);
+  transform: translateY(-1px);
+}
+
+.emotionQuickBtnActive {
+  border-color: var(--eq-color, var(--color-primary));
+  background: color-mix(in srgb, var(--eq-color, var(--color-primary)) 12%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--eq-color, var(--color-primary)) 40%, transparent);
+}
+
+.emotionQuickIcon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.emotionQuickLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.emotionQuickBtnActive .emotionQuickLabel {
+  color: var(--eq-color, var(--color-primary));
+}
+
+/* --- 右侧：快速文本输入 --- */
+.quickInputArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.quickInputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.quickInputRow {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.quickInput {
+  flex: 1;
+  min-height: 80px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  outline: none;
+  resize: none;
+}
+
+.voiceToggleBtn {
+  width: 44px;
+  min-height: 80px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 20px;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.voiceToggleBtn:hover {
+  border-color: var(--color-primary);
+  background: rgba(167, 139, 250, 0.08);
+}
+
+.voiceToggleBtnActive {
+  border-color: #e06070;
+  background: rgba(224, 96, 112, 0.12);
+  box-shadow: 0 0 16px rgba(224, 96, 112, 0.3);
+  animation: voicePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(224, 96, 112, 0.25); }
+  50% { box-shadow: 0 0 24px rgba(224, 96, 112, 0.5); }
+}
+
+.quickInput::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.quickInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 0 12px rgba(167, 139, 250, 0.2);
+}
+
+.quickSubmitBtn {
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: var(--color-text-on-primary);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: opacity 200ms ease, box-shadow 200ms ease;
+}
+
+.quickSubmitBtn:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+}
+
+/* ===== 头部信息栏 ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.count {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.refreshBtn {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.refreshBtn:hover {
+  background: var(--color-surface-hover);
+}
+
+/* ===== 情绪筛选栏 ===== */
+.emotionFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.emotionTag {
+  padding: 4px 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.emotionTag:hover {
+  border-color: var(--tag-color, var(--color-primary));
+}
+
+.emotionTagActive {
+  border-color: var(--tag-color, var(--color-primary));
+  background: rgba(126, 184, 218, 0.1);
+}
+
+/* ===== 时间分组 ===== */
+.timeGroup {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.groupHeader {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-divider);
+  text-shadow: 0 0 16px rgba(167, 139, 250, 0.3), 0 0 32px rgba(126, 184, 218, 0.15);
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 无结果 ===== */
+.noResults {
+  text-align: center;
+  padding: 32px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 响应式：小屏幕 Bento 改为单列 ===== */
+@media (max-width: 560px) {
+  .bentoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .greeting {
+    font-size: 24px;
+  }
+}

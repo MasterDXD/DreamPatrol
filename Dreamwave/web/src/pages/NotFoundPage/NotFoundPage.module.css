@@ -1,0 +1,42 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.message {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.homeBtn {
+  padding: 10px 24px;
+  border-radius: 12px;
+  background: var(--color-primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 150ms ease;
+}
+
+.homeBtn:hover {
+  opacity: 0.9;
+}

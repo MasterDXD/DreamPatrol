@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="zh-CN" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>巡梦 - Dream Rover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            surface: '#0d1126',
+            'surface-container': 'rgba(25, 30, 60, 0.6)',
+            'surface-bright': 'rgba(45, 50, 90, 0.8)',
+            primary: '#a78bfa',
+            'primary-dark': '#7c3aed',
+            text: '#e2e8f0',
+            'text-muted': '#94a3b8',
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+            '3xl': '2rem',
+          },
+          backgroundImage: {
+            'glow-gradient': 'linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(124, 58, 237, 0.05) 100%)',
+            'button-gradient': 'linear-gradient(90deg, #8b5cf6 0%, #d946ef 100%)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    body {
+      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcicFOIlkmMKIaqx32YhKvcj_J43juRSovMWCnSnyCPX8q4DB6si8Qp35-NTEFbk2GTvsNQL5Q-aL7Q0Za8ikOOsYKJF_4arLOzcsFZwZEo7YV5uGwwwD8S3ll8d-_0oDc2Nd03PLIf9YNLdybPqiSp7UIRDTK4IEIzE5oFgIAmQT3EWnkQG77rzO1XaaWtlYXZ7v7Kig5uKPefyVeFaZHhSH8wPJZpBbevR9_i9UmcFz7PupOzqZWB1xpGEGY3MUbUq61h_CzLBs');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .glass-panel {
+      background: rgba(20, 25, 55, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+    .glass-panel-light {
+      background: rgba(45, 50, 90, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .text-glow {
+      text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased flex h-screen overflow-hidden">
+<!-- BEGIN: Sidebar -->
+<aside class="w-20 md:w-64 glass-panel flex flex-col justify-between h-full py-8 px-4 flex-shrink-0 transition-all duration-300 z-20 hidden sm:flex">
+<div>
+<!-- Logo -->
+<div class="mb-12 px-2 text-center md:text-left">
+<h1 class="text-3xl font-bold text-white tracking-widest text-glow mb-1 hidden md:block">巡梦</h1>
+<h1 class="text-2xl font-bold text-white tracking-widest text-glow mb-1 md:hidden">巡</h1>
+<p class="text-xs text-text-muted hidden md:block">Dream Rover</p>
+</div>
+<!-- Navigation -->
+<nav class="space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-surface-bright text-white shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all" href="#">
+<i class="fa-solid fa-house text-lg w-6 text-center text-primary"></i>
+<span class="font-medium hidden md:block">首页</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-solid fa-cloud-moon text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">我的梦境</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-solid fa-star text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">情绪星图</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-regular fa-calendar text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">梦境日历</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-solid fa-book-open text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">灵感集</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-solid fa-bed text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">睡眠空间</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<i class="fa-solid fa-gear text-lg w-6 text-center"></i>
+<span class="font-medium hidden md:block">设置</span>
+</a>
+</nav>
+</div>
+<!-- User Profile -->
+<div class="mt-auto pt-6 border-t border-white/10 px-2 flex items-center gap-3 hidden md:flex"><img alt="User Avatar" class="w-10 h-10 rounded-full border border-white/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLjnFfBQCslLDzOnuVdBpJyMQRI0fGctZPZ8JFt6PBnQ3VNzddOGx44QMMe-VqOML3KcglQ6sSP5bHC87sElAbIj47exJ5O8NV8dSwHkOFbsS4DJYRkIXJFolYIA-XGEOqr_2JN1hSgueBegH_qKfUX0fryX0g8F4uQukCA3u0CaSernPVfJWeBU8PvjfGKd6G3W4LrHT8pkHV9XwXeympH220QzRrU1HxVE9pQUF9Plq9gsenCf922R3zpqwZBrs2rbj_49WJjUM">
+<div>
+  <div class="flex items-center gap-1">
+    <p class="text-sm font-medium text-white">晚安</p>
+    <i class="fa-solid fa-moon text-xs text-primary"></i>
+  </div>
+  <p class="text-xs text-text-muted">已记录了 128 个梦</p>
+</div></div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: Main Content -->
+<main class="flex-1 h-full overflow-y-auto overflow-x-hidden hide-scrollbar relative z-10 pb-24 sm:pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 space-y-8">
+<!-- Top Section: Welcome & Status -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Welcome & CTA -->
+<div class="lg:col-span-5 space-y-6 pt-4">
+<div>
+<h2 class="text-2xl sm:text-3xl font-bold text-white mb-4 tracking-wider text-glow font-serif">晚安，梦语者 <i class="fa-solid fa-sparkles text-2xl text-primary align-top"></i></h2>
+<p class="text-lg text-text-muted">你的梦境，由此被温柔接住</p>
+</div>
+<button class="bg-button-gradient hover:opacity-90 transition-opacity text-white font-medium py-4 px-8 rounded-full flex items-center gap-3 shadow-[0_0_20px_rgba(167,139,250,0.5)] mt-8">
+<i class="fa-solid fa-pen-nib"></i>
+<span class="text-lg">记录此刻的梦</span>
+</button>
+</div>
+<!-- Right: Status Cards -->
+<div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Sleep Status Card -->
+<div class="glass-panel rounded-3xl p-6 relative overflow-hidden bg-glow-gradient">
+<div class="flex items-center gap-2 mb-6">
+<i class="fa-solid fa-heart text-pink-400 text-sm"></i>
+<span class="text-sm text-text-muted">欢迎回来，晚风</span>
+</div>
+<div class="mb-8">
+<p class="text-sm text-text-muted mb-1">最近睡眠质量</p>
+<div class="flex items-baseline gap-3">
+<h3 class="text-4xl font-bold text-white">良好</h3>
+<span class="text-3xl text-yellow-400">😊</span>
+</div>
+<p class="text-xs text-text-muted mt-2 max-w-[200px]">昨晚你入睡较快，睡眠较深，继续保持哦~</p>
+</div>
+<div class="flex gap-8">
+<div>
+<p class="text-xs text-text-muted mb-1">睡眠时长</p>
+<p class="text-lg font-medium text-white">7小时 32分</p>
+</div>
+<div>
+<p class="text-xs text-text-muted mb-1">入睡时间</p>
+<p class="text-lg font-medium text-white">23:18</p>
+</div>
+</div>
+<!-- Illustration Placeholder -->
+<img alt="Sleeping girl illustration" class="absolute right-0 bottom-0 w-40 opacity-80 object-cover object-left-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVcgl3VH7UTDjmvLzs6XXakgrxxirjq-rgd9qKfpNigDBiw7M6mPn0xOma_-wJa8ewxpvb2tqJcSvSKA_xBxoHnuQkkPkkY2XO3GrA9LqRp4_Ea-gAevOx_e_nHCZz2l37Zy3it9yvj2FFtlDkmJFLWkE5AwXr9RpVFMmmS4Nxs0XGTrQiwyQBjEpvWO47tGz3haiQzGGPAYiZJc0w8WBGC5mhv_cmxHSYwf-ftjvVnGz2Kr_HeBuinvlNr4Axzv0FpaibtotRgUs" style="clip-path: circle(70% at 80% 80%);">
+</div>
+<!-- Mood Status Card -->
+<div class="glass-panel rounded-3xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-lg font-medium text-white">今日情绪</h3>
+<i class="fa-solid fa-quote-right text-text-muted/30 text-2xl"></i>
+</div>
+<p class="text-text-muted mb-6">平静 · 温暖</p>
+</div>
+<div class="flex flex-col items-center justify-center flex-1">
+<div class="w-24 h-24 rounded-full bg-indigo-900/50 flex items-center justify-center shadow-[0_0_30px_rgba(167,139,250,0.4)] relative mb-4">
+<span class="text-5xl relative z-10">🪐</span>
+<div class="absolute inset-0 border-2 border-primary/30 rounded-full scale-110"></div>
+<div class="absolute inset-0 border border-primary/20 rounded-full scale-125"></div>
+</div>
+<p class="text-xs text-text-muted text-center">云层很柔软，风也轻轻的。</p>
+</div>
+<button class="mt-4 w-full py-2.5 glass-panel-light rounded-xl text-sm text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+<i class="fa-solid fa-chart-pie"></i> 查看情绪星图 <i class="fa-solid fa-arrow-right text-xs"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Dream Review & Calendar Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left: Dream Review (Horizontal Scroll) -->
+<div class="lg:col-span-8 glass-panel rounded-3xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-medium text-white">梦境回顾</h3>
+<a class="text-sm text-text-muted hover:text-white transition-colors" href="#">查看全部</a>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
+<!-- Dream Card 1 -->
+<div class="min-w-[280px] sm:min-w-[320px] rounded-2xl glass-panel-light overflow-hidden snap-start group cursor-pointer relative">
+<div class="h-40 bg-indigo-900/50 relative overflow-hidden">
+<img alt="Dream image 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaOY_cfuLmgT77ap6L3izvgzPHPjo4MDKpWA_2qzuzVgiA33FeDcwBYi-NQ3oKruUgUElRGWIblIMaa4n6slxwlQMzmf_rM0Axx5N0QslBnp5_3claKCFm5_xNOS4_VmcJmSFS2FYmaWZ1vhka7UJdIfx29dduaDjObNr_cWvRQ0uafveqmrmiZR0cyH4FhQ5yf5QH-NxHsIdvQRPGdCXfq38cAmR0Tsv3u7W8GCSpTAhAMHO2dut47DbJv5xFM7Y-D7wiV9ia6ys">
+<div class="absolute bottom-2 right-2 px-2 py-1 bg-black/40 backdrop-blur-sm rounded-md text-[10px] text-white">5月20日</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-medium text-white text-lg">漂浮的岛屿</h4>
+<span class="px-2 py-0.5 rounded-full bg-white/10 text-xs text-text-muted border border-white/5">奇幻</span>
+</div>
+<p class="text-xs text-text-muted line-clamp-2 mb-3">我站在一艘漂浮的岛上，脚下是云，远处有一座发光的城堡...</p>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaOY_cfuLmgT77ap6L3izvgzPHPjo4MDKpWA_2qzuzVgiA33FeDcwBYi-NQ3oKruUgUElRGWIblIMaa4n6slxwlQMzmf_rM0Axx5N0QslBnp5_3claKCFm5_xNOS4_VmcJmSFS2FYmaWZ1vhka7UJdIfx29dduaDjObNr_cWvRQ0uafveqmrmiZR0cyH4FhQ5yf5QH-NxHsIdvQRPGdCXfq38cAmR0Tsv3u7W8GCSpTAhAMHO2dut47DbJv5xFM7Y-D7wiV9ia6ys">
+</div>
+<i class="fa-solid fa-heart text-pink-500 text-sm"></i>
+</div>
+</div>
+</div>
+<!-- Dream Card 2 -->
+<div class="min-w-[280px] sm:min-w-[320px] rounded-2xl glass-panel-light overflow-hidden snap-start group cursor-pointer relative">
+<div class="h-40 bg-indigo-900/50 relative overflow-hidden">
+<img alt="Dream image 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0sNorAjB9V2sLAFVgA6ZVRHbUOsfXa8xNHjUMakA1ZdkxihsJlXLthSIn7T6otcIzij5M7ZvjkWxELImbywbmXorcr6YWA0lGJ9QrOMAvjAfZhRcq4LruV33NIQBZas9zNP6FQdsYivqrKWkJtm2vxK99AgOoazKy95O3LjMIXNLxf8a_sQzR7MlWbf8VXn7krIHLrDq2SKP7gYuebjUZEVT7PMZPvHTj4a2Ao0Xb7C6Ya0RFx43NZhBmWwtezNCdkyhGZ6y5RPQ">
+<div class="absolute bottom-2 right-2 px-2 py-1 bg-black/40 backdrop-blur-sm rounded-md text-[10px] text-white">5月18日</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-medium text-white text-lg">海边的告别</h4>
+<span class="px-2 py-0.5 rounded-full bg-white/10 text-xs text-text-muted border border-white/5">情感</span>
+</div>
+<p class="text-xs text-text-muted line-clamp-2 mb-3">我们在海边走着，想说些什么，却谁也没说出口...</p>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2"></div>
+<i class="fa-solid fa-heart text-pink-500 text-sm"></i>
+</div>
+</div>
+</div>
+<!-- Dream Card 3 -->
+<div class="min-w-[280px] sm:min-w-[320px] rounded-2xl glass-panel-light overflow-hidden snap-start group cursor-pointer relative">
+<div class="h-40 bg-indigo-900/50 relative overflow-hidden">
+<img alt="Dream image 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8SZ1qkX21kHrG2jPRghPkQuROA6OLBc_g6yC2zUP_3rZtMnoE9qEYTUEx_veVmo6Re_bYbxAyLJLJurUlXRfoOLIAfyi7-ifQ_5CEjexn6NKjKuDralbXaIpcqEyZZB3tEN33ixOu1lvdT04Mp7yeVb8ZwqlfdI4qQrOQHyfz4oBNX8mLZ9UTe-FMHtZI7NnCeyGNhIQPCoEtoqtjxUm7CLKa0d6a9MIuoozxBLRX6YWIiDvKY0L8f5QWVF_Xwdtmip2fQrGdfUs">
+<div class="absolute bottom-2 right-2 px-2 py-1 bg-black/40 backdrop-blur-sm rounded-md text-[10px] text-white">5月15日</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-medium text-white text-lg">错过的列车</h4>
+<span class="px-2 py-0.5 rounded-full bg-white/10 text-xs text-text-muted border border-white/5">悬疑</span>
+</div>
+<p class="text-xs text-text-muted line-clamp-2 mb-3">我在站台上奔跑，但列车还是缓缓开走了...</p>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2"></div>
+<i class="fa-regular fa-heart text-text-muted/50 text-sm hover:text-pink-500 transition-colors"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- Scroll indicators -->
+<div class="flex justify-center gap-1.5 mt-2">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+<div class="w-2 h-2 rounded-full bg-white/30"></div>
+<div class="w-2 h-2 rounded-full bg-white/30"></div>
+<div class="w-2 h-2 rounded-full bg-white/30"></div>
+</div>
+</div>
+<!-- Right: Calendar Widget -->
+<div class="lg:col-span-4 glass-panel rounded-3xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-medium text-white">梦境日历</h3>
+<a class="text-sm text-text-muted hover:text-white transition-colors" href="#">查看全部</a>
+</div>
+<!-- Month Header -->
+<div class="flex justify-between items-center mb-4 text-white">
+<button class="p-1 hover:bg-white/10 rounded"><i class="fa-solid fa-chevron-left text-sm"></i></button>
+<span class="font-medium">5月 2024</span>
+<button class="p-1 hover:bg-white/10 rounded"><i class="fa-solid fa-chevron-right text-sm"></i></button>
+</div>
+<!-- Days Grid -->
+<div class="grid grid-cols-7 gap-y-3 text-center mb-2">
+<div class="text-xs text-text-muted">日</div>
+<div class="text-xs text-text-muted">一</div>
+<div class="text-xs text-text-muted">二</div>
+<div class="text-xs text-text-muted">三</div>
+<div class="text-xs text-text-muted">四</div>
+<div class="text-xs text-text-muted">五</div>
+<div class="text-xs text-text-muted">六</div>
+</div>
+<div class="grid grid-cols-7 gap-y-2 text-center text-sm">
+<div class="text-text-muted/30 py-1.5">28</div><div class="text-text-muted/30 py-1.5">29</div><div class="text-text-muted/30 py-1.5">30</div>
+<div class="text-text-muted py-1.5">1</div><div class="text-text-muted py-1.5">2</div><div class="text-text-muted py-1.5">3</div><div class="text-text-muted py-1.5">4</div>
+<div class="text-text-muted py-1.5">5</div><div class="text-text-muted py-1.5">6</div><div class="text-text-muted py-1.5">7</div><div class="text-text-muted py-1.5">8</div>
+<div class="text-text-muted py-1.5">9</div><div class="text-text-muted py-1.5">10</div><div class="text-text-muted py-1.5">11</div>
+<div class="text-text-muted py-1.5">12</div><div class="text-text-muted py-1.5">13</div><div class="text-text-muted py-1.5">14</div>
+<div class="text-text-muted py-1.5 relative"><span class="relative z-10">15</span><div class="w-1 h-1 bg-primary rounded-full mx-auto mt-0.5"></div></div>
+<div class="text-white py-1.5 relative">
+<div class="absolute inset-0 bg-primary/40 rounded-full w-8 h-8 mx-auto -top-0.5"></div>
+<span class="relative z-10">16</span>
+</div>
+<div class="text-text-muted py-1.5">17</div>
+<div class="text-white py-1.5 relative">
+<div class="absolute inset-0 bg-primary/40 rounded-full w-8 h-8 mx-auto -top-0.5 border border-primary/50"></div>
+<span class="relative z-10">18</span>
+<div class="w-1 h-1 bg-white rounded-full absolute bottom-0 left-1/2 -translate-x-1/2"></div>
+</div>
+<div class="text-text-muted py-1.5">19</div>
+<div class="text-white py-1.5 relative">
+<div class="absolute inset-0 bg-white/10 rounded-full w-8 h-8 mx-auto -top-0.5 border border-primary/50 shadow-[0_0_10px_rgba(167,139,250,0.5)]"></div>
+<span class="relative z-10">20</span>
+<div class="w-1 h-1 bg-primary rounded-full absolute bottom-0 left-1/2 -translate-x-1/2"></div>
+</div>
+<div class="text-text-muted py-1.5">21</div><div class="text-text-muted py-1.5">22</div><div class="text-text-muted py-1.5">23</div>
+<div class="text-text-muted py-1.5">24</div><div class="text-text-muted py-1.5">25</div>
+<div class="text-text-muted py-1.5">26</div><div class="text-text-muted py-1.5">27</div><div class="text-text-muted py-1.5">28</div>
+<div class="text-text-muted py-1.5">29</div><div class="text-text-muted py-1.5">30</div><div class="text-text-muted py-1.5">31</div>
+<div class="text-text-muted/30 py-1.5">1</div>
+</div>
+</div>
+</div><div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+  <!-- Daily Quote Block -->
+  <div class="lg:col-span-12 glass-panel rounded-3xl p-8 flex flex-col items-center justify-center text-center space-y-4">
+    <i class="fa-solid fa-quote-left text-primary/40 text-3xl"></i>
+    <p class="text-2xl sm:text-3xl font-serif text-white tracking-wide leading-relaxed italic">梦是夜的信，而你，是唯一的收信人。</p>
+    <i class="fa-solid fa-quote-right text-primary/40 text-3xl self-end"></i>
+  </div>
+
+  <!-- Note to Future Self Card -->
+  <div class="lg:col-span-6 glass-panel rounded-3xl p-6 flex flex-col justify-between group cursor-pointer hover:bg-white/5 transition-all">
+    <div class="flex justify-between items-start mb-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <h3 class="text-lg font-medium text-white">写给未来的自己</h3>
+      </div>
+      <i class="fa-solid fa-pen-nib text-text-muted/50 group-hover:text-primary transition-colors"></i>
+    </div>
+    <p class="text-text-muted text-lg leading-relaxed">你正在成为一个越来越温柔，勇敢且真实的人。</p>
+  </div>
+
+  <!-- Sleep Space Card -->
+  <div class="lg:col-span-6 glass-panel rounded-3xl p-6 flex flex-col justify-between group cursor-pointer hover:bg-white/5 transition-all relative overflow-hidden">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+        <i class="fa-solid fa-bed"></i>
+      </div>
+      <h3 class="text-lg font-medium text-white">探索睡眠空间</h3>
+    </div>
+    <div class="flex justify-between items-end">
+      <p class="text-text-muted">开启一段静谧的入眠旅程</p>
+      <i class="fa-solid fa-arrow-right text-white group-hover:translate-x-1 transition-transform"></i>
+    </div>
+    <!-- Subtle background glow -->
+    <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+  </div>
+</div>
+</div>
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Mobile Bottom Nav (Optional, for small screens) -->
+<nav class="fixed bottom-0 left-0 right-0 glass-panel border-t border-white/10 px-6 py-3 flex justify-between items-center sm:hidden z-50 rounded-t-2xl">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<i class="fa-solid fa-house text-lg"></i>
+<span class="text-[10px]">首页</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-cloud-moon text-lg"></i>
+<span class="text-[10px]">梦境</span>
+</a>
+<div class="relative -top-5">
+<button class="w-12 h-12 rounded-full bg-button-gradient flex items-center justify-center text-white shadow-[0_0_15px_rgba(167,139,250,0.5)] border-2 border-surface">
+<i class="fa-solid fa-plus text-xl"></i>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-regular fa-calendar text-lg"></i>
+<span class="text-[10px]">日历</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-user text-lg"></i>
+<span class="text-[10px]">我的</span>
+</a>
+</nav>
+<!-- END: Mobile Bottom Nav -->
+
+
+
+
+</body></html>

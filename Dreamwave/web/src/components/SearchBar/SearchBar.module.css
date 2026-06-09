@@ -1,0 +1,161 @@
+.container {
+  margin-bottom: 16px;
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.searchBtn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.searchBtn:hover {
+  opacity: 0.9;
+}
+
+.filterBtn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.filterBtn:hover {
+  border-color: var(--color-primary);
+}
+
+.filterActive {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.filters {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: fadeIn 200ms ease;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.emotionFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.emotionBtn {
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.emotionBtn:hover {
+  border-color: var(--emotion-color, var(--color-primary));
+}
+
+.emotionActive {
+  border-color: var(--emotion-color, var(--color-primary));
+  background: rgba(126, 184, 218, 0.1);
+}
+
+.select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 13px;
+  outline: none;
+  max-width: 200px;
+}
+
+.select:focus {
+  border-color: var(--color-primary);
+}
+
+.favoriteBtn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.favoriteBtn:hover {
+  border-color: var(--color-primary);
+}
+
+.favoriteActive {
+  border-color: #F0A050;
+  background: rgba(240, 160, 80, 0.1);
+}
+
+.resetBtn {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.resetBtn:hover {
+  color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

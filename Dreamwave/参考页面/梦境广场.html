@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>梦境织者 - 社区广场</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#001b21",
+                        "on-secondary-container": "#c4abff",
+                        "on-secondary-fixed": "#23005c",
+                        "on-background": "#d4e4fa",
+                        "background": "#051424",
+                        "primary-fixed": "#dae2fd",
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-fixed": "#131b2e",
+                        "on-surface": "#d4e4fa",
+                        "tertiary-fixed": "#acedff",
+                        "on-primary": "#283044",
+                        "inverse-primary": "#565e74",
+                        "secondary": "#d0bcff",
+                        "outline-variant": "#45464d",
+                        "surface-dim": "#051424",
+                        "error": "#ffb4ab",
+                        "tertiary": "#4cd7f6",
+                        "surface-bright": "#2c3a4c",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "inverse-on-surface": "#233143",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "secondary-container": "#571bc1",
+                        "inverse-surface": "#d4e4fa",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-tint": "#bec6e0",
+                        "surface-container-high": "#1c2b3c",
+                        "surface-container-low": "#0d1c2d",
+                        "surface-container": "#122131",
+                        "primary-container": "#0f172a",
+                        "surface-container-highest": "#273647",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-primary-container": "#798098",
+                        "primary": "#bec6e0",
+                        "on-tertiary": "#003640",
+                        "surface": "#051424",
+                        "outline": "#909097",
+                        "on-tertiary-container": "#008da5",
+                        "on-secondary": "#3c0091",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-variant": "#273647",
+                        "on-surface-variant": "#c6c6cd",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "text-muted": "#94a3b8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    },
+                    backgroundImage: {
+                        'glow-gradient': 'linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(124, 58, 237, 0.05) 100%)',
+                        'button-gradient': 'linear-gradient(90deg, #8b5cf6 0%, #d946ef 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcicFOIlkmMKIaqx32YhKvcj_J43juRSovMWCnSnyCPX8q4DB6si8Qp35-NTEFbk2GTvsNQL5Q-aL7Q0Za8ikOOsYKJF_4arLOzcsFZwZEo7YV5uGwwwD8S3ll8d-_0oDc2Nd03PLIf9YNLdybPqiSp7UIRDTK4IEIzE5oFgIAmQT3EWnkQG77rzO1XaaWtlYXZ7v7Kig5uKPefyVeFaZHhSH8wPJZpBbevR9_i9UmcFz7PupOzqZWB1xpGEGY3MUbUq61h_CzLBs');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #e2e8f0;
+        }
+
+        .glass-panel {
+            background: rgba(20, 25, 55, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-panel-light {
+            background: rgba(45, 50, 90, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+        }
+
+        /* WebKit Scrollbar Styling for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(198, 198, 205, 0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(198, 198, 205, 0.4);
+        }
+        
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 24px;
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 2; }
+        }
+        @media (min-width: 1440px) {
+            .masonry-grid { column-count: 3; }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+            display: inline-block;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen overflow-hidden font-body-md selection:bg-tertiary/30 text-white">
+<!-- Ambient Background Elements -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-secondary-container/20 rounded-full blur-[120px] mix-blend-screen opacity-50"></div>
+<div class="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-tertiary-container/30 rounded-full blur-[150px] mix-blend-screen opacity-40"></div>
+</div>
+<!-- SideNavBar -->
+<nav class="hidden md:flex h-screen w-64 fixed left-0 top-0 glass-panel flex-col py-8 px-4 overflow-y-auto z-50">
+<!-- Brand Header -->
+<div class="mb-12 px-2">
+<h1 class="text-3xl font-bold text-white tracking-widest text-glow mb-1">梦境织者</h1>
+<p class="text-xs text-text-muted">记录你的潜意识</p>
+</div>
+<!-- Navigation Links -->
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined w-6 text-center text-lg">edit_note</span>
+<span class="font-medium">记录</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined w-6 text-center text-lg">query_stats</span>
+<span class="font-medium">洞察</span>
+</a>
+</li>
+<!-- Active Tab -->
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-[rgba(45,50,90,0.8)] text-white shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all" href="#">
+<span class="material-symbols-outlined w-6 text-center text-lg text-[#a78bfa]" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-medium">社区</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined w-6 text-center text-lg">waves</span>
+<span class="font-medium">音景</span>
+</a>
+</li>
+<li class="mt-8">
+<div class="h-px w-full bg-white/5 my-4"></div>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-text-muted hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined w-6 text-center text-lg">settings</span>
+<span class="font-medium">设置</span>
+</a>
+</li>
+</ul>
+<!-- User Profile / CTA -->
+<div class="mt-auto pt-6 border-t border-white/10 px-2">
+<button class="w-full bg-button-gradient hover:opacity-90 transition-opacity text-white font-medium py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(167,139,250,0.5)]">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-sm">开启新梦境</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="md:ml-64 flex flex-col h-screen relative z-10">
+<!-- TopAppBar -->
+<header class="w-full h-16 sticky top-0 z-40 bg-[rgba(20,25,55,0.45)] backdrop-blur-md border-b border-white/10 flex items-center justify-between px-container-margin transition-all">
+<!-- Mobile Brand (Hidden on Desktop) -->
+<div class="md:hidden flex items-center gap-2">
+<h1 class="text-xl font-bold text-white tracking-widest text-glow">梦境织者</h1>
+</div>
+<!-- Page Context Title (Desktop) -->
+<div class="hidden md:flex items-center gap-3">
+<h2 class="text-2xl font-bold text-white tracking-wider text-glow font-serif">梦境广场</h2>
+<span class="text-text-muted text-xs bg-white/5 px-3 py-1 rounded-full border border-white/10">共鸣</span>
+</div>
+<!-- Right Actions & Search -->
+<div class="flex items-center gap-4">
+<!-- Search Well -->
+<div class="hidden sm:flex items-center glass-panel-light rounded-full px-4 py-2 w-64 focus-within:border-[#a78bfa]/50 transition-all">
+<span class="material-symbols-outlined text-text-muted text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder:text-text-muted w-full ml-2 py-0" placeholder="搜索梦境片段、标签..." type="text"/>
+</div>
+<!-- Icon Actions -->
+<button class="text-text-muted hover:text-white transition-colors relative p-2 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-[#a78bfa] rounded-full shadow-[0_0_5px_rgba(167,139,250,1)]"></span>
+</button>
+<button class="sm:hidden text-text-muted hover:text-white transition-colors p-2 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined">search</span>
+</button>
+<!-- Profile Avatar -->
+<button class="w-8 h-8 rounded-full border border-white/20 overflow-hidden hover:opacity-80 transition-opacity ml-2">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFpAnNHE43pQQjcT7MifXZrHgXmyhAzIOpaSvWpm9RP7e842yxjXBAxv1EqkJ-uBVBs0uF0TT54LPtP37jORr1TyX99RLtXOUT41vgciGh9JBf-cSXKBt_DKtfDq-5RQ1RswJWaxY9UvNuJNE7i0uj2uRt9HOgywrZ806knWixAIkCkDGdIcIvi-SrYBtLxWYTrCUjdNltRK9RlN4uogkjnBsvjYHeMTnM6m0jslaxlN4VklvnjJQDi0NQOG-x7_wrHhD55TGLaoU"/>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 overflow-y-auto px-4 sm:px-8 py-8">
+<div class="max-w-7xl mx-auto">
+<!-- Filters / Tags Bar -->
+<div class="flex items-center gap-3 mb-8 overflow-x-auto pb-4 hide-scrollbar">
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-[rgba(167,139,250,0.2)] text-[#a78bfa] border border-[#a78bfa]/30 text-sm transition-all shadow-[0_0_10px_rgba(167,139,250,0.1)]">推荐</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-panel-light text-text-muted text-sm hover:text-white transition-all">最新</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-panel-light text-text-muted text-sm hover:text-white transition-all">清醒梦</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-panel-light text-text-muted text-sm hover:text-white transition-all">超现实</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-panel-light text-text-muted text-sm hover:text-white transition-all">怀旧</button>
+<div class="h-6 w-px bg-white/10 mx-2"></div>
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full glass-panel-light text-text-muted text-sm hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px]">tune</span> 筛选
+                </button>
+</div>
+<!-- Bento / Masonry Feed -->
+<div class="masonry-grid">
+<!-- Card 1 (Large Image) -->
+<article class="masonry-item glass-panel rounded-3xl overflow-hidden group hover:-translate-y-1 transition-transform duration-500 cursor-pointer">
+<div class="relative h-72 w-full overflow-hidden bg-indigo-900/50">
+<img alt="A serene, ancient forest at night with glowing blue fireflies and ethereal mist. Deep indigo and emerald green color palette. Dreamlike, immersive, cinematic lighting." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" src="https://lh3.googleusercontent.com/aida/AP1WRLtdmHolJRUtBwJwJF8Rico-D1eL_MvEHaaZE_HPWABWEoj9AHJURUMOrqlho1hAkkyiUkluBHjiD2pMnccjwgcfbPfWXB_MrBid3XVQB2lUrOsQ7hZIjraoLflBREJmymKWJLOEusokF5Xta4jfWXP38SiIG7pUGD4qEW_W-HcRNiaQ4QfQ4-S_1rvi7LKcHIAwEOjyy1DGLZtATFajBPt8R690hqaX9d72jC7zVltd3u5eoSOedPoIPVo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[rgba(20,25,55,0.9)] to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white text-[10px]">宁静</span>
+<span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white text-[10px]">迷失</span>
+</div>
+</div>
+<div class="p-5 pt-2">
+<h3 class="text-xl font-medium text-white mb-2 text-glow">星云之林</h3>
+<p class="text-sm text-text-muted line-clamp-3 mb-4">
+                            我走进了一片发光的森林，树叶呈现出透明的翡翠色。空气中悬浮着蓝色微光，像是呼吸着的星辰。每走一步，脚下的青苔便会泛起涟漪，仿佛踩在平静的湖面上。四周没有声音，却让人感到无比安全。
+                        </p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<div class="flex items-center gap-2">
+<img alt="User avatar" class="w-6 h-6 rounded-full border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy5qmo951sVKqNM2T1A7trBXMfeMD38503zlxW4F2MTMHeWgMBM_peT7WFOHqoLMhSoTcI3KtbOalDk2Jeanh1ZpLznH6kkHFtNMwp3Yfm8eiCX6pHNqtIdX0-HxENjBvYlHm1FBAMOQdGGMGvuQuPHQsWwoCS-jyVlZlrRl9pX9bFikIGQGH-8VLopATYhLu9-6Tduu2fELRcNhOsWoCrbefIxNGPzkt88qIz4uZ8760c6RsTVjsTi-mUOz2ybBEm8_mid8nmmPY"/>
+<span class="text-xs text-white">夜行者</span>
+</div>
+<div class="flex gap-4 text-text-muted">
+<button class="flex items-center gap-1 hover:text-pink-500 transition-colors group/btn">
+<span class="material-symbols-outlined text-[18px] group-hover/btn:scale-110 transition-transform">favorite</span>
+<span class="text-xs">241</span>
+</button>
+<button class="flex items-center gap-1 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+<span class="text-xs">32</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 (Text Heavy) -->
+<article class="masonry-item glass-panel rounded-3xl p-5 group hover:-translate-y-1 transition-transform duration-500 cursor-pointer relative overflow-hidden bg-glow-gradient">
+<div class="flex gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-white/10 border border-white/5 text-white text-[10px]">超现实</span>
+<span class="px-2.5 py-1 rounded-full bg-white/10 border border-white/5 text-text-muted text-[10px]">怀旧</span>
+</div>
+<h3 class="text-xl font-medium text-white mb-3 text-glow">倒错的钟楼</h3>
+<p class="text-sm text-text-muted mb-4 relative z-10">
+                        天空是深紫色的，云层像缓慢流动的岩浆。我站在一个巨大的钟楼内部，但齿轮是反向旋转的。往下看，不是街道，而是无尽的星空；往上看，则是熟悉的城市街道，倒悬在头顶。路灯亮起，灯光像雨滴一样向上飘落。
+                    </p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5 relative z-10">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-indigo-900/50 border border-white/10 flex items-center justify-center text-[10px] text-white font-bold">M</div>
+<span class="text-xs text-white">MemoryFragment</span>
+</div>
+<div class="flex gap-4 text-text-muted">
+<button class="flex items-center gap-1 hover:text-pink-500 transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span class="text-xs">89</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3 (Image focus) -->
+<article class="masonry-item glass-panel rounded-3xl overflow-hidden group hover:-translate-y-1 transition-transform duration-500 cursor-pointer">
+<div class="relative h-64 w-full overflow-hidden bg-indigo-900/50">
+<img alt="A surreal, underwater dreamscape of the deep ocean. Bioluminescent jellyfish floating in deep indigo water, soft light rays filtering from above, mysterious glowing coral reefs. Ethereal, cinematic lighting." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" src="https://lh3.googleusercontent.com/aida/AP1WRLtsaVR-ZLGJvt_ZeWnr0x_LkdhvWZDTZ4oUeLP7KKlqYDoBokhkS8q-UbmQiC5vR4gxqD93efyTuGNCgAvNKKGB-WV5o0iKxrAP7Fzmq1U0zTAi76iElP3W3Gxy86dv6iQoRVjrh1TDkWxv3Lk7NJX99dd9-5lrJUFUiCO3MVHpN2mDDV6IvHTsm8DtOlI2ujd1743QRIr_cff7Anj7gq1tuULOEPYtsKNZNXACoE5KPkkkw9OxQTz-mns"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[rgba(20,25,55,0.9)] to-transparent"></div>
+<div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md rounded-full px-2 py-1 flex items-center gap-1 border border-white/10">
+<span class="material-symbols-outlined text-[14px] text-white">visibility</span>
+<span class="text-[10px] text-white">1.2k</span>
+</div>
+</div>
+<div class="p-5 -mt-12 relative z-10">
+<div class="flex gap-2 mb-2">
+<span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white text-[10px]">深邃</span>
+<span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 text-white text-[10px]">奇幻</span>
+</div>
+<h3 class="text-xl font-medium text-white mb-2 mt-3 text-glow">深海列车</h3>
+<p class="text-sm text-text-muted line-clamp-2 mb-4">
+                            一辆老式绿皮火车在海底穿行，没有轨道，只是在水流中漂浮。窗外游过巨大的发光水母。
+                        </p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<div class="flex items-center gap-2">
+<img alt="User avatar" class="w-6 h-6 rounded-full border border-white/10 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1X0aqQeQrUxPLYaL6PUZ7UqcEDsLeeucA0jOnkkc5AIUMYebwFl0DR-20_wXVHOpjUuyotT7amlae49V5-jVWtPR06Av0mkisAWfNn3HfBYrZ1I_CUI84Mh2pxfBs3VdzQY9JgTxvNl5qgnZ12Xbd6Bg6pHAfNL7l0wyeJtYRH6bCHFKADfwWJLdzglYDmQU8lwKntd63EsJT5A9_HaDCAsZmKSTNSd5AvpiCXaW2sMMXtEPDPZVYWRG1T5ka2pQ6x1TPRIKppUU"/>
+<span class="text-xs text-white">流浪的鱼</span>
+</div>
+<div class="flex gap-4 text-text-muted">
+<button class="flex items-center gap-1 text-pink-500 transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-xs">512</span>
+</button>
+<button class="flex items-center gap-1 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+<span class="text-xs">128</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 4 (Short Text) -->
+<article class="masonry-item glass-panel rounded-3xl p-5 group hover:-translate-y-1 transition-transform duration-500 cursor-pointer">
+<div class="flex gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-white/10 border border-white/5 text-white text-[10px]">焦虑</span>
+</div>
+<h3 class="text-lg text-white mb-3 italic font-serif">
+                        "总是在找一扇门，但每一扇门后都是同样的走廊。墙纸的花纹在呼吸。"
+                    </h3>
+<div class="flex items-center justify-between pt-3 border-t border-white/5 mt-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full glass-panel-light flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-text-muted">person</span>
+</div>
+<span class="text-xs text-text-muted">匿名织者</span>
+</div>
+<button class="flex items-center gap-1 text-text-muted hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[16px]">more_horiz</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Load More Indicator -->
+<div class="flex justify-center my-12 pb-12">
+<button class="flex items-center gap-2 px-6 py-3 rounded-full glass-panel-light text-white hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined animate-spin text-[18px]">sync</span>
+<span class="text-sm">探索更深层</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

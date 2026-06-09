@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>幻梦云端 - 梦境详情</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400&amp;family=Geist:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#d0bcff",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#45464d",
+                        "on-primary-container": "#798098",
+                        "primary-fixed": "#dae2fd",
+                        "on-primary": "#283044",
+                        "inverse-primary": "#565e74",
+                        "tertiary-container": "#001b21",
+                        "primary": "#bec6e0",
+                        "on-primary-fixed": "#131b2e",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#23005c",
+                        "surface-container-lowest": "#010f1f",
+                        "inverse-on-surface": "#233143",
+                        "surface": "#051424",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "tertiary": "#4cd7f6",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-container-low": "#0d1c2d",
+                        "tertiary-fixed": "#acedff",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "secondary-container": "#571bc1",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-tertiary-container": "#008da5",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-tint": "#bec6e0",
+                        "surface-container-high": "#1c2b3c",
+                        "on-background": "#d4e4fa",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-secondary-container": "#c4abff",
+                        "outline": "#909097",
+                        "secondary": "#d0bcff",
+                        "background": "#051424",
+                        "surface-dim": "#051424",
+                        "primary-container": "#0f172a",
+                        "error-container": "#93000a",
+                        "surface-variant": "#273647",
+                        "surface-bright": "#2c3a4c",
+                        "on-surface": "#d4e4fa",
+                        "on-surface-variant": "#c6c6cd",
+                        "inverse-surface": "#d4e4fa",
+                        "surface-container-highest": "#273647",
+                        "surface-container": "#122131",
+                        "on-tertiary": "#003640",
+                        "on-secondary": "#3c0091"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-lg": "48px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px",
+                        "unit": "8px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "1", fontWeight: "500" }],
+                        "label-md": ["14px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+                        "headline-lg": ["40px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom Utilities for Glassmorphism & Skeuomorphic touches */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        .glass-pill {
+            background: rgba(5, 20, 36, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(190, 198, 224, 0.5);
+        }
+        .hero-bg-overlay {
+            background: linear-gradient(to bottom, rgba(5, 20, 36, 0.2) 0%, rgba(5, 20, 36, 0.9) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen relative overflow-x-hidden font-body-md">
+<!-- Immersive Background Image -->
+<div class="fixed inset-0 z-0">
+<img alt="Immersive dreamscape background" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIOTj47ndTOJ7PBZRI_lH1W5iFSPmphMgasgwWdnd-FzYxNSm46WNUEQxuSZJKDrHeUk6MkAQxrk6l4Rf84VhSzc1FxsLroE5zikP3VENuBhYv4qIhf9U3vNvXK57vQjlOTESsnGak0gwAkQhThkWgGHCRGX-Tuy5yeQ1KujUmmUNmAHDBh4cMeCFISyqNmNVmwNsps8rkViGq2RE6vP6OXufPS3RlbBS62vT5qL29bEVWMWWA7gz8nvUw0nhDxXaVwlDmTNWTnro"/>
+<div class="absolute inset-0 hero-bg-overlay" style="background: linear-gradient(to bottom, rgba(5, 20, 36, 0.2) 0%, rgba(5, 20, 36, 0.8) 70%, rgba(5, 20, 36, 1) 100%);"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center px-gutter h-16 bg-transparent backdrop-blur-xl border-b border-white/10 shadow-none justify-center">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors absolute left-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-wider text-glow">幻梦云端</h1>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-[88px] px-container-margin max-w-[800px] mx-auto min-h-screen flex flex-col gap-stack-md pb-stack-lg">
+<!-- Dream Date & Metadata -->
+<div class="flex items-center justify-between opacity-80">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-md text-label-md">2023年10月24日 • 凌晨 3:15</span>
+</div>
+<div class="flex items-center gap-2 glass-pill px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="bedtime">bedtime</span>
+<span class="font-label-sm text-label-sm">梦库</span>
+</div>
+</div>
+<!-- Main Narrative Card -->
+<section class="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/20 rounded-full blur-[40px] -mr-10 -mt-10 transition-all duration-700 group-hover:scale-110"></div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-stack-sm text-primary-fixed text-glow">漂浮在柔软的云层中</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                我发现自己置身于一片广袤无垠的天空中。四周是如棉花糖般柔软、泛着淡淡粉色和紫色的云彩。一轮巨大的明月悬挂在天际，散发着柔和而神秘的光芒。我感觉不到任何重力，身体轻盈地在云端穿梭、漂浮。这种感觉极其自由，仿佛所有的烦恼和束缚都被抛在了下方的世界，只剩下纯粹的宁静与失重感。
+            </p>
+<!-- Mood Tags -->
+<div class="flex flex-wrap gap-3 mt-stack-md pt-stack-sm border-t border-white/10">
+<div class="glass-pill px-4 py-2 rounded-full flex items-center gap-2 border-tertiary/30">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-md text-label-md text-tertiary">愉悦 85%</span>
+</div>
+<div class="glass-pill px-4 py-2 rounded-full flex items-center gap-2 border-secondary/30">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-secondary">自由 70%</span>
+</div>
+</div>
+</section>
+<!-- Subconscious Interpretation -->
+<section class="glass-panel rounded-2xl p-6 relative mt-stack-sm backdrop-blur-xl">
+<div class="flex items-center gap-3 mb-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/50 flex items-center justify-center border border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">潜意识解读</h3>
+</div>
+<div class="bg-surface-container-lowest/50 rounded-xl p-4 border border-white/5 inset-shadow-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    在云端飞行或漂浮通常象征着对日常压力的逃避渴望，以及对精神解脱的追求。这个梦境反映了你内心深处渴望摆脱现实生活中的重担，寻找一个安全、无拘无束的避风港。巨大的月亮可能代表着你潜意识中指引你的直觉或母性力量，它在黑暗中为你提供柔和的光明与慰藉。
+                </p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+</body></html>

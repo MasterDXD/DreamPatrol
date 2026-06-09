@@ -1,0 +1,681 @@
+/* ===== StatsPage - 情绪星图/洞察报告 重设计 ===== */
+
+.container {
+  position: relative;
+  animation: fadeInUp 400ms ease;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-lg) 80px;
+}
+
+/* ===== 背景装饰：星云光晕 ===== */
+.bgGlow1,
+.bgGlow2 {
+  position: fixed;
+  width: 384px;
+  height: 384px;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.bgGlow1 {
+  top: 15%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(76, 215, 246, 0.12) 0%, rgba(5, 20, 36, 0) 70%);
+  animation: pulseGlow 8s infinite alternate ease-in-out;
+}
+
+.bgGlow2 {
+  bottom: 10%;
+  right: 8%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.12) 0%, rgba(5, 20, 36, 0) 70%);
+  animation: pulseGlow 8s infinite alternate ease-in-out;
+  animation-delay: -4s;
+}
+
+/* ===== 页面标题 ===== */
+.pageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-2xl);
+  position: relative;
+  z-index: 1;
+}
+
+.pageTitle {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+  margin-bottom: var(--space-xs);
+}
+
+.pageSubtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.pageBadge {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(18, 33, 49, 0.5);
+  color: #4cd7f6;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ===== Bento Grid ===== */
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Glass Panel 基类 ===== */
+.nebulaCard,
+.ringCard,
+.trendCard,
+.tagCard,
+.aiCard,
+.kpiCard {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 24px;
+  padding: var(--space-lg);
+  transition: border-color 300ms ease;
+}
+
+/* ===== KPI Stat Cards ===== */
+.kpiCard {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.kpiCard:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+.kpiTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.kpiLabel {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+
+.kpiIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpiIconTertiary {
+  color: #4cd7f6;
+}
+
+.kpiIconSecondary {
+  color: #d0bcff;
+}
+
+.kpiIconPrimary {
+  color: #a78bfa;
+}
+
+.kpiValue {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.kpiUnit {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-left: 4px;
+}
+
+.kpiTrend {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #4cd7f6;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kpiTrendSecondary {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #d0bcff;
+  margin-top: 8px;
+}
+
+.kpiTrendPrimary {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #a78bfa;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== Mood Nebula ===== */
+.nebulaCard {
+  grid-column: span 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.nebulaCard .sectionTitle {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+}
+
+.nebulaVis {
+  position: relative;
+  width: 256px;
+  height: 256px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.nebulaOuterBlur {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #4cd7f6 0deg, #d0bcff 120deg, #571bc1 240deg, #4cd7f6 360deg);
+  filter: blur(8px);
+  opacity: 0.6;
+  animation: spinSlow 20s linear infinite;
+}
+
+.nebulaCircle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%, #4cd7f6 0deg, #d0bcff 120deg, #571bc1 240deg, #4cd7f6 360deg);
+  opacity: 0.8;
+  animation: spinSlow 20s linear infinite;
+}
+
+.nebulaCenter {
+  position: relative;
+  z-index: 2;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(18, 33, 49, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nebulaPct {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: #4cd7f6;
+}
+
+.nebulaEmotion {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d0bcff;
+  margin-top: 8px;
+  letter-spacing: 0.15em;
+}
+
+.nebulaSecondary {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 2;
+}
+
+.secondaryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.secondaryBar {
+  width: 64px;
+  height: 4px;
+  background: rgba(39, 54, 71, 0.8);
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.secondaryBarFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s ease;
+}
+
+.secondaryLabel {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+/* ===== Emotion Ring Chart ===== */
+.ringCard {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.ringChartWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.ringSvg {
+  width: 192px;
+  height: 192px;
+  transform: rotate(-90deg);
+}
+
+.ringSegment {
+  transition: stroke-dashoffset 1.5s ease-out;
+}
+
+.ringLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #ffffff;
+}
+
+/* ===== 7-Day Trend Bar Chart ===== */
+.trendCard {
+  grid-column: span 7;
+  display: flex;
+  flex-direction: column;
+}
+
+.trendHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.trendPeriod {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 160px;
+  flex: 1;
+  padding-top: var(--space-md);
+}
+
+.barItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar {
+  width: 100%;
+  max-width: 40px;
+  border-radius: 4px 4px 0 0;
+  background: rgba(39, 54, 71, 0.8);
+  transition: height 500ms ease, background 200ms ease;
+  min-height: 4px;
+  cursor: pointer;
+}
+
+.bar:hover {
+  background: rgba(76, 215, 246, 0.5);
+}
+
+.barHighlight {
+  background: #4cd7f6;
+  box-shadow: 0 0 10px rgba(76, 215, 246, 0.6);
+}
+
+.barHighlight:hover {
+  background: #4cd7f6;
+}
+
+.barLabel {
+  font-size: 11px;
+  color: var(--color-text-placeholder);
+  margin-top: var(--space-xs);
+  white-space: nowrap;
+}
+
+.barValue {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+/* ===== High-Frequency Elements (Tag Cloud) ===== */
+.tagCard {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.tagCloud {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.tagPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease;
+  backdrop-filter: blur(8px);
+}
+
+.tagPill:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tagLg {
+  padding: 10px 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.tagMd {
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.tagSm {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.tagDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== AI Insight Card ===== */
+.aiCard {
+  grid-column: span 12;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.aiDecorIcon {
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  opacity: 0.15;
+  pointer-events: none;
+  color: #a78bfa;
+  mix-blend-mode: overlay;
+}
+
+.aiContent {
+  position: relative;
+  z-index: 2;
+}
+
+.aiIconSquare {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+}
+
+.aiTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.aiText {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 800px;
+}
+
+/* ===== Loading & Empty ===== */
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--color-text-secondary);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--color-text-placeholder);
+  font-size: var(--font-size-sm);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .kpiCard {
+    grid-column: span 4;
+  }
+
+  .nebulaCard {
+    grid-column: span 12;
+  }
+
+  .ringCard {
+    grid-column: span 12;
+  }
+
+  .trendCard {
+    grid-column: span 12;
+  }
+
+  .tagCard {
+    grid-column: span 12;
+  }
+
+  .aiCard {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-md) var(--space-md) 60px;
+  }
+
+  .kpiCard {
+    grid-column: span 12;
+  }
+
+  .pageTitle {
+    font-size: 32px;
+  }
+
+  .pageSubtitle {
+    font-size: 16px;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nebulaVis {
+    width: 200px;
+    height: 200px;
+  }
+
+  .nebulaCenter {
+    width: 160px;
+    height: 160px;
+  }
+
+  .nebulaPct {
+    font-size: 48px;
+  }
+
+  .nebulaSecondary {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    padding: 16px 0 0;
+  }
+
+  .bgGlow1,
+  .bgGlow2 {
+    width: 240px;
+    height: 240px;
+  }
+}

@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DimiLinks 文生图 API 调试工具</title>
+  <style>
+    :root {
+      --bg: #0e0f13;
+      --surface: #16171d;
+      --surface2: #1e1f27;
+      --border: #2a2b35;
+      --text: #e4e4ec;
+      --text2: #8b8ca0;
+      --accent: #6c5ce7;
+      --accent2: #a29bfe;
+      --success: #00b894;
+      --error: #e17055;
+      --warn: #fdcb6e;
+      --radius: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text2);
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-body { padding: 18px; }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text2);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+
+    .toggle-row span {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .toggle .slider::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 3px;
+      left: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .slider {
+      background: var(--accent);
+    }
+
+    .toggle input:checked + .slider::after {
+      transform: translateX(20px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      width: 100%;
+    }
+
+    .btn-primary:hover { background: #5a4bd6; }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .btn-danger:hover { background: rgba(225, 112, 85, 0.1); }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .actions .btn-primary { flex: 1; }
+
+    /* Result area */
+    .result-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .status-bar.idle { background: var(--surface2); color: var(--text2); }
+    .status-bar.loading { background: rgba(108, 92, 231, 0.15); color: var(--accent2); }
+    .status-bar.success { background: rgba(0, 184, 148, 0.12); color: var(--success); }
+    .status-bar.error { background: rgba(225, 112, 85, 0.12); color: var(--error); }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .image-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .image-card img {
+      width: 100%;
+      display: block;
+      cursor: zoom-in;
+    }
+
+    .image-card .meta {
+      padding: 10px 14px;
+      font-size: 11px;
+      color: var(--text2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .image-card .meta a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    .image-card .meta a:hover { text-decoration: underline; }
+
+    .response-json {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text2);
+      max-height: 300px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .response-json .key { color: var(--accent2); }
+    .response-json .string { color: var(--success); }
+    .response-json .number { color: var(--warn); }
+
+    .task-info {
+      padding: 14px;
+      background: var(--surface2);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .task-info .field {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .task-info .field:last-child { margin-bottom: 0; }
+    .task-info .field .k { color: var(--text2); min-width: 80px; }
+    .task-info .field .v { color: var(--text); font-weight: 500; }
+
+    /* History */
+    .history-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .history-item:hover { background: var(--surface2); }
+    .history-item:last-child { border-bottom: none; }
+
+    .history-item .prompt-text {
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-item .prompt-meta {
+      font-size: 11px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    .empty-state .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      opacity: 0.3;
+    }
+
+    /* Image overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+
+    .overlay.active { display: flex; }
+
+    .overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+
+    .api-key-group {
+      position: relative;
+    }
+
+    .api-key-group .eye-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text2);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+    }
+
+    .api-key-group .eye-btn:hover { color: var(--text); }
+
+    .ref-images { margin-top: 8px; }
+
+    .ref-image-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .ref-image-row input { flex: 1; }
+
+    .ref-image-row .remove-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--error);
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0 8px;
+      font-size: 16px;
+    }
+
+    .add-ref-btn {
+      background: none;
+      border: 1px dashed var(--border);
+      color: var(--text2);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .add-ref-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .poll-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .poll-controls .btn-secondary { white-space: nowrap; }
+
+    .poll-controls .interval-input {
+      width: 60px;
+      padding: 6px 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .poll-label {
+      font-size: 12px;
+      color: var(--text2);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>DimiLinks 文生图调试</h1>
+      <span class="badge">gpt-image-2</span>
+    </header>
+
+    <div class="main-grid">
+      <!-- Left: Form -->
+      <div>
+        <div class="panel">
+          <div class="panel-header">请求参数</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label>API Key</label>
+              <div class="api-key-group">
+                <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off">
+                <button class="eye-btn" onclick="toggleKeyVisibility()" title="显示/隐藏">&#128065;</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Prompt（必填）</label>
+              <textarea id="prompt" placeholder="描述你想生成的图片..."></textarea>
+            </div>
+
+            <div class="row-3">
+              <div class="form-group">
+                <label>Model</label>
+                <input type="text" id="model" value="gpt-image-2">
+              </div>
+              <div class="form-group">
+                <label>N</label>
+                <input type="number" id="n" value="1" min="1" max="4">
+              </div>
+              <div class="form-group">
+                <label>Size</label>
+                <select id="size">
+                  <option value="1:1">1:1</option>
+                  <option value="16:9" selected>16:9</option>
+                  <option value="9:16">9:16</option>
+                  <option value="4:3">4:3</option>
+                  <option value="3:4">3:4</option>
+                  <option value="custom">自定义...</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="customSizeRow" class="row" style="display:none; margin-bottom:16px;">
+              <div class="form-group" style="margin-bottom:0">
+                <label>宽度</label>
+                <input type="number" id="customWidth" placeholder="1024" min="256">
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label>高度</label>
+                <input type="number" id="customHeight" placeholder="1024" min="256">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label>Resolution</label>
+                <select id="resolution">
+                  <option value="">默认</option>
+                  <option value="1k">1k</option>
+                  <option value="2k" selected>2k</option>
+                  <option value="4k">4k</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Output Format</label>
+                <select id="outputFormat">
+                  <option value="">默认</option>
+                  <option value="png" selected>png</option>
+                  <option value="jpeg">jpeg</option>
+                  <option value="webp">webp</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label>Background</label>
+                <select id="background">
+                  <option value="">默认</option>
+                  <option value="auto">auto</option>
+                  <option value="transparent">transparent</option>
+                  <option value="opaque">opaque</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Moderation</label>
+                <select id="moderation">
+                  <option value="">默认</option>
+                  <option value="auto">auto</option>
+                  <option value="low">low</option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="toggle-row">
+              <span>异步模式 (async)</span>
+              <label class="toggle">
+                <input type="checkbox" id="asyncMode" checked>
+                <div class="slider"></div>
+              </label>
+            </div>
+
+            <div id="pollSection">
+              <div class="poll-controls">
+                <span class="poll-label">轮询间隔</span>
+                <input type="number" class="interval-input" id="pollInterval" value="3" min="1" max="30">
+                <span class="poll-label">秒</span>
+                <button class="btn btn-secondary" id="stopPollBtn" onclick="stopPolling()" disabled>停止轮询</button>
+              </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="form-group">
+              <label>参考图 (image_urls，最多4张)</label>
+              <div class="ref-images" id="refImages"></div>
+              <button class="add-ref-btn" onclick="addRefImage()">+ 添加参考图</button>
+            </div>
+
+            <div class="form-group">
+              <label>User 标识</label>
+              <input type="text" id="user" placeholder="可选，便于审计">
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="submitBtn" onclick="submitGeneration()">
+                生成图片
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div class="panel" style="margin-top: 16px;">
+          <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>历史记录</span>
+            <button class="btn btn-danger" onclick="clearHistory()" style="padding:4px 10px; font-size:11px;">清空</button>
+          </div>
+          <div id="historyList">
+            <div class="empty-state">
+              <div class="icon">&#128203;</div>
+              暂无记录
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Results -->
+      <div class="result-area">
+        <div id="statusBar" class="status-bar idle">
+          就绪 — 填写参数后点击「生成图片」
+        </div>
+
+        <div id="taskInfo" style="display:none;"></div>
+
+        <div id="imageResult">
+          <div class="empty-state">
+            <div class="icon">&#127912;</div>
+            生成的图片将显示在这里
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">原始响应</div>
+          <div class="panel-body">
+            <div class="response-json" id="responseJson">// 提交请求后查看原始 JSON 响应</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image overlay -->
+  <div class="overlay" id="overlay" onclick="closeOverlay()">
+    <img id="overlayImg" src="" alt="">
+  </div>
+
+  <script>
+    const BASE_URL = 'https://dimilinks.com/v1';
+    let pollTimer = null;
+    let history = JSON.parse(localStorage.getItem('dimilinks_history') || '[]');
+
+    // Size select handler
+    document.getElementById('size').addEventListener('change', function() {
+      document.getElementById('customSizeRow').style.display =
+        this.value === 'custom' ? 'grid' : 'none';
+    });
+
+    // Async toggle
+    document.getElementById('asyncMode').addEventListener('change', function() {
+      document.getElementById('pollSection').style.display = this.checked ? 'block' : 'none';
+    });
+
+    // API key visibility
+    function toggleKeyVisibility() {
+      const input = document.getElementById('apiKey');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // Reference images
+    function addRefImage() {
+      const container = document.getElementById('refImages');
+      const count = container.children.length;
+      if (count >= 4) return alert('最多4张参考图');
+      const row = document.createElement('div');
+      row.className = 'ref-image-row';
+      row.innerHTML = `
+        <input type="text" placeholder="图片 URL 或 data:image/...;base64,..." class="ref-url">
+        <button class="remove-btn" onclick="this.parentElement.remove()" title="移除">&times;</button>
+      `;
+      container.appendChild(row);
+    }
+
+    // Build request body
+    function buildRequestBody() {
+      const body = {
+        model: document.getElementById('model').value || 'gpt-image-2',
+        prompt: document.getElementById('prompt').value,
+        n: parseInt(document.getElementById('n').value) || 1,
+      };
+
+      const sizeVal = document.getElementById('size').value;
+      if (sizeVal === 'custom') {
+        const w = document.getElementById('customWidth').value;
+        const h = document.getElementById('customHeight').value;
+        if (w && h) body.size = `${w}x${h}`;
+      } else {
+        body.size = sizeVal;
+      }
+
+      const resolution = document.getElementById('resolution').value;
+      if (resolution) body.resolution = resolution;
+
+      const outputFormat = document.getElementById('outputFormat').value;
+      if (outputFormat) body.output_format = outputFormat;
+
+      const background = document.getElementById('background').value;
+      if (background) body.background = background;
+
+      const moderation = document.getElementById('moderation').value;
+      if (moderation) body.moderation = moderation;
+
+      const user = document.getElementById('user').value;
+      if (user) body.user = user;
+
+      // Reference images
+      const refUrls = Array.from(document.querySelectorAll('.ref-url'))
+        .map(el => el.value.trim())
+        .filter(Boolean);
+      if (refUrls.length > 0) {
+        body.image_urls = refUrls.length === 1 ? refUrls[0] : refUrls;
+      }
+
+      return body;
+    }
+
+    // Update status bar
+    function setStatus(type, text) {
+      const bar = document.getElementById('statusBar');
+      bar.className = `status-bar ${type}`;
+      if (type === 'loading') {
+        bar.innerHTML = `<div class="spinner"></div>${text}`;
+      } else {
+        bar.textContent = text;
+      }
+    }
+
+    // Show JSON with syntax highlighting
+    function showJson(obj) {
+      const el = document.getElementById('responseJson');
+      const json = JSON.stringify(obj, null, 2);
+      el.innerHTML = json
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+        .replace(/: "([^"]*)"/g, ': <span class="string">"$1"</span>')
+        .replace(/: (\d+)/g, ': <span class="number">$1</span>');
+    }
+
+    // Show images
+    function showImages(data) {
+      const container = document.getElementById('imageResult');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="icon">&#127912;</div>暂无图片</div>';
+        return;
+      }
+
+      container.innerHTML = '<div class="image-grid">' + data.map((item, i) => {
+        let imgSrc = item.url || '';
+        // Relative URL -> absolute
+        if (imgSrc.startsWith('/')) {
+          imgSrc = BASE_URL.replace('/v1', '') + imgSrc;
+        }
+        return `
+          <div class="image-card">
+            <img src="${imgSrc}" alt="Generated ${i + 1}" onclick="openOverlay('${imgSrc.replace(/'/g, "\\'")}')"
+                 onerror="this.alt='加载失败'; this.style.minHeight='120px'; this.style.background='var(--surface2)';">
+            <div class="meta">
+              <span>#${i + 1}</span>
+              ${item.file_id ? `<span>file: ${item.file_id}</span>` : ''}
+              <a href="${imgSrc}" target="_blank" download>打开</a>
+            </div>
+          </div>
+        `;
+      }).join('') + '</div>';
+    }
+
+    // Image overlay
+    function openOverlay(src) {
+      document.getElementById('overlayImg').src = src;
+      document.getElementById('overlay').classList.add('active');
+    }
+
+    function closeOverlay() {
+      document.getElementById('overlay').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeOverlay();
+    });
+
+    // Polling
+    function startPolling(taskId) {
+      stopPolling();
+      const interval = (parseInt(document.getElementById('pollInterval').value) || 3) * 1000;
+      document.getElementById('stopPollBtn').disabled = false;
+
+      pollTimer = setInterval(async () => {
+        try {
+          const res = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+            headers: { 'Authorization': `Bearer ${document.getElementById('apiKey').value}` }
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            setStatus('error', `查询失败: ${data.error?.message || res.status}`);
+            showJson(data);
+            stopPolling();
+            return;
+          }
+
+          showJson(data);
+          updateTaskInfo(data);
+
+          if (data.status === 'succeeded') {
+            setStatus('success', `完成 — task_id: ${taskId}`);
+            showImages(data.result?.data || []);
+            stopPolling();
+            updateHistoryStatus(taskId, 'succeeded');
+          } else if (data.status === 'failed') {
+            setStatus('error', `失败 — ${data.error?.message || '未知错误'}`);
+            stopPolling();
+            updateHistoryStatus(taskId, 'failed');
+          } else {
+            const progress = data.progress || 0;
+            setStatus('loading', `生成中 ${progress}% — ${data.status}`);
+          }
+        } catch (err) {
+          setStatus('error', `轮询异常: ${err.message}`);
+          stopPolling();
+        }
+      }, interval);
+    }
+
+    function stopPolling() {
+      if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+      document.getElementById('stopPollBtn').disabled = true;
+    }
+
+    function updateTaskInfo(data) {
+      const el = document.getElementById('taskInfo');
+      el.style.display = 'block';
+      el.innerHTML = `
+        <div class="task-info">
+          <div class="field"><span class="k">Task ID</span><span class="v">${data.task_id || data.id || '-'}</span></div>
+          <div class="field"><span class="k">Status</span><span class="v">${data.status || '-'}</span></div>
+          <div class="field"><span class="k">Progress</span><span class="v">${data.progress ?? '-'}%</span></div>
+          ${data.created_at ? `<div class="field"><span class="k">Created</span><span class="v">${new Date(data.created_at * 1000).toLocaleString()}</span></div>` : ''}
+          ${data.completed_at ? `<div class="field"><span class="k">Completed</span><span class="v">${new Date(data.completed_at * 1000).toLocaleString()}</span></div>` : ''}
+        </div>
+        ${data.progress !== undefined ? `<div class="progress-bar"><div class="fill" style="width:${data.progress}%"></div></div>` : ''}
+      `;
+    }
+
+    // Submit
+    async function submitGeneration() {
+      const apiKey = document.getElementById('apiKey').value.trim();
+      if (!apiKey) return alert('请输入 API Key');
+      const prompt = document.getElementById('prompt').value.trim();
+      if (!prompt) return alert('请输入 Prompt');
+
+      const isAsync = document.getElementById('asyncMode').checked;
+      const body = buildRequestBody();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '提交中...';
+
+      const url = isAsync
+        ? `${BASE_URL}/images/generations?async=true`
+        : `${BASE_URL}/images/generations`;
+
+      try {
+        setStatus('loading', '正在提交请求...');
+        showJson({ url, method: 'POST', body });
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        showJson(data);
+
+        if (!res.ok) {
+          setStatus('error', `请求失败 (${res.status}): ${data.error?.message || '未知错误'}`);
+          return;
+        }
+
+        const taskId = data.task_id;
+
+        if (isAsync && data.data && data.data.length === 0) {
+          // Async submitted, start polling
+          setStatus('loading', `已提交 — task_id: ${taskId}，开始轮询...`);
+          updateTaskInfo({ task_id: taskId, status: 'queued', progress: 0 });
+          addHistory(prompt, taskId);
+          startPolling(taskId);
+        } else {
+          // Sync response or async with immediate result
+          setStatus('success', `完成 — task_id: ${taskId}`);
+          showImages(data.data || []);
+          addHistory(prompt, taskId, 'succeeded');
+        }
+      } catch (err) {
+        setStatus('error', `请求异常: ${err.message}`);
+        showJson({ error: err.message });
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '生成图片';
+      }
+    }
+
+    // History
+    function addHistory(prompt, taskId, status = 'pending') {
+      history.unshift({
+        prompt,
+        taskId,
+        status,
+        time: Date.now()
+      });
+      if (history.length > 20) history = history.slice(0, 20);
+      localStorage.setItem('dimilinks_history', JSON.stringify(history));
+      renderHistory();
+    }
+
+    function updateHistoryStatus(taskId, status) {
+      const item = history.find(h => h.taskId === taskId);
+      if (item) item.status = status;
+      localStorage.setItem('dimilinks_history', JSON.stringify(history));
+      renderHistory();
+    }
+
+    function clearHistory() {
+      history = [];
+      localStorage.removeItem('dimilinks_history');
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const el = document.getElementById('historyList');
+      if (history.length === 0) {
+        el.innerHTML = '<div class="empty-state"><div class="icon">&#128203;</div>暂无记录</div>';
+        return;
+      }
+      el.innerHTML = history.map(h => {
+        const statusIcon = h.status === 'succeeded' ? '&#9989;' : h.status === 'failed' ? '&#10060;' : '&#9203;';
+        const time = new Date(h.time).toLocaleString('zh-CN', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+        return `
+          <div class="history-item" onclick="loadHistory('${h.taskId}')">
+            <div class="prompt-text">${statusIcon} ${h.prompt}</div>
+            <div class="prompt-meta">${h.taskId} · ${time}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function loadHistory(taskId) {
+      const apiKey = document.getElementById('apiKey').value.trim();
+      if (!apiKey) return alert('请先输入 API Key');
+
+      setStatus('loading', `查询任务 ${taskId}...`);
+      try {
+        const res = await fetch(`${BASE_URL}/tasks/${taskId}`, {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        const data = await res.json();
+        showJson(data);
+        updateTaskInfo(data);
+
+        if (data.status === 'succeeded') {
+          setStatus('success', `任务已完成 — ${taskId}`);
+          showImages(data.result?.data || []);
+        } else if (data.status === 'failed') {
+          setStatus('error', `任务失败 — ${data.error?.message || '未知'}`);
+        } else {
+          setStatus('loading', `任务进行中 — ${data.status} ${data.progress || 0}%`);
+          startPolling(taskId);
+        }
+      } catch (err) {
+        setStatus('error', `查询异常: ${err.message}`);
+      }
+    }
+
+    // Init
+    renderHistory();
+
+    // Auto-load API key from localStorage
+    const savedKey = localStorage.getItem('dimilinks_api_key');
+    if (savedKey) document.getElementById('apiKey').value = savedKey;
+
+    document.getElementById('apiKey').addEventListener('change', function() {
+      localStorage.setItem('dimilinks_api_key', this.value);
+    });
+  </script>
+</body>
+</html>

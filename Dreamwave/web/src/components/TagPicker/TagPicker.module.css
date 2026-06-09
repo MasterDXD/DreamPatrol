@@ -1,0 +1,133 @@
+.container {
+  margin-top: 24px;
+}
+
+.label {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+  font-size: 13px;
+}
+
+.tag:hover {
+  border-color: var(--color-primary);
+}
+
+.selected {
+  border-color: var(--color-primary);
+  background: rgba(126, 184, 218, 0.12);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.name {
+  color: var(--color-text-primary);
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 150ms ease;
+}
+
+.addBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.createForm {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.colors {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.colorBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.colorBtn:hover {
+  transform: scale(1.15);
+}
+
+.colorActive {
+  border-color: var(--color-text-primary);
+  transform: scale(1.15);
+}
+
+.confirmBtn {
+  align-self: flex-end;
+  padding: 6px 16px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.confirmBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,56 @@
+.skeleton {
+  display: flex;
+  border-radius: var(--radius-md);
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.bar {
+  width: 4px;
+  flex-shrink: 0;
+  background: var(--color-surface-variant);
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-md);
+}
+
+.line {
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--color-surface-variant) 25%, var(--color-surface-hover) 50%, var(--color-surface-variant) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.titleLine {
+  width: 60%;
+  height: 18px;
+  margin-bottom: var(--space-sm);
+}
+
+.previewLine1 {
+  width: 100%;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.previewLine2 {
+  width: 80%;
+  height: 14px;
+  margin-bottom: var(--space-sm);
+}
+
+.metaLine {
+  width: 40%;
+  height: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

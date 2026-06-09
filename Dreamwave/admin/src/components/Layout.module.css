@@ -1,0 +1,238 @@
+/* ===== Admin Layout: Sidebar + Main ===== */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 32px 16px;
+  position: sticky;
+  top: 0;
+  background: rgba(20, 25, 55, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), padding 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* ===== Collapsed Sidebar ===== */
+.sidebarCollapsed {
+  width: 72px;
+  padding: 32px 8px;
+}
+
+.sidebarCollapsed .logoSection {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebarCollapsed .logoImg {
+  width: 36px;
+}
+
+.sidebarCollapsed .logoText {
+  display: none;
+}
+
+.sidebarCollapsed .navLabel {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 150ms ease, width 0ms 150ms;
+}
+
+.sidebarCollapsed .navItem {
+  justify-content: center;
+  padding: 12px;
+  gap: 0;
+}
+
+.sidebarCollapsed .navIcon {
+  margin: 0;
+}
+
+.sidebarCollapsed .collapseBtn {
+  justify-content: center;
+  padding: 10px;
+  gap: 0;
+}
+
+.sidebarCollapsed .collapseBtn .navLabel {
+  display: none;
+}
+
+.sidebarCollapsed .logoutBtn {
+  justify-content: center;
+  padding: 10px;
+  gap: 0;
+}
+
+.sidebarCollapsed .logoutBtn .navLabel {
+  display: none;
+}
+
+.sidebarTop {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo */
+.logoSection {
+  margin-bottom: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: justify-content 300ms ease, padding 300ms ease;
+}
+
+.logoImg {
+  width: 40px;
+  display: block;
+  transition: width 300ms ease;
+}
+
+.logoText {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--admin-accent);
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  color: #c6c6cd;
+  text-decoration: none;
+  transition: all 200ms ease, gap 300ms ease, padding 300ms ease;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.navItemActive {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.navIcon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+  color: inherit;
+  flex-shrink: 0;
+  transition: margin 300ms ease;
+}
+
+.navIconActive {
+  color: #4cd7f6;
+}
+
+.navLabel {
+  white-space: nowrap;
+  transition: opacity 200ms ease, width 0ms;
+}
+
+/* Sidebar Bottom */
+.sidebarBottom {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Collapse Button */
+.collapseBtn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  color: #c6c6cd;
+  font-size: 13px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease, gap 300ms ease, padding 300ms ease;
+  font-family: inherit;
+}
+
+.collapseBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* Logout Button */
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(208, 188, 255, 0.2), rgba(76, 215, 246, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(208, 188, 255, 0.1);
+  color: var(--admin-text);
+  transition: all 200ms ease, gap 300ms ease, padding 300ms ease;
+  font-family: inherit;
+}
+
+.logoutBtn:hover {
+  background: linear-gradient(135deg, rgba(208, 188, 255, 0.3), rgba(76, 215, 246, 0.3));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 25px rgba(208, 188, 255, 0.2);
+}
+
+/* ===== Main Content ===== */
+.main {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.mainInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

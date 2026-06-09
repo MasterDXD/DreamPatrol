@@ -1,0 +1,65 @@
+/* ===== Theme Toggle ===== */
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.toggleBtn:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-bg-rgb), 0.1);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms ease;
+}
+
+.iconSun {
+  color: #f59e0b;
+  transform: rotate(0deg);
+}
+
+.iconMoon {
+  color: var(--color-accent-light);
+  transform: rotate(0deg);
+}
+
+.animating .icon {
+  animation: iconFlip 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes iconFlip {
+  0% { transform: rotate(0deg) scale(1); }
+  40% { transform: rotate(180deg) scale(0.6); }
+  70% { transform: rotate(360deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  transition: opacity 200ms ease;
+}
+
+/* 侧边栏收起时隐藏文字 */
+.sidebarCollapsed .label {
+  display: none;
+}

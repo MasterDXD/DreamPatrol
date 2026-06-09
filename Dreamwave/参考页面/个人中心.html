@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>我的梦境空间 - 梦境织者</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "outline-variant": "#45464d",
+                "on-tertiary": "#003640",
+                "on-primary": "#283044",
+                "tertiary-container": "#001b21",
+                "surface-bright": "#2c3a4c",
+                "on-error-container": "#ffdad6",
+                "surface-container-high": "#1c2b3c",
+                "on-primary-container": "#798098",
+                "inverse-primary": "#565e74",
+                "background": "#051424",
+                "on-secondary-fixed-variant": "#5516be",
+                "secondary-container": "#571bc1",
+                "on-background": "#d4e4fa",
+                "on-primary-fixed-variant": "#3f465c",
+                "surface-tint": "#bec6e0",
+                "error": "#ffb4ab",
+                "on-tertiary-fixed": "#001f26",
+                "on-error": "#690005",
+                "primary-fixed-dim": "#bec6e0",
+                "on-surface-variant": "#c6c6cd",
+                "on-primary-fixed": "#131b2e",
+                "surface-container": "#122131",
+                "on-tertiary-fixed-variant": "#004e5c",
+                "surface-container-highest": "#273647",
+                "primary-container": "#0f172a",
+                "tertiary-fixed": "#acedff",
+                "on-surface": "#d4e4fa",
+                "tertiary-fixed-dim": "#4cd7f6",
+                "secondary-fixed-dim": "#d0bcff",
+                "primary": "#bec6e0",
+                "primary-fixed": "#dae2fd",
+                "surface-container-lowest": "#010f1f",
+                "on-tertiary-container": "#008da5",
+                "on-secondary": "#3c0091",
+                "on-secondary-container": "#c4abff",
+                "outline": "#909097",
+                "inverse-on-surface": "#233143",
+                "on-secondary-fixed": "#23005c",
+                "tertiary": "#4cd7f6",
+                "secondary": "#d0bcff",
+                "surface-variant": "#273647",
+                "surface-dim": "#051424",
+                "secondary-fixed": "#e9ddff",
+                "surface-container-low": "#0d1c2d",
+                "surface": "#051424",
+                "inverse-surface": "#d4e4fa",
+                "error-container": "#93000a"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "gutter": "16px",
+                "container-margin": "24px",
+                "stack-md": "24px",
+                "unit": "8px",
+                "stack-sm": "12px",
+                "stack-lg": "48px"
+        },
+        "fontFamily": {
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-md": [
+                        "Geist"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Geist"
+                ],
+                "body-md": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg": [
+                        "40px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+    }
+  }
+</script>
+<style>
+        body {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcicFOIlkmMKIaqx32YhKvcj_J43juRSovMWCnSnyCPX8q4DB6si8Qp35-NTEFbk2GTvsNQL5Q-aL7Q0Za8ikOOsYKJF_4arLOzcsFZwZEo7YV5uGwwwD8S3ll8d-_0oDc2Nd03PLIf9YNLdybPqiSp7UIRDTK4IEIzE5oFgIAmQT3EWnkQG77rzO1XaaWtlYXZ7v7Kig5uKPefyVeFaZHhSH8wPJZpBbevR9_i9UmcFz7PupOzqZWB1xpGEGY3MUbUq61h_CzLBs');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #d4e4fa;
+        }
+        .glass-panel {
+            background: rgba(20, 25, 55, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .glass-panel-light {
+            background: rgba(45, 50, 90, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(190, 198, 224, 0.6);
+        }
+        .btn-dream {
+            background: linear-gradient(135deg, rgba(208, 188, 255, 0.2), rgba(76, 215, 246, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(208, 188, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-dream:active {
+            transform: scale(0.98);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 25px rgba(208, 188, 255, 0.2);
+        }
+        .stat-well {
+            background: rgba(5, 20, 36, 0.6);
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-20 md:w-64 glass-panel flex flex-col justify-between h-full py-8 px-4 flex-shrink-0 transition-all duration-300 z-20 hidden sm:flex border-r border-white/10">
+<div>
+<!-- Logo -->
+<div class="mb-12 px-2 text-center md:text-left">
+<h1 class="text-3xl font-bold text-white tracking-widest text-glow mb-1 hidden md:block">巡梦</h1>
+<h1 class="text-2xl font-bold text-white tracking-widest text-glow mb-1 md:hidden">巡</h1>
+<p class="text-xs text-on-surface-variant hidden md:block">Dream Rover</p>
+</div>
+<!-- Navigation -->
+<nav class="space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center text-primary">home</span>
+<span class="font-medium hidden md:block text-sm">首页</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">cloud</span>
+<span class="font-medium hidden md:block text-sm">我的梦境</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">auto_awesome</span>
+<span class="font-medium hidden md:block text-sm">情绪星图</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">calendar_month</span>
+<span class="font-medium hidden md:block text-sm">梦境日历</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">menu_book</span>
+<span class="font-medium hidden md:block text-sm">灵感集</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">bed</span>
+<span class="font-medium hidden md:block text-sm">睡眠空间</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-2xl text-on-surface-variant hover:bg-white/5 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg w-6 text-center">settings</span>
+<span class="font-medium hidden md:block text-sm">设置</span>
+</a>
+</nav>
+</div>
+<!-- User Profile -->
+<div class="mt-auto pt-6 border-t border-white/10 px-2 flex items-center gap-3 hidden md:flex">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-white/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbTzfwpmLFIlYNLdeXmHTU08sfueCBDSEYB5ov0mm6OMKu5IhpKClPXtyiD4ayRbwhepqt8FqqVc9f-pSZD8k0pEKS-kI2IjcNtRzE38n08TpntafdPCPYSs9k7OoY1QOQr41DgUaoMZv9lho0folRengiVe9eHAuYeCwc3sq99YP3UM50q_-0R814RhD1Z81AexW5VlBI1nCeRgSQQFO7ZSK7kQ2HUirLQLgxbUiUhlaZ120WFTi7KBhpzpsxCHCQ4W8tlIpNahU"/>
+<div>
+<div class="flex items-center gap-1">
+<p class="text-sm font-medium text-white">晚风</p>
+<span class="material-symbols-outlined text-xs text-primary">dark_mode</span>
+</div>
+<p class="text-xs text-on-surface-variant">已记录了 128 个梦</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 h-full overflow-y-auto overflow-x-hidden hide-scrollbar relative z-10 pb-24 sm:pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 space-y-8">
+<!-- Profile Header Bento Grid Item -->
+<div class="glass-panel rounded-3xl p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-stack-md">
+<div class="relative">
+<div class="w-24 h-24 rounded-full overflow-hidden border-2 border-secondary p-1">
+<img alt="Star Teller Avatar" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXmF1OV7CBR8Ijs3jSJU7taNz7OYP1KoWAuE2k1NBgWE1QcdAC_fzdhopLU0U-J4FpGwiDk8pKY35aFlAD_a6Pmbt4nDBZUZTXo_hNRXy3iJ-7tA7tI2aJhpp28FVgO6L3BfAPrdWrYbr3TKpjjP9C-EvbtXxbXrdc5hN7-EUZsPLH4T0BH-8w3-J8UzJ9SQZGjcoYLHiUkxynogpTJuTfRX-TR7JmxS3toSFkBmH1ooPqCkVvLgGtDPujtL4V5xST2_BRG_H1Ozs"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-tertiary text-on-tertiary font-label-sm text-label-sm px-2 py-1 rounded-full border border-surface shadow-[0_0_10px_rgba(76,215,246,0.5)]">
+                        Lvl 5
+                    </div>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-white mb-2">Star Teller</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Lucid Dreamer &amp; Night Voyager</p>
+</div>
+</div>
+<button class="bg-white/10 hover:bg-white/20 border border-white/20 transition-all font-label-md text-label-md px-6 py-2 rounded-lg text-white">
+                编辑个人档案
+            </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-md">
+<!-- Stats Column -->
+<div class="flex flex-col gap-stack-md lg:col-span-1">
+<!-- Cumulative Records -->
+<div class="glass-panel rounded-3xl p-stack-md">
+<div class="flex items-center gap-2 mb-4 text-secondary">
+<span class="material-symbols-outlined">library_books</span>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">累计记录</h3>
+</div>
+<div class="stat-well p-6 flex flex-col items-center justify-center">
+<span class="font-headline-lg text-headline-lg text-primary mb-1 text-glow">128</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">总梦境数</span>
+</div>
+</div>
+<!-- Streak -->
+<div class="glass-panel rounded-3xl p-stack-md">
+<div class="flex items-center gap-2 mb-4 text-tertiary">
+<span class="material-symbols-outlined">local_fire_department</span>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">连续记录</h3>
+</div>
+<div class="stat-well p-6 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-tertiary/10 to-transparent"></div>
+<span class="font-headline-lg text-headline-lg text-tertiary mb-1 relative z-10 text-glow">14</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant relative z-10">天</span>
+</div>
+</div>
+<!-- Emotion Tone -->
+<div class="glass-panel rounded-3xl p-stack-md flex-1">
+<div class="flex items-center gap-2 mb-4 text-on-secondary-container">
+<span class="material-symbols-outlined">mood</span>
+<h3 class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">情绪基调</h3>
+</div>
+<div class="h-40 relative flex items-end justify-between px-2 pb-2">
+<!-- Pseudo Chart Bars -->
+<div class="w-8 bg-secondary/50 rounded-t-sm h-[40%] hover:bg-secondary/70 transition-colors relative group">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface-container px-2 py-1 rounded font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">平静</div>
+</div>
+<div class="w-8 bg-tertiary/60 rounded-t-sm h-[70%] hover:bg-tertiary/80 transition-colors relative group">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface-container px-2 py-1 rounded font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">奇幻</div>
+</div>
+<div class="w-8 bg-error/50 rounded-t-sm h-[20%] hover:bg-error/70 transition-colors relative group">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface-container px-2 py-1 rounded font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">焦虑</div>
+</div>
+<div class="w-8 bg-primary/60 rounded-t-sm h-[50%] hover:bg-primary/80 transition-colors relative group">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface-container px-2 py-1 rounded font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">怀旧</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-on-surface-variant font-label-sm text-label-sm px-2">
+<span>Mon</span>
+<span>Wed</span>
+<span>Fri</span>
+<span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Gallery Column -->
+<div class="lg:col-span-2 flex flex-col gap-stack-md">
+<div class="glass-panel rounded-3xl p-stack-md h-full">
+<div class="flex items-center justify-between mb-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">photo_library</span>
+<h2 class="font-headline-md text-headline-md text-white">梦境碎片画廊</h2>
+</div>
+<a class="font-label-md text-label-md text-tertiary hover:text-white transition-colors" href="#">查看全部</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-sm">
+<!-- Fragment Card 1 -->
+<div class="glass-panel-light relative group rounded-2xl overflow-hidden h-48 cursor-pointer">
+<div class="absolute inset-0 bg-primary-container/40 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+<img alt="City of Reflections" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhy5ol5HKaidtJzmgfC_qFtjePy8192LJJO7G-RSFzVdr1e6Cdz3FAx7yNB19xj0AoL9iWZZoqk73k1QS_YMg8lNHs0UstlO9v9Adnk_N7QPRMqVRmESDSrNv8_RKDsLSmaTLeYzvTBHQJrsopQpjfOBJDoWNIzQlWcNErVMTFXf7mu2dvSBeqdJXTV-DySQv8_WnWTh_Kj62Nr4eiXAvu7zx_e0tvwEXpdrqeyFo7pav6jgj3rMbEpu9e8_VDl4ZcqUfUcxX_Brw"/>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-20">
+<h4 class="font-headline-md text-headline-md text-white text-lg mb-1">倒影之城</h4>
+<div class="flex gap-2">
+<span class="bg-secondary-container/50 border border-secondary/30 text-on-secondary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">清醒梦</span>
+<span class="bg-tertiary-container/50 border border-tertiary/30 text-on-tertiary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">超现实</span>
+</div>
+</div>
+</div>
+<!-- Fragment Card 2 -->
+<div class="glass-panel-light relative group rounded-2xl overflow-hidden h-48 cursor-pointer">
+<div class="absolute inset-0 bg-primary-container/40 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+<img alt="Nocturnal Forest" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHbxZDOTePhdsZJtFybSvOJ12whdUt3QhXQcspBcAX2T6URN-7X0FVxfOyJ5VYjXaoh--IcZCjaUnZJxiAJzEFaG2AdRsKbTfq490KVxaOuyNnV9EagSvKYNeZg4FXz2fxoiVHyt8Smd6b2Q5Eunk_cDM0BLAR9JVT5dLy2UP64S2YwW492OT5NgN26p_hLdSD0brp8C6CjkkKtSw0oHLuAcxQ3tPVT0NNYdWjqE660Utg5Fq5R2uiTj1BEVmbMkRTI-dYF3qKjXU"/>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-20">
+<h4 class="font-headline-md text-headline-md text-white text-lg mb-1">夜行森林</h4>
+<div class="flex gap-2">
+<span class="bg-primary-container/50 border border-primary/30 text-on-primary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">迷失</span>
+<span class="bg-tertiary-container/50 border border-tertiary/30 text-on-tertiary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">探索</span>
+</div>
+</div>
+</div>
+<!-- Fragment Card 3 -->
+<div class="glass-panel-light relative group rounded-2xl overflow-hidden h-48 cursor-pointer md:col-span-2">
+<div class="absolute inset-0 bg-primary-container/40 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+<img alt="Cosmic Ocean" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwKKINpGLs7EMt8UyptRQPaT4-w1ukGaEVGZIbjJJI7XzirKzo9VKa1Vi7urefeKU7FBJjmaHi7f8q0g6uj0vffsjJYwBFW4QqndxHaB3OMprhYSDUpz14hriegHEmk9k8Dc3fZd9jPdPLGWM0ACnRMk8Hd2XlC1lyTRfZ8bKuiQmhAzmZuRtCe-8F6POwQdkmPf4MNLXbNQ9xmeiXr67KwXP_I_IzgHtJsDxZRC4-M74yoaFEhy5zYfOEAkn74pb4AbpXX7Atc24"/>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-20 flex justify-between items-end">
+<div>
+<h4 class="font-headline-md text-headline-md text-white text-lg mb-1">星际之海</h4>
+<div class="flex gap-2">
+<span class="bg-secondary-container/50 border border-secondary/30 text-on-secondary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">深层睡眠</span>
+<span class="bg-primary-container/50 border border-primary/30 text-on-primary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full backdrop-blur-md">宏大</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">favorite</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

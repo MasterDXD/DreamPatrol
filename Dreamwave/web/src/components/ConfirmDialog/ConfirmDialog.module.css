@@ -1,0 +1,50 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.dialog {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 12px;
+}
+
+.message {
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.cancelBtn {
+  padding: 8px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  background: white;
+}
+
+.confirmBtn {
+  padding: 8px 24px;
+  border-radius: 8px;
+  background: var(--color-error);
+  color: white;
+  border: none;
+  cursor: pointer;
+}

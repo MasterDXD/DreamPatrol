@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d1126" />
+
+    <!-- SEO -->
+    <title>巡梦 — 梦境记录与情绪承接</title>
+    <meta
+      name="description"
+      content="巡梦（Dreamwave）是一款沉浸式梦境记录应用：潜入潜意识的深海，记录并探索那些在星空下绽放的隐秘思绪。"
+    />
+    <meta name="keywords" content="梦境,梦境记录,情绪日记,巡梦,Dreamwave" />
+    <meta name="author" content="Dreamwave" />
+
+    <!-- Open Graph / 社交分享 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="巡梦 — 开启梦境之旅" />
+    <meta
+      property="og:description"
+      content="潜入潜意识的深海，记录并探索那些在星空下绽放的隐秘思绪。"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="巡梦 Dreamwave" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="巡梦 — 开启梦境之旅" />
+    <meta
+      name="twitter:description"
+      content="潜入潜意识的深海，记录并探索那些在星空下绽放的隐秘思绪。"
+    />
+
+    <!-- 字体预连接 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin />
+
+    <!-- 关键字体优先加载（毛笔字+正文） -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Inter:wght@400;500&display=swap"
+    />
+    <!-- 其余字体异步加载，避免阻塞首屏 -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Geist:wght@500&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Geist:wght@500&display=swap"
+      />
+    </noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    />
+    <!-- Font Awesome 图标 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* 首屏兜底：字体未到时不显示 FOIT 闪烁 */
+      :root { color-scheme: dark; }
+      html, body { background: #0d1126; }
+      body { margin: 0; }
+      .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+        /* 字体未就绪时透明化文本节点（避免闪现 "arrow_right_alt" 等英文） */
+        color: transparent;
+      }
+      .material-symbols-outlined.fonts-ready {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
